@@ -21,16 +21,14 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-table"></i> Tabelas</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Categoria') ?>"><i class="fa-solid fa-table-list"></i> CID - Categoria</a>
-                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Subcategoria') ?>"><i class="fa-solid fa-table-list"></i> CID - Subcategoria</a>
-                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Diluente') ?>"><i class="fa-solid fa-table-list"></i> Diluente</a>
-                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/EtapaTerapia') ?>"><i class="fa-solid fa-table-list"></i> Etapa da Terapia</a>
-                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Medicamento') ?>"><i class="fa-solid fa-table-list"></i> Medicamento</a>
-                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/MotivoCancelamento') ?>"><i class="fa-solid fa-table-list"></i> Motivo Cancelamento</a>
-                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/MotivoAjusteDose') ?>"><i class="fa-solid fa-table-list"></i> Motivo de Ajuste de Dose</a>
-                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Posologia') ?>"><i class="fa-solid fa-table-list"></i> Posologia</a>
-                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Protocolo') ?>"><i class="fa-solid fa-table-list"></i> Protocolo</a>
-                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/TipoTerapia') ?>"><i class="fa-solid fa-table-list"></i> Tipo de Terapia</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/DiagnosticoInfeccioso') ?>"><i class="fa-solid fa-table-list"></i> Diagnóstico Infeccioso</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Especialidade') ?>"><i class="fa-solid fa-table-list"></i> Especialidade</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Indicacao') ?>"><i class="fa-solid fa-table-list"></i> Indicação</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Infeccao') ?>"><i class="fa-solid fa-table-list"></i> Infecção</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Intervalo') ?>"><i class="fa-solid fa-table-list"></i> Intervalo</a>
+                        <!--<a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Produto') ?>"><i class="fa-solid fa-table-list"></i> Produto</a>-->
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Substituicao') ?>"><i class="fa-solid fa-table-list"></i> Substituição</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Tratamento') ?>"><i class="fa-solid fa-table-list"></i> Tratamento</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/ViaAdministracao') ?>"><i class="fa-solid fa-table-list"></i> Via de Administração</a>
                     </div>
                 </li>

@@ -23,41 +23,41 @@ class TabelaModel extends Model
         if($simples) {
             $query = $db->query(
                 'SELECT
-                    tpm.idTabPreschuap_Protocolo_Medicamento
-                    , tpm.idTabPreschuap_Protocolo
+                    tpm.idTabSismicrob_Protocolo_Medicamento
+                    , tpm.idTabSismicrob_Protocolo
                     , tpm.OrdemInfusao
-                    , tpm.idTabPreschuap_EtapaTerapia
-                    , tpm.idTabPreschuap_Medicamento
+                    , tpm.idTabSismicrob_EtapaTerapia
+                    , tpm.idTabSismicrob_Medicamento
                     , tpm.Dose
-                    , tpm.idTabPreschuap_UnidadeMedida
-                    , tpm.idTabPreschuap_ViaAdministracao
-                    , tpm.idTabPreschuap_Diluente
+                    , tpm.idTabSismicrob_UnidadeMedida
+                    , tpm.idTabSismicrob_ViaAdministracao
+                    , tpm.idTabSismicrob_Diluente
                     , tpm.Volume
                     , tpm.TempoInfusao
-                    , tpm.idTabPreschuap_Posologia
-                    , tum.idTabPreschuap_Formula
+                    , tpm.idTabSismicrob_Posologia
+                    , tum.idTabSismicrob_Formula
                     , format(tpm2.CalculoLimiteMinimo, 2, "pt_BR") AS CalculoLimiteMinimo
 	                , format(tpm2.CalculoLimiteMaximo, 2, "pt_BR") AS CalculoLimiteMaximo
                 FROM
-                    TabPreschuap_Protocolo_Medicamento AS tpm
-                    , TabPreschuap_UnidadeMedida AS tum
-                    , TabPreschuap_Medicamento AS tpm2
+                    TabSismicrob_Protocolo_Medicamento AS tpm
+                    , TabSismicrob_UnidadeMedida AS tum
+                    , TabSismicrob_Medicamento AS tpm2
                 WHERE
-                    idTabPreschuap_Protocolo = '.$data.'
+                    idTabSismicrob_Protocolo = '.$data.'
                     and tpm.Inativo = 0
-                    and tpm.idTabPreschuap_UnidadeMedida = tum.idTabPreschuap_UnidadeMedida
-                    and tpm2.idTabPreschuap_Medicamento = tpm.idTabPreschuap_Medicamento  
+                    and tpm.idTabSismicrob_UnidadeMedida = tum.idTabSismicrob_UnidadeMedida
+                    and tpm2.idTabSismicrob_Medicamento = tpm.idTabSismicrob_Medicamento  
                 ORDER BY OrdemInfusao ASC'
             );
         }
         else {
             $query['count'] = $db->query('
                 SELECT
-                    COUNT(idTabPreschuap_Protocolo_Medicamento) AS count
+                    COUNT(idTabSismicrob_Protocolo_Medicamento) AS count
                 FROM
-                    TabPreschuap_Protocolo_Medicamento
+                    TabSismicrob_Protocolo_Medicamento
                 WHERE
-                    idTabPreschuap_Protocolo = '.$data.'
+                    idTabSismicrob_Protocolo = '.$data.'
                     AND Inativo = 0;
             ');
             $query['count'] = $query['count']->getRowArray();
@@ -65,8 +65,8 @@ class TabelaModel extends Model
 
             $query['lista'] = $db->query('
                 SELECT
-                	tpm.idTabPreschuap_Protocolo_Medicamento
-                    , tpm.idTabPreschuap_Protocolo
+                	tpm.idTabSismicrob_Protocolo_Medicamento
+                    , tpm.idTabSismicrob_Protocolo
                     , tpm.OrdemInfusao
                     , tet.EtapaTerapia
                     , tm.Medicamento
@@ -82,21 +82,21 @@ class TabelaModel extends Model
                     , format(tm.CalculoLimiteMinimo, 2, "pt_BR") as CalculoLimiteMinimo
                     , format(tm.CalculoLimiteMaximo, 2, "pt_BR") as CalculoLimiteMaximo
                 FROM
-                    TabPreschuap_Protocolo_Medicamento AS tpm
-                        LEFT JOIN TabPreschuap_Diluente AS td ON tpm.idTabPreschuap_Diluente = td.idTabPreschuap_Diluente
-                    , TabPreschuap_EtapaTerapia 			AS tet
-                    , TabPreschuap_Medicamento 				AS tm
-                    , TabPreschuap_UnidadeMedida 			AS tum
-                    , TabPreschuap_ViaAdministracao 		AS tva
-                    , TabPreschuap_Posologia 				AS tpo
+                    TabSismicrob_Protocolo_Medicamento AS tpm
+                        LEFT JOIN TabSismicrob_Diluente AS td ON tpm.idTabSismicrob_Diluente = td.idTabSismicrob_Diluente
+                    , TabSismicrob_EtapaTerapia 			AS tet
+                    , TabSismicrob_Medicamento 				AS tm
+                    , TabSismicrob_UnidadeMedida 			AS tum
+                    , TabSismicrob_ViaAdministracao 		AS tva
+                    , TabSismicrob_Posologia 				AS tpo
                 WHERE
-                	tpm.idTabPreschuap_EtapaTerapia 		= tet.idTabPreschuap_EtapaTerapia
-                    and tpm.idTabPreschuap_Medicamento 		= tm.idTabPreschuap_Medicamento
-                    and tpm.idTabPreschuap_UnidadeMedida 	= tum.idTabPreschuap_UnidadeMedida
-                    and tpm.idTabPreschuap_ViaAdministracao = tva.idTabPreschuap_ViaAdministracao
-                    and tpm.idTabPreschuap_Posologia 		= tpo.idTabPreschuap_Posologia
-                    and tpm.idTabPreschuap_Protocolo = '.$data.'
-                ORDER BY Inativo ASC, tpm.idTabPreschuap_Protocolo ASC, tpm.OrdemInfusao ASC
+                	tpm.idTabSismicrob_EtapaTerapia 		= tet.idTabSismicrob_EtapaTerapia
+                    and tpm.idTabSismicrob_Medicamento 		= tm.idTabSismicrob_Medicamento
+                    and tpm.idTabSismicrob_UnidadeMedida 	= tum.idTabSismicrob_UnidadeMedida
+                    and tpm.idTabSismicrob_ViaAdministracao = tva.idTabSismicrob_ViaAdministracao
+                    and tpm.idTabSismicrob_Posologia 		= tpo.idTabSismicrob_Posologia
+                    and tpm.idTabSismicrob_Protocolo = '.$data.'
+                ORDER BY Inativo ASC, tpm.idTabSismicrob_Protocolo ASC, tpm.OrdemInfusao ASC
             ');
         }
 
@@ -141,7 +141,7 @@ class TabelaModel extends Model
             'SELECT
                 '.$select.'
             FROM
-                TabPreschuap_'.$data.'
+                TabSismicrob_'.$data.'
                 '.$where.'
             ORDER BY '.$order.' ASC
                 '.$limit.'
@@ -159,7 +159,7 @@ class TabelaModel extends Model
     {
 
         $db = \Config\Database::connect();
-        return $db->table('TabPreschuap_'.$data)->countAll();;
+        return $db->table('TabSismicrob_'.$data)->countAll();;
 
     }
 
@@ -172,9 +172,9 @@ class TabelaModel extends Model
     {
 
         $db = \Config\Database::connect();
-        $builder = $db->table('TabPreschuap_'.$tabela);
+        $builder = $db->table('TabSismicrob_'.$tabela);
 
-        $builder->where(['idTabPreschuap_'.$tabela => $id]);
+        $builder->where(['idTabSismicrob_'.$tabela => $id]);
 
         return $builder->update($data);
 
@@ -189,9 +189,9 @@ class TabelaModel extends Model
     {
 
         $db = \Config\Database::connect();
-        $builder = $db->table('TabPreschuap_Protocolo_Medicamento');
+        $builder = $db->table('TabSismicrob_Protocolo_Medicamento');
 
-        return $builder->updateBatch($data, 'idTabPreschuap_Protocolo_Medicamento');
+        return $builder->updateBatch($data, 'idTabSismicrob_Protocolo_Medicamento');
 
     }
 
@@ -204,7 +204,7 @@ class TabelaModel extends Model
     {
 
         $db = \Config\Database::connect();
-        $builder = $db->table('TabPreschuap_'.$tabela);
+        $builder = $db->table('TabSismicrob_'.$tabela);
 
         $builder->insert($data);
         return $db->insertID();
@@ -220,9 +220,9 @@ class TabelaModel extends Model
     {
 
         $db = \Config\Database::connect();
-        $builder = $db->table('TabPreschuap_'.$tabela);
+        $builder = $db->table('TabSismicrob_'.$tabela);
 
-        return $builder->getWhere(['idTabPreschuap_'.$tabela => $data])->getRowArray();
+        return $builder->getWhere(['idTabSismicrob_'.$tabela => $data])->getRowArray();
 
     }
 
@@ -239,15 +239,15 @@ class TabelaModel extends Model
         $db = \Config\Database::connect();
         $query = $db->query('
             SELECT
-                idTabPreschuap_Protocolo_Medicamento
+                idTabSismicrob_Protocolo_Medicamento
                 , OrdemInfusao
                 , Inativo
             FROM
-                TabPreschuap_Protocolo_Medicamento
+                TabSismicrob_Protocolo_Medicamento
             WHERE
-                idTabPreschuap_Protocolo = '.$id.'
+                idTabSismicrob_Protocolo = '.$id.'
                 '.$where.'
-            ORDER BY OrdemInfusao ASC, idTabPreschuap_Protocolo_Medicamento ASC
+            ORDER BY OrdemInfusao ASC, idTabSismicrob_Protocolo_Medicamento ASC
         ');
 
         return $query->getResultArray();

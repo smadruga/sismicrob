@@ -19,7 +19,7 @@
                 </div>
                 <div class="card-body has-validation row g-3">
 
-                    <?php if ($tabela == 'ViaAdministracao') { ?>
+                    <?php if ($tabela == 'ViaAdministracao' || $tabela == 'Intervalo') { ?>
                         <div class="col-md-6">
                             <label for="Item" class="form-label"><b>Item</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
@@ -79,7 +79,7 @@
                             <div class="input-group mb-3">
                                 <input type="text" id="Codigo" <?= $opt['disabled'] ?>
                                     class="form-control <?php if($validation->getError('Codigo')): ?>is-invalid<?php endif ?>"
-                                    maxlength="10" name="Codigo" value="<?php echo $data['idTabPreschuap_'.$tabela]; ?>"/>
+                                    maxlength="10" name="Codigo" value="<?php echo $data['idTabSismicrob_'.$tabela]; ?>"/>
 
                                 <?php if ($validation->getError('Codigo')): ?>
                                     <div class="invalid-feedback">
@@ -133,48 +133,48 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="idTabPreschuap_TipoTerapia" class="form-label"><b>Tipo de Terapia</b> <b class="text-danger">*</b></label>
+                            <label for="idTabSismicrob_TipoTerapia" class="form-label"><b>Tipo de Terapia</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
                                 <select <?= $opt['disabled'] ?>
-                                    class="form-select <?php if($validation->getError('idTabPreschuap_TipoTerapia')): ?>is-invalid<?php endif ?>"
-                                    id="idTabPreschuap_TipoTerapia" name="idTabPreschuap_TipoTerapia" data-placeholder="Selecione uma opção"
+                                    class="form-select <?php if($validation->getError('idTabSismicrob_TipoTerapia')): ?>is-invalid<?php endif ?>"
+                                    id="idTabSismicrob_TipoTerapia" name="idTabSismicrob_TipoTerapia" data-placeholder="Selecione uma opção"
                                     data-allow-clear="1">
                                     <option></option>
                                     <?php
                                     foreach ($select['TipoTerapia']->getResultArray() as $val) {
-                                        $selected = ($data['idTabPreschuap_TipoTerapia'] == $val['idTabPreschuap_TipoTerapia']) ? 'selected' : '';
-                                        echo '<option value="'.$val['idTabPreschuap_TipoTerapia'].'" '.$selected.'>'.$val['TipoTerapia'].'</option>';
+                                        $selected = ($data['idTabSismicrob_TipoTerapia'] == $val['idTabSismicrob_TipoTerapia']) ? 'selected' : '';
+                                        echo '<option value="'.$val['idTabSismicrob_TipoTerapia'].'" '.$selected.'>'.$val['TipoTerapia'].'</option>';
                                     }
                                     ?>
                                 </select>
 
-                                <?php if ($validation->getError('idTabPreschuap_TipoTerapia')): ?>
+                                <?php if ($validation->getError('idTabSismicrob_TipoTerapia')): ?>
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('idTabPreschuap_TipoTerapia') ?>
+                                        <?= $validation->getError('idTabSismicrob_TipoTerapia') ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="idTabPreschuap_Categoria" class="form-label"><b>Categoria</b> <b class="text-danger">*</b></label>
+                            <label for="idTabSismicrob_Categoria" class="form-label"><b>Categoria</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
-                                <select <?= $opt['disabled'] ?> class="form-select select2 <?php if($validation->getError('idTabPreschuap_Categoria')): ?>is-invalid<?php endif ?>"
-                                    id="idTabPreschuap_Categoria" name="idTabPreschuap_Categoria" data-placeholder="Selecione uma opção"
+                                <select <?= $opt['disabled'] ?> class="form-select select2 <?php if($validation->getError('idTabSismicrob_Categoria')): ?>is-invalid<?php endif ?>"
+                                    id="idTabSismicrob_Categoria" name="idTabSismicrob_Categoria" data-placeholder="Selecione uma opção"
                                     data-allow-clear="1">
                                     <option></option>
                                     <?php
                                     foreach ($select['Categoria']->getResultArray() as $val) {
-                                        $selected = ($data['idTabPreschuap_Categoria'] == $val['idTabPreschuap_Categoria']) ? 'selected' : '';
-                                        echo '<option value="'.$val['idTabPreschuap_Categoria'].'" '.$selected.'>'.$val['idTabPreschuap_Categoria'].' - '.$val['Categoria'].'</option>';
+                                        $selected = ($data['idTabSismicrob_Categoria'] == $val['idTabSismicrob_Categoria']) ? 'selected' : '';
+                                        echo '<option value="'.$val['idTabSismicrob_Categoria'].'" '.$selected.'>'.$val['idTabSismicrob_Categoria'].' - '.$val['Categoria'].'</option>';
                                     }
                                     ?>
                                 </select>
 
-                                <?php if ($validation->getError('idTabPreschuap_Categoria')): ?>
+                                <?php if ($validation->getError('idTabSismicrob_Categoria')): ?>
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('idTabPreschuap_Categoria') ?>
+                                        <?= $validation->getError('idTabSismicrob_Categoria') ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -215,8 +215,8 @@
                                     <option></option>
                                     <?php
                                     foreach ($select['Medicamento']->getResultArray() as $val) {
-                                        $selected = ($data['Item'] == $val['idTabPreschuap_Medicamento']) ? 'selected' : '';
-                                        echo '<option value="'.$val['idTabPreschuap_Medicamento'].'" '.$selected.'>'.$val['Medicamento'].'</option>';
+                                        $selected = ($data['Item'] == $val['idTabSismicrob_Medicamento']) ? 'selected' : '';
+                                        echo '<option value="'.$val['idTabSismicrob_Medicamento'].'" '.$selected.'>'.$val['Medicamento'].'</option>';
                                     }
                                     ?>
                                 </select>
@@ -229,25 +229,25 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label for="idTabPreschuap_EtapaTerapia" class="form-label"><b>Etapa da Terapia</b> <b class="text-danger">*</b></label>
+                            <label for="idTabSismicrob_EtapaTerapia" class="form-label"><b>Etapa da Terapia</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
                                 <select <?= $opt['disabled'] ?>
-                                    class="form-select <?php if($validation->getError('idTabPreschuap_EtapaTerapia')): ?>is-invalid<?php endif ?>"
-                                    id="idTabPreschuap_EtapaTerapia" name="idTabPreschuap_EtapaTerapia" data-placeholder="Selecione uma opção"
+                                    class="form-select <?php if($validation->getError('idTabSismicrob_EtapaTerapia')): ?>is-invalid<?php endif ?>"
+                                    id="idTabSismicrob_EtapaTerapia" name="idTabSismicrob_EtapaTerapia" data-placeholder="Selecione uma opção"
                                     data-allow-clear="1">
                                     <option></option>
                                     <?php
                                     foreach ($select['EtapaTerapia']->getResultArray() as $val) {
-                                        $selected = ($data['idTabPreschuap_EtapaTerapia'] == $val['idTabPreschuap_EtapaTerapia']) ? 'selected' : '';
-                                        echo '<option value="'.$val['idTabPreschuap_EtapaTerapia'].'" '.$selected.'>'.$val['EtapaTerapia'].'</option>';
+                                        $selected = ($data['idTabSismicrob_EtapaTerapia'] == $val['idTabSismicrob_EtapaTerapia']) ? 'selected' : '';
+                                        echo '<option value="'.$val['idTabSismicrob_EtapaTerapia'].'" '.$selected.'>'.$val['EtapaTerapia'].'</option>';
                                     }
                                     ?>
                                 </select>
 
-                                <?php if ($validation->getError('idTabPreschuap_EtapaTerapia')): ?>
+                                <?php if ($validation->getError('idTabSismicrob_EtapaTerapia')): ?>
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('idTabPreschuap_EtapaTerapia') ?>
+                                        <?= $validation->getError('idTabSismicrob_EtapaTerapia') ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -261,13 +261,13 @@
                                     class="form-control <?php if($validation->getError('Dose')): ?>is-invalid<?php endif ?>"
                                     maxlength="9" name="Dose" value="<?php echo $data['Dose']; ?>"/>
 
-                                <select <?= $opt['disabled'] ?> class="form-select <?php if($validation->getError('idTabPreschuap_UnidadeMedida')): ?>is-invalid<?php endif ?>" id="idTabPreschuap_UnidadeMedida"
-                                    name="idTabPreschuap_UnidadeMedida" data-placeholder="Selecione uma opção" data-allow-clear="1">
+                                <select <?= $opt['disabled'] ?> class="form-select <?php if($validation->getError('idTabSismicrob_UnidadeMedida')): ?>is-invalid<?php endif ?>" id="idTabSismicrob_UnidadeMedida"
+                                    name="idTabSismicrob_UnidadeMedida" data-placeholder="Selecione uma opção" data-allow-clear="1">
                                     <option></option>
                                     <?php
                                     foreach ($select['UnidadeMedida']->getResultArray() as $val) {
-                                        $selected = ($data['idTabPreschuap_UnidadeMedida'] == $val['idTabPreschuap_UnidadeMedida']) ? 'selected' : '';
-                                        echo '<option value="'.$val['idTabPreschuap_UnidadeMedida'].'" '.$selected.'>'.$val['Representacao'].'</option>';
+                                        $selected = ($data['idTabSismicrob_UnidadeMedida'] == $val['idTabSismicrob_UnidadeMedida']) ? 'selected' : '';
+                                        echo '<option value="'.$val['idTabSismicrob_UnidadeMedida'].'" '.$selected.'>'.$val['Representacao'].'</option>';
                                     }
                                     ?>
                                 </select>
@@ -276,57 +276,57 @@
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('Dose') ?>
                                     </div>
-                                <?php } elseif ($validation->getError('idTabPreschuap_UnidadeMedida')) { ?>
+                                <?php } elseif ($validation->getError('idTabSismicrob_UnidadeMedida')) { ?>
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('idTabPreschuap_UnidadeMedida') ?>
+                                        <?= $validation->getError('idTabSismicrob_UnidadeMedida') ?>
                                     </div>
                                 <?php } ?>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label for="idTabPreschuap_ViaAdministracao" class="form-label"><b>Via de Administração</b> <b class="text-danger">*</b></label>
+                            <label for="idTabSismicrob_ViaAdministracao" class="form-label"><b>Via de Administração</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
                                 <select <?= $opt['disabled'] ?>
-                                    class="form-select <?php if($validation->getError('idTabPreschuap_ViaAdministracao')): ?>is-invalid<?php endif ?>"
-                                    id="idTabPreschuap_ViaAdministracao" name="idTabPreschuap_ViaAdministracao" data-placeholder="Selecione uma opção"
+                                    class="form-select <?php if($validation->getError('idTabSismicrob_ViaAdministracao')): ?>is-invalid<?php endif ?>"
+                                    id="idTabSismicrob_ViaAdministracao" name="idTabSismicrob_ViaAdministracao" data-placeholder="Selecione uma opção"
                                     data-allow-clear="1">
                                     <option></option>
                                     <?php
                                     foreach ($select['ViaAdministracao']->getResultArray() as $val) {
-                                        $selected = ($data['idTabPreschuap_ViaAdministracao'] == $val['idTabPreschuap_ViaAdministracao']) ? 'selected' : '';
-                                        echo '<option value="'.$val['idTabPreschuap_ViaAdministracao'].'" '.$selected.'>'.$val['ViaAdministracao'].'</option>';
+                                        $selected = ($data['idTabSismicrob_ViaAdministracao'] == $val['idTabSismicrob_ViaAdministracao']) ? 'selected' : '';
+                                        echo '<option value="'.$val['idTabSismicrob_ViaAdministracao'].'" '.$selected.'>'.$val['ViaAdministracao'].'</option>';
                                     }
                                     ?>
                                 </select>
 
-                                <?php if ($validation->getError('idTabPreschuap_ViaAdministracao')): ?>
+                                <?php if ($validation->getError('idTabSismicrob_ViaAdministracao')): ?>
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('idTabPreschuap_ViaAdministracao') ?>
+                                        <?= $validation->getError('idTabSismicrob_ViaAdministracao') ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label for="idTabPreschuap_Diluente" class="form-label"><b>Diluente</b> <b class="text-info">*</b></label>
+                            <label for="idTabSismicrob_Diluente" class="form-label"><b>Diluente</b> <b class="text-info">*</b></label>
                             <div class="input-group mb-3">
 
                                 <select <?= $opt['disabled'] ?>
-                                    class="form-select <?php if($validation->getError('idTabPreschuap_Diluente')): ?>is-invalid<?php endif ?>"
-                                    id="idTabPreschuap_Diluente" name="idTabPreschuap_Diluente" data-placeholder="Selecione uma opção"
+                                    class="form-select <?php if($validation->getError('idTabSismicrob_Diluente')): ?>is-invalid<?php endif ?>"
+                                    id="idTabSismicrob_Diluente" name="idTabSismicrob_Diluente" data-placeholder="Selecione uma opção"
                                     data-allow-clear="1">
                                     <option></option>
                                     <?php
                                     foreach ($select['Diluente']->getResultArray() as $val) {
-                                        $selected = ($data['idTabPreschuap_Diluente'] == $val['idTabPreschuap_Diluente']) ? 'selected' : '';
-                                        echo '<option value="'.$val['idTabPreschuap_Diluente'].'" '.$selected.'>'.$val['Diluente'].'</option>';
+                                        $selected = ($data['idTabSismicrob_Diluente'] == $val['idTabSismicrob_Diluente']) ? 'selected' : '';
+                                        echo '<option value="'.$val['idTabSismicrob_Diluente'].'" '.$selected.'>'.$val['Diluente'].'</option>';
                                     }
                                     ?>
                                 </select>
 
-                                <?php if ($validation->getError('idTabPreschuap_Diluente')): ?>
+                                <?php if ($validation->getError('idTabSismicrob_Diluente')): ?>
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('idTabPreschuap_Diluente') ?>
+                                        <?= $validation->getError('idTabSismicrob_Diluente') ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -363,31 +363,31 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="idTabPreschuap_Posologia" class="form-label"><b>Posologia</b> <b class="text-danger">*</b></label>
+                            <label for="idTabSismicrob_Posologia" class="form-label"><b>Posologia</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
                                 <select <?= $opt['disabled'] ?>
-                                    class="form-select select2 <?php if($validation->getError('idTabPreschuap_Posologia')): ?>is-invalid<?php endif ?>"
-                                    id="idTabPreschuap_Posologia" name="idTabPreschuap_Posologia" data-placeholder="Selecione uma opção"
+                                    class="form-select select2 <?php if($validation->getError('idTabSismicrob_Posologia')): ?>is-invalid<?php endif ?>"
+                                    id="idTabSismicrob_Posologia" name="idTabSismicrob_Posologia" data-placeholder="Selecione uma opção"
                                     data-allow-clear="1">
                                     <option></option>
                                     <?php
                                     foreach ($select['Posologia']->getResultArray() as $val) {
-                                        $selected = ($data['idTabPreschuap_Posologia'] == $val['idTabPreschuap_Posologia']) ? 'selected' : '';
-                                        echo '<option value="'.$val['idTabPreschuap_Posologia'].'" '.$selected.'>'.$val['Posologia'].'</option>';
+                                        $selected = ($data['idTabSismicrob_Posologia'] == $val['idTabSismicrob_Posologia']) ? 'selected' : '';
+                                        echo '<option value="'.$val['idTabSismicrob_Posologia'].'" '.$selected.'>'.$val['Posologia'].'</option>';
                                     }
                                     ?>
                                 </select>
 
-                                <?php if ($validation->getError('idTabPreschuap_Posologia')): ?>
+                                <?php if ($validation->getError('idTabSismicrob_Posologia')): ?>
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('idTabPreschuap_Posologia') ?>
+                                        <?= $validation->getError('idTabSismicrob_Posologia') ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
                         </div>
 
-                        <input type="hidden" name="idTabPreschuap_Protocolo" value="<?= $data['idTabPreschuap_Protocolo'] ?>" />
+                        <input type="hidden" name="idTabSismicrob_Protocolo" value="<?= $data['idTabSismicrob_Protocolo'] ?>" />
                         <input type="hidden" name="OrdemInfusao" value="<?= $data['OrdemInfusao'] ?>" />
                         <?= $opt['button'] ?>
                     <?php } else { ?>
@@ -413,7 +413,7 @@
                 </div>
             </div>
             <?php if($opt['action'] == 'editar' || $opt['action'] == 'habilitar' || $opt['action'] == 'desabilitar') { ?>
-            <input type="hidden" name="idTabPreschuap_<?= $tabela ?>" value="<?= $data['idTabPreschuap_'.$tabela] ?>" />
+            <input type="hidden" name="idTabSismicrob_<?= $tabela ?>" value="<?= $data['idTabSismicrob_'.$tabela] ?>" />
             <?php } ?>
             <input type="hidden" name="action" value="<?= $opt['action'] ?>" />
         </form>

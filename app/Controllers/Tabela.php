@@ -38,7 +38,7 @@ class Tabela extends BaseController
         $v['data'] = array();
         foreach ($v['sort'] as $val) { #aplica a nova ordem de infusão
 
-            $v['data'][$i]['idTabPreschuap_Protocolo_Medicamento'] = $val['idTabPreschuap_Protocolo_Medicamento'];
+            $v['data'][$i]['idTabSismicrob_Protocolo_Medicamento'] = $val['idTabSismicrob_Protocolo_Medicamento'];
             if($val['Inativo'])
                 $v['data'][$i]['OrdemInfusao'] = NULL;
             else {
@@ -62,7 +62,7 @@ class Tabela extends BaseController
         #aplico o update
         if($interno) {
             if($tabela->update_item_sort($v['data'])) {
-                $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_Protocolo_Medicamento', 'RE-SORT', $protocolo), TRUE);
+                $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabSismicrob_Protocolo_Medicamento', 'RE-SORT', $protocolo), TRUE);
                 return TRUE;
             }
             else
@@ -71,7 +71,7 @@ class Tabela extends BaseController
         }
         else {
             if($tabela->update_item_sort($v['data'])) {
-                $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_Protocolo_Medicamento', 'RE-SORT', $protocolo), TRUE);
+                $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabSismicrob_Protocolo_Medicamento', 'RE-SORT', $protocolo), TRUE);
                 session()->setFlashdata('success', 'Item atualizado com sucesso!');
             }
             else
@@ -112,13 +112,13 @@ class Tabela extends BaseController
             $i=0;
             foreach ($v['sort'] as $val) {
 
-                $v['id'] = $val['idTabPreschuap_Protocolo_Medicamento'];
-                unset($val['idTabPreschuap_Protocolo_Medicamento']);
+                $v['id'] = $val['idTabSismicrob_Protocolo_Medicamento'];
+                unset($val['idTabSismicrob_Protocolo_Medicamento']);
 
                 $v['campos'] = array_keys($val);
                 $v['anterior'] = $val;
 
-                $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_Protocolo_Medicamento', 'UPDATE', $v['id']), TRUE);
+                $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabSismicrob_Protocolo_Medicamento', 'UPDATE', $v['id']), TRUE);
                 $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'][$i], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
 
                 $i++;
@@ -163,6 +163,7 @@ class Tabela extends BaseController
         $v['opt'] = $opt['opt'];
         $v['lista'] = (isset($opt['lista'])) ? $opt['lista'] : NULL;
         */
+
         if($action == 'editar' || $action == 'habilitar' || $action == 'desabilitar') {
 
             $v['id'] = $data;
@@ -194,11 +195,12 @@ class Tabela extends BaseController
 
         }
         else {
+            
             $protmed = '';
             if($v['tabela'] == 'Protocolo_Medicamento') {
-                $v['data']['idTabPreschuap_Protocolo'] = ($data) ? $data : $v['data']['idTabPreschuap_Protocolo'];
-                $v['lista'] = $tabela->list_medicamento_bd($v['data']['idTabPreschuap_Protocolo']);
-                $v['protocolo'] = $tabela->get_item($v['data']['idTabPreschuap_Protocolo'], 'Protocolo'); #Carrega os itens da tabela Medicamentos
+                $v['data']['idTabSismicrob_Protocolo'] = ($data) ? $data : $v['data']['idTabSismicrob_Protocolo'];
+                $v['lista'] = $tabela->list_medicamento_bd($v['data']['idTabSismicrob_Protocolo']);
+                $v['protocolo'] = $tabela->get_item($v['data']['idTabSismicrob_Protocolo'], 'Protocolo'); #Carrega os itens da tabela Medicamentos
                 $_SESSION['config']['class'] = 'col-12';
                 $protmed = 'Protocolo: '.$v['protocolo']['Protocolo'].' - ';
 
@@ -234,7 +236,7 @@ class Tabela extends BaseController
 
         }
 
-        if($v['tabela'] == 'ViaAdministracao')
+        if($v['tabela'] == 'ViaAdministracao' || $v['tabela'] == 'Intervalo')
             $v['tab']['colspan'] = 6;
         else
             $v['tab']['colspan'] = 5;
@@ -242,7 +244,7 @@ class Tabela extends BaseController
         $notinativo = ($action == 'habilitar' || $action == 'desabilitar') ? FALSE : TRUE;
         if($v['tabela'] == 'Protocolo') {
             $v['select']['TipoTerapia']     = $tabela->list_tabela_bd('TipoTerapia', FALSE, FALSE, '*', FALSE, $notinativo); #Carrega os itens da tabela selecionada
-            $v['select']['Categoria']       = $tabela->list_tabela_bd('Categoria', FALSE, FALSE, '*', 'idTabPreschuap_Categoria'); #Carrega os itens da tabela selecionada
+            $v['select']['Categoria']       = $tabela->list_tabela_bd('Categoria', FALSE, FALSE, '*', 'idTabSismicrob_Categoria'); #Carrega os itens da tabela selecionada
             $v['select']['Aplicabilidade']  = ['CANCEROLOGIA', 'HEMATOLOGIA'];
 
         }
@@ -258,14 +260,14 @@ class Tabela extends BaseController
 
         if($action == 'habilitar' || $action == 'desabilitar') {
 
-            if(isset($v['data']['idTabPreschuap_'.$v['tabela']])) {
+            if(isset($v['data']['idTabSismicrob_'.$v['tabela']])) {
 
-                $v['id'] = $v['data']['idTabPreschuap_'.$v['tabela']];
+                $v['id'] = $v['data']['idTabSismicrob_'.$v['tabela']];
                 $v['data']['Inativo'] = ($v['data']['action'] == 'desabilitar') ? 1 : 0;
                 unset(
                     $v['data']['csrf_test_name'],
                     $v['data']['Item'],
-                    $v['data']['idTabPreschuap_'.$v['tabela']],
+                    $v['data']['idTabSismicrob_'.$v['tabela']],
                     $v['data']['action']
                 );
 
@@ -288,9 +290,9 @@ class Tabela extends BaseController
                 if($tabela->update_item($v['data'], $v['tabela'], $v['id']) ) {
 
                     if ($v['tabela'] == 'Protocolo_Medicamento')
-                        $this->sort_medicamento($v['data']['idTabPreschuap_Protocolo'], TRUE);
+                        $this->sort_medicamento($v['data']['idTabSismicrob_Protocolo'], TRUE);
 
-                    $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_'.$v['tabela'], 'UPDATE', $v['id']), TRUE);
+                    $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabSismicrob_'.$v['tabela'], 'UPDATE', $v['id']), TRUE);
                     $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
 
                     session()->setFlashdata('success', 'Item atualizado com sucesso!');
@@ -299,7 +301,7 @@ class Tabela extends BaseController
                     session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
 
                 if ($v['tabela'] == 'Protocolo_Medicamento')
-                    return redirect()->to('tabela/list_tabela/Protocolo_Medicamento/cadastrar/'.$v['data']['idTabPreschuap_Protocolo']);
+                    return redirect()->to('tabela/list_tabela/Protocolo_Medicamento/cadastrar/'.$v['data']['idTabSismicrob_Protocolo']);
                 else
                     return redirect()->to('tabela/list_tabela/'.$v['tabela']);
 
@@ -308,7 +310,7 @@ class Tabela extends BaseController
             else {
 
                 $v['data'] = $tabela->get_item($data, $v['tabela']);
-                $v['data']['Item'] = ($v['tabela'] == 'Protocolo_Medicamento') ? $v['data']['idTabPreschuap_Medicamento'] : $v['data'][$v['tabela']];
+                $v['data']['Item'] = ($v['tabela'] == 'Protocolo_Medicamento') ? $v['data']['idTabSismicrob_Medicamento'] : $v['data'][$v['tabela']];
 
             }
         }
@@ -323,7 +325,7 @@ class Tabela extends BaseController
 
             if(isset($v['data']['Item'])) {
 
-                if($v['tabela'] == 'ViaAdministracao')
+                if($v['tabela'] == 'ViaAdministracao' || ['tabela'] == 'Intervalo')
                     #Critérios de validação
                     $inputs = $this->validate([
                         'Item'      => 'required',
@@ -334,23 +336,23 @@ class Tabela extends BaseController
                     $inputs = $this->validate([
                         'Item'                          => ['label' => 'Protocolo', 'rules' => 'required'],
                         'Aplicabilidade'                => 'required',
-                        'idTabPreschuap_TipoTerapia'    => ['label' => 'Tipo de Terapia', 'rules' => 'required'],
-                        'idTabPreschuap_Categoria'      => ['label' => 'Categoria', 'rules' => 'required'],
+                        'idTabSismicrob_TipoTerapia'    => ['label' => 'Tipo de Terapia', 'rules' => 'required'],
+                        'idTabSismicrob_Categoria'      => ['label' => 'Categoria', 'rules' => 'required'],
                         'Observacoes'                   => ['label' => 'Observações', 'rules' => 'required'],
                     ]);
                 elseif($v['tabela'] == 'Protocolo_Medicamento') {
                     #Critérios de validação
                     $inputs = $this->validate([
                         'Item'                              => ['label' => 'Medicamento', 'rules' => 'required'],
-                        'idTabPreschuap_EtapaTerapia'       => ['label' => 'Etapa da Terapia', 'rules' => 'required'],
+                        'idTabSismicrob_EtapaTerapia'       => ['label' => 'Etapa da Terapia', 'rules' => 'required'],
                         'Dose'                              => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
-                        'idTabPreschuap_UnidadeMedida'      => ['label' => 'Unidade de Medida', 'rules' => 'required'],
-                        'idTabPreschuap_ViaAdministracao'   => ['label' => 'Via de Administração', 'rules' => 'required'],
-                        'idTabPreschuap_Posologia'          => ['label' => 'Posologia', 'rules' => 'required'],
+                        'idTabSismicrob_UnidadeMedida'      => ['label' => 'Unidade de Medida', 'rules' => 'required'],
+                        'idTabSismicrob_ViaAdministracao'   => ['label' => 'Via de Administração', 'rules' => 'required'],
+                        'idTabSismicrob_Posologia'          => ['label' => 'Posologia', 'rules' => 'required'],
                     ]);
-                    if($v['data']['idTabPreschuap_ViaAdministracao'] == 2)
+                    if($v['data']['idTabSismicrob_ViaAdministracao'] == 2)
                         $inputs = $this->validate([
-                            'idTabPreschuap_Diluente'           => ['label' => 'Diluente', 'rules' => 'required'],
+                            'idTabSismicrob_Diluente'           => ['label' => 'Diluente', 'rules' => 'required'],
                             'Volume'                            => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
                             'TempoInfusao'                      => ['label' => 'Tempo de Infusão', 'rules' => 'required'],
 
@@ -370,16 +372,16 @@ class Tabela extends BaseController
                     $action = $v['data']['action'];
 
                     $v['data'][$v['tabela']] = $v['data']['Item'];
-                    if($v['tabela'] == 'ViaAdministracao')
+                    if($v['tabela'] == 'ViaAdministracao' || $v['tabela'] == 'Intervalo')
                         $v['data']['Codigo'] = mb_strtoupper($v['data']['Codigo']);
                     if($v['tabela'] == 'Protocolo')
                         $v['data']['Protocolo'] = mb_strtoupper($v['data']['Item']);
                     if($v['tabela'] == 'Protocolo_Medicamento') {
-                        $v['data']['idTabPreschuap_Medicamento'] = $v['data']['Item'];
+                        $v['data']['idTabSismicrob_Medicamento'] = $v['data']['Item'];
                         $v['data']['Dose'] = str_replace(",",".",$v['data']['Dose']);
                         $v['data']['Volume'] = str_replace(",",".",$v['data']['Volume']);
-                        $v['data']['idTabPreschuap_Diluente'] = (!$v['data']['idTabPreschuap_Diluente'] || $v['data']['idTabPreschuap_Diluente'] == '') ? 
-                            NULL : $v['data']['idTabPreschuap_Diluente'];
+                        $v['data']['idTabSismicrob_Diluente'] = (!$v['data']['idTabSismicrob_Diluente'] || $v['data']['idTabSismicrob_Diluente'] == '') ? 
+                            NULL : $v['data']['idTabSismicrob_Diluente'];
                         unset($v['data'][$v['tabela']]);
                     }
 
@@ -401,12 +403,12 @@ class Tabela extends BaseController
 
                     if($action == 'editar') {
 
-                        $v['id'] = $v['data']['idTabPreschuap_'.$v['tabela']];
+                        $v['id'] = $v['data']['idTabSismicrob_'.$v['tabela']];
                         $v['anterior'] = $tabela->get_item($v['id'], $v['tabela']);
 
                         if($tabela->update_item($v['data'], $v['tabela'], $v['id']) ) {
 
-                            $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_'.$v['tabela'], 'UPDATE', $v['id']), TRUE);
+                            $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabSismicrob_'.$v['tabela'], 'UPDATE', $v['id']), TRUE);
                             $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
 
                             session()->setFlashdata('success', 'Item atualizado com sucesso!');
@@ -423,7 +425,7 @@ class Tabela extends BaseController
 
                         if($v['id']) {
 
-                            $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_'.$v['tabela'], 'CREATE', $v['id']), TRUE);
+                            $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabSismicrob_'.$v['tabela'], 'CREATE', $v['id']), TRUE);
                             $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
 
                             session()->setFlashdata('success', 'Item adicionado com sucesso!');
@@ -435,7 +437,7 @@ class Tabela extends BaseController
                     }
 
                     if ($v['tabela'] == 'Protocolo_Medicamento')
-                        return redirect()->to('tabela/list_tabela/Protocolo_Medicamento/cadastrar/'.$v['data']['idTabPreschuap_Protocolo']);
+                        return redirect()->to('tabela/list_tabela/Protocolo_Medicamento/cadastrar/'.$v['data']['idTabSismicrob_Protocolo']);
                     else
                         return redirect()->to('tabela/list_tabela/'.$v['tabela']);
 
@@ -448,7 +450,7 @@ class Tabela extends BaseController
                     $v['data'] = $tabela->get_item($data, $v['tabela']);
 
                     if ($v['tabela'] == 'Protocolo_Medicamento') {
-                        $v['data']['Item'] = $v['data']['idTabPreschuap_Medicamento'];
+                        $v['data']['Item'] = $v['data']['idTabSismicrob_Medicamento'];
                         $v['data']['Dose'] = ($v['data']['Dose']) ? str_replace(".",",",$v['data']['Dose']) : $v['data']['Dose'];
                         $v['data']['Volume'] = ($v['data']['Volume']) ? str_replace(".",",",$v['data']['Volume']) : $v['data']['Volume'];
                     }
@@ -460,20 +462,20 @@ class Tabela extends BaseController
                         'Item'                          =>  '',
                         'Codigo'                        =>  '',
                         'Aplicabilidade'                =>  '',
-                        'idTabPreschuap_TipoTerapia'    =>  '',
-                        'idTabPreschuap_Categoria'      =>  '',
+                        'idTabSismicrob_TipoTerapia'    =>  '',
+                        'idTabSismicrob_Categoria'      =>  '',
                         'Observacoes'                   =>  '',
 
-                        'idTabPreschuap_Protocolo'              => $data,
-                        'idTabPreschuap_EtapaTerapia'           => '',
-                        'idTabPreschuap_Medicamento'            => '',
+                        'idTabSismicrob_Protocolo'              => $data,
+                        'idTabSismicrob_EtapaTerapia'           => '',
+                        'idTabSismicrob_Medicamento'            => '',
                         'Dose'                                  => '',
-                        'idTabPreschuap_UnidadeMedida'          => '',
-                        'idTabPreschuap_ViaAdministracao'       => '',
-                        'idTabPreschuap_Diluente'               => '',
+                        'idTabSismicrob_UnidadeMedida'          => '',
+                        'idTabSismicrob_ViaAdministracao'       => '',
+                        'idTabSismicrob_Diluente'               => '',
                         'Volume'                                => '',
                         'TempoInfusao'                          => '',
-                        'idTabPreschuap_Posologia'              => '',
+                        'idTabSismicrob_Posologia'              => '',
                     ]; #iniciando as variávies para serem carregadas corretamente na página de lista de itens de tabela
 
                     if($v['tabela'] == 'Protocolo_Medicamento')
@@ -488,7 +490,7 @@ class Tabela extends BaseController
 
         /*
         echo "<pre>";
-        #print_r($v['select']);
+        print_r($v['tabela']);
         echo "</pre>";
         echo "<pre>";
         print_r($v['data']);
