@@ -16,7 +16,7 @@ class Cookie extends BaseConfig
      *
      * @var string
      */
-    public $prefix = 'sishuap_cookie_';
+    public $prefix = 'sismicrob_cookie_';
 
     /**
      * --------------------------------------------------------------------------

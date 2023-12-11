@@ -1,5 +1,5 @@
 CUIDADO AO ATUALIZAR OS SEGUINTES ARQUIVOS:
-
+-Boot/*
 -app.php
 -constants.php
 -cookie.php

@@ -2,19 +2,6 @@
 
 /*
  | --------------------------------------------------------------------
- | HUAP constants
- | --------------------------------------------------------------------
- |
- | Custom Constants
- |
- */
-defined('HUAP_APPNAME') || define('HUAP_APPNAME', 'Sismicrob');
-defined('HUAP_MSG_ERROR') || define('HUAP_MSG_ERROR', '<i class="fa-solid fa-exclamation-circle"></i> ERRO <i class="fa-solid fa-exclamation-circle"></i> Verifique os campos abaixo.');
-defined('HUAP_MSG_ALERT') || define('HUAP_MSG_ALERT', 'Sismicrob');
-defined('HUAP_MSG_SUCCESS') || define('HUAP_MSG_SUCCESS', 'Sismicrob');
-
-/*
- | --------------------------------------------------------------------
  | App Namespace
  | --------------------------------------------------------------------
  |
