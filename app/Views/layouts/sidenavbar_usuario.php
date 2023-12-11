@@ -3,8 +3,13 @@
 </a>
 <hr>
 <ul class="nav nav-pills flex-column mb-auto">
+<li class="nav-item">
+        <a href="<?= base_url('admin/show_user/'.$_SESSION['Usuario']['Usuario']) ?>" class="nav-link text-white" aria-current="page">
+            <i class="fa-solid fa-user"></i> Usuário
+        </a>
+    </li>
     <li class="nav-item">
-        <a href="<?= base_url('admin/list_perfil/'.$_SESSION['Usuario']['idSishuap_Usuario']) ?>" class="nav-link" aria-current="page">
+        <a href="<?= base_url('admin/list_perfil/'.$_SESSION['Usuario']['idSishuap_Usuario']) ?>" class="nav-link text-white" aria-current="page">
             <i class="fa-solid fa-chalkboard-user"></i> Perfil
         </a>
     </li>
@@ -15,7 +20,7 @@
         </a>
     <?php } else { ?>
         <a href="<?= base_url('admin/disable_user/'.$_SESSION['Usuario']['idSishuap_Usuario']) ?>" class="nav-link text-white" aria-current="page">
-            <i class="fa-solid fa-user-slash"></i> Desativar
+            <i class="fa-solid fa-user-slash"></i> Bloquear
         </a>
     <?php } ?>
     </li>
