@@ -57,7 +57,7 @@ class Home extends ResourceController
 
         $func = new HUAP_Functions();
 
-        $usuario = new UsuarioModel();
+        $usuario = $permissao = new UsuarioModel();
         $usuario = $usuario->get_user_mysql($v['Usuario']);
 
         if (!isset($usuario) || !$usuario) {
@@ -68,8 +68,12 @@ class Home extends ResourceController
             session()->setFlashdata('failed', 'Erro ao autenticar. <br> Usuário inativo.');
             return view('home/form_login');
         }
+        if (!isset($usuario['Permissao']) || !$usuario['Permissao']) {            
+            session()->setFlashdata('failed', 'Erro ao autenticar. <br> Usuário não possui permissão para acessar o módulo.');
+            return view('home/form_login');
+        }
 
-        $perfil = $perfil->list_perfil_bd($usuario['idSishuap_Usuario'], TRUE);
+        $perfil = $perfil->list_perfil_bd($usuario['idSishuap_Usuario'], TRUE, env('mod.cod'));
 
         if (!isset($perfil) || !$perfil) {
             session()->setFlashdata('failed', 'Erro ao autenticar. <br> Usuário não possui nenhum perfil associado.');

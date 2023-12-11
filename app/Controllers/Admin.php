@@ -220,7 +220,7 @@ class Admin extends BaseController
         $v['select']['Perfil'] = $tabperfil->where('Inativo', NULL)->findAll();
 
         #Perfis já atribuídos ao usuário
-        $v['list']['Perfil'] = $perfil->list_perfil_bd($data);
+        $v['list']['Perfil'] = $perfil->list_perfil_bd($data, NULL, env('mod.cod'));
 
         #Verifica quais perfis os usuário já possui para exibir apenas aqueles ainda disponíveis pra escolha
         if($v['list']['Perfil'] !== FALSE) {
@@ -263,7 +263,7 @@ class Admin extends BaseController
         $v['select']['Perfil'] = $tabperfil->where('Inativo', NULL)->findAll();
 
         #Perfis já atribuídos ao usuário
-        $v['list']['Perfil'] = $perfil->list_perfil_bd($data);
+        $v['list']['Perfil'] = $perfil->list_perfil_bd($data, NULL, env('mod.cod'));
 
         #Verifica quais perfis os usuário já possui para exibir apenas aqueles ainda disponíveis pra escolha
         if($v['list']['Perfil'] !== FALSE) {
@@ -287,6 +287,7 @@ class Admin extends BaseController
         $v['data'] = [
             'idSishuap_Usuario' => $_SESSION['Usuario']['idSishuap_Usuario'],
             'idTab_Perfil'      => $v['Perfil'],
+            'idTab_Modulo'      => env('mod.cod'),
         ];
 
         $v['campos'] = array_keys($v['data']);
@@ -296,6 +297,9 @@ class Admin extends BaseController
         echo "<pre>";
         print_r($v);
         echo "</pre>";
+        echo "<pre>";
+        print_r($v['data']);
+        echo "</pre>";        
         exit();
         #*/
 
