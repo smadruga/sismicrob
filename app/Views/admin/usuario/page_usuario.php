@@ -31,8 +31,9 @@
                 <td></td>
                 <td>
                     <?php
-                    if($_SESSION['Usuario']['Inativo'] == 1) {
-                        $bg     = 'warning';
+                    #if($_SESSION['Usuario']['Inativo'] == 1) {
+                    if(!isset($_SESSION['Usuario']['Permissao']) || !$_SESSION['Usuario']['Permissao'] || $_SESSION['Usuario']['Permissao'] == 'NULL' ) {
+                        $bg     = 'danger';
                         $msg    = 'Usuário Inativo';
                         $fa     = 'user-slash';
                     }

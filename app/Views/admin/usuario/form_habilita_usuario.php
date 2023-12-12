@@ -8,7 +8,7 @@
 <div class="col border rounded ms-2 p-4">
 
     <div class="alert alert-warning" role="alert">
-        Deseja ativar o usuário abaixo?
+        Deseja desbloquear o usuário abaixo?
     </div>
     <form method="post" action="<?= base_url('admin/enable_user/'.$_SESSION['Usuario']['idSishuap_Usuario']) ?>">
         <?= csrf_field() ?>
@@ -50,7 +50,7 @@
                 <div class="col text-start" colspan="2">
                     <input type="hidden" name="Habilitar" value="1"/>
                     <a class="btn btn-warning" href="<?= previous_url() ?>"><i class="fa-solid fa-ban"></i> Cancelar</a>
-                    <button class="btn btn-primary" id="submit" type="submit"><i class="fa-solid fa-check-circle"></i> Habilitar</button>
+                    <button class="btn btn-success" id="submit" type="submit"><i class="fas fa-lock-open"></i> Desbloquear</button>
                 </div>
             </div>
         </div>

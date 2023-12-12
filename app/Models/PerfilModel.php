@@ -15,6 +15,7 @@ class PerfilModel extends Model
     protected $allowedFields        = [
                                         'idSishuap_Usuario',
                                         'idTab_Perfil',
+                                        'idTab_Modulo',
                                     ];
 
     /**

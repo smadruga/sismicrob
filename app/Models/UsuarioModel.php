@@ -35,6 +35,8 @@ class UsuarioModel extends Model
             , u.Nome
             , u.Usuario
             , u.Inativo
+            , u.Cpf
+            , u.EmailSecundario
             , pm.idSishuap_Usuario as "Permissao"
         FROM
             Sishuap_Usuario u

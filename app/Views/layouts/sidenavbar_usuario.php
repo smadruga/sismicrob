@@ -14,13 +14,16 @@
         </a>
     </li>
     <li>
-        <?php if ($_SESSION['Usuario']['Inativo'] == 1) { ?>
+        <?php 
+        //if ($_SESSION['Usuario']['Inativo'] == 1) { 
+        if(!isset($_SESSION['Usuario']['Permissao']) || !$_SESSION['Usuario']['Permissao'] || $_SESSION['Usuario']['Permissao'] == 'NULL' ) {    
+        ?>
         <a href="<?= base_url('admin/enable_user/'.$_SESSION['Usuario']['idSishuap_Usuario']) ?>" class="nav-link text-white" aria-current="page">
-            <i class="fa-solid fa-user-check"></i> Ativar
+        <i class="fas fa-lock-open"></i> Desbloquear Usuário
         </a>
     <?php } else { ?>
         <a href="<?= base_url('admin/disable_user/'.$_SESSION['Usuario']['idSishuap_Usuario']) ?>" class="nav-link text-white" aria-current="page">
-            <i class="fa-solid fa-user-slash"></i> Bloquear
+            <i class="fas fa-lock"></i> Bloquear Usuário
         </a>
     <?php } ?>
     </li>
