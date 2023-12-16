@@ -2,7 +2,7 @@
 <?= $this->section('subcontent') ?>
 <?= $this->include('layouts/sidenavbar_paciente') ?>
 
-<main class="container col  rounded ms-2 p-4">
+<main class="container col rounded ms-2 p-4">
 
     <table class="table table-striped table-bordered">
         <thead>
