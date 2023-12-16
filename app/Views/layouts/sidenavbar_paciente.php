@@ -20,5 +20,10 @@
                 <i class="fa-solid fa-list"></i> Histórico de Prescrições
             </a>
         </li>
+        <li>
+            <a href="<?= base_url('prescricao/list_atendimento/') ?>" class="nav-link text-white p-2" aria-current="page">
+                <i class="fa-solid fa-list"></i> Histórico de Atendimentos
+            </a>
+        </li>        
     </ul>
 </div>

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\PacienteModel;
+use App\Models\AtendimentoModel;
 
 use App\Models\AuditoriaModel;
 use App\Models\AuditoriaLogModel;
@@ -20,7 +21,7 @@ class Paciente extends BaseController
     }
 
     /**
-    * Tela inicial do preschuapweb
+    * Tela inicial da área de prescrições
     *
     * @return void
     */
@@ -30,7 +31,7 @@ class Paciente extends BaseController
     }
 
     /**
-    * Formulário para busca de usuário a ser importado do AD/EBSERH
+    * Formulário para busca de paciente (com possibildade de busca no AGHUX)
     *
     * @return void
     */
@@ -44,7 +45,7 @@ class Paciente extends BaseController
     }
 
     /**
-    * Valida o formulário de busca e retorna um ou mais resultados
+    * Captura e carrega o paciente
     *
     * @return mixed
     */
@@ -107,7 +108,7 @@ class Paciente extends BaseController
     }
 
     /**
-    * Importa o usuário do AD/EBSERH e salva os dados básicos no BD PRESCHUAP
+    * Redireciona para a tela do peril do paciente.
     *
     * @return mixed
     */
@@ -132,7 +133,7 @@ class Paciente extends BaseController
     }
 
     /**
-    * Lista os perfis atribuídos ao usuário
+    * Lista os pacientes encontrados
     *
     * @return mixed
     */
