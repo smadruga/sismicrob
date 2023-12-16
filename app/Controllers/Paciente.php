@@ -125,7 +125,7 @@ class Paciente extends BaseController
         echo "<pre>";
         print_r($_SESSION['Paciente']);
         echo "</pre>";
-        #exit();
+        exit();
         #*/
 
         return view('admin/paciente/page_paciente', $v);

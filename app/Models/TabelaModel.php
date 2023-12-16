@@ -8,6 +8,39 @@ class TabelaModel extends Model
 {
     protected $DBGroup              = 'default';
 
+
+    /**
+    * Lista os itens da tabela Protocolo_Medicamentos
+    *
+    * @return array
+    */
+    public function list_medicamento_aghux()
+    {
+
+        $db = \Config\Database::connect('aghux');
+
+        $query = $db->query('
+            select
+                mat_codigo as "Codigo"
+                , descricao as "Medicamento"
+            from
+                agh.afa_medicamentos am
+            where
+                am.tum_sigla = \'M\'
+            order by descricao asc
+        ');
+    
+        /*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query->getResultArray());
+        echo "</pre>";
+        exit('oi222');
+        #*/
+
+        return $query;
+    }
+
     /**
     * Lista os itens da tabela Protocolo_Medicamentos
     *

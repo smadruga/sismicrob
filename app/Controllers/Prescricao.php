@@ -151,7 +151,6 @@ class Prescricao extends BaseController
 
         $tabela         = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
         $prescricao     = new PrescricaoModel(); #Inicia o objeto baseado na TabelaModel
-        $medicamento    = new PrescricaoMedicamentoModel(); #Inicia o objeto baseado na TabelaModel
         $auditoria      = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
         $auditorialog   = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
         $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias
@@ -160,34 +159,60 @@ class Prescricao extends BaseController
 
         if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
             $v['data'] = [
-                'idPreschuap_Prescricao'            => '',
-                'Prontuario'                        => '',
-                'DataMarcacao'                      => '',
-                'DataPrescricao'                    => date('d/m/Y', time()),
-                'Dia'                               => '',
-                'Ciclo'                             => '',
-                'Aplicabilidade'                    => '',
-                'idTabPreschuap_Categoria'          => '',
-                'idTabPreschuap_Subcategoria'       => '',
-                'idTabPreschuap_Protocolo'          => '',
-                'idTabPreschuap_TipoTerapia'        => '',
-                'CiclosTotais'                      => '',
-                'EntreCiclos'                       => '',
-
-                'Peso'                              => '',
-                'CreatininaSerica'                  => '',
-                'Altura'                            => '',
-                'ClearanceCreatinina'               => '',
-                'IndiceMassaCorporal'               => '',
-                'SuperficieCorporal'                => '',
-
-                #'DescricaoServico'                  => '',
-                'InformacaoComplementar'            => '',
-                'ReacaoAdversa'                     => '',
-                'Alergia'            => '',
-                'ClearanceCreatinina'               => '',
-                'IndiceMassaCorporal'               => '',
-                'SuperficieCorporal'                => '',
+                'idSismicrob_Tratamento' => '',
+                'Codigo' => '',
+                'Medicamento' => '',
+                'DataInicioTratamento' => '',
+                'Duracao' => '',
+                'DataFimTratamento' => '',
+                'DoseAtaque' => '',
+                'DoseAtaquePosologica' => '',
+                'DoseAtaqueUnidadeMedida' => '',
+                'DoseAtaqueIntervalo' => '',
+                'DoseAtaqueIntervaloUnidade' => '',
+                'DoseAtaqueNumeroDoses' => '',
+                'DosePosologica' => '',
+                'UnidadeMedida' => '',
+                'IntervaloUnidade' => '',
+                'DoseDiaria' => '',
+                'Unidades' => '',
+                'Peso' => '',
+                'Creatinina' => '',
+                'Clearance' => '',
+                'Hemodialise' => '',
+                'DiagnosticoInfecciosoOutro' => '',
+                'SubstituicaoMedicamento' => '',
+                'IndicacaoTipoCirurgia' => '',
+                'Avaliacao' => '',
+                'AvaliacaoDose' => '',
+                'AvaliacaoDoseObs' => '',
+                'AvaliacaoDuracao' => '',
+                'AvaliacaoDuracaoObs' => '',
+                'AvaliacaoIntervalo' => '',
+                'AvaliacaoIntervaloObs' => '',
+                'AvaliacaoIndicacao' => '',
+                'AvaliacaoIndicacaoObs' => '',
+                'AvaliacaoPreenchimentoInadequado' => '',
+                'AvaliacaoPreenchimentoInadequadoObs' => '',
+                'AvaliacaoOutros' => '',
+                'AvaliacaoOutrosObs' => '',
+                'AlteracaoPorAlta' => '',
+                'SubstituirTratamento' => '',
+                'SubstituidoPeloTratamento' => '',
+                'Justificativa' => '',
+                'Suspender' => '',
+                'SuspenderObs' => '',
+                'Prorrogar' => '',
+                'ProrrogarObs' => '',
+                'idTabSismicrob_Produto' => '',
+                'idTabSismicrob_ViaAdministracao' => '',
+                'idTabSismicrob_Especialidade' => '',
+                'idTabSismicrob_DiagnosticoInfeccioso' => '',
+                'idTabSismicrob_Tratamento' => '',
+                'idTabSismicrob_Substituicao' => '',
+                'idTabSismicrob_Indicacao' => '',
+                'idTabSismicrob_Infeccao' => '',
+                'idTabSismicrob_Intervalo' => '',
 
                 'submit'                            => '',
             ];
@@ -221,11 +246,14 @@ class Prescricao extends BaseController
         }
 
         $v['select'] = [
+            'Medicamento'       => $tabela->list_medicamento_aghux(), #Carrega os itens da tabela selecionada
+            /*
             'Categoria'         => $tabela->list_tabela_bd('Categoria',     FALSE, FALSE, '*', 'idTabPreschuap_Categoria', TRUE), #Carrega os itens da tabela selecionada
             'Subcategoria'      => $tabela->list_tabela_bd('Subcategoria',  FALSE, FALSE, '*', 'idTabPreschuap_Subcategoria', TRUE), #Carrega os itens da tabela selecionada
             'Protocolo'         => $tabela->list_tabela_bd('Protocolo',     FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
             'TipoTerapia'       => $tabela->list_tabela_bd('TipoTerapia',   FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
             'Aplicabilidade'    => ['CANCEROLOGIA', 'HEMATOLOGIA'],
+            */
         ];
 
         if($action == 'editar') {
@@ -306,6 +334,8 @@ class Prescricao extends BaseController
             if (!$inputs && ($action == 'cadastrar' || $action == 'editar'))
                 $v['validation'] = $this->validator;
             else {
+
+                exit('oioioioi');
 
                 if($action == 'cadastrar' || $action == 'editar') {
 

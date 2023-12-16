@@ -11,7 +11,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="<?= base_url('prescricao/page_prescricao/') ?>" class="nav-link text-white p-2" aria-current="page">
+            <a href="<?= base_url('prescricao/manage_prescricao/cadastrar') ?>" class="nav-link text-white p-2" aria-current="page">
                 <i class="fa-solid fa-add"></i> Nova Prescrição
             </a>
         </li>

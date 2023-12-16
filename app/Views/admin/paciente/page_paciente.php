@@ -16,6 +16,10 @@
                 <td><b><?= $_SESSION['Paciente']['prontuario'] ?></b></td>
             </tr>
             <tr>
+                <td width="30%"><i class="fas fa-key"></i></i> Código do Paciente:</td>
+                <td><b><?= $_SESSION['Paciente']['codigo'] ?></b></td>
+            </tr>
+            <tr>
                 <td width="30%"><i class="fa-solid fa-id-badge"></i> Nome da Mãe:</td>
                 <td><b><?= $_SESSION['Paciente']['nome_mae'] ?></b></td>
             </tr>

@@ -18,6 +18,11 @@
                         <span class="visually-hidden"></span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('paciente/assess_paciente') ?>"><i class="fas fa-gavel"></i> Avaliar
+                        <span class="visually-hidden"></span>
+                    </a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-table"></i> Tabelas</a>
                     <div class="dropdown-menu">
