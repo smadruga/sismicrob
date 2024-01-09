@@ -4,8 +4,8 @@ namespace App\Controllers;
 
 use App\Models\TabelaModel;
 use App\Models\PrescricaoModel;
-use App\Models\PrescricaoMedicamentoModel;
 use App\Models\AtendimentoModel;
+use App\Models\CulturaModel;
 
 use App\Models\AuditoriaModel;
 use App\Models\AuditoriaLogModel;
@@ -19,6 +19,30 @@ class Prescricao extends BaseController
 
     public function __construct()
     {
+
+    }
+
+    /**
+    * Lista os resultados de cultura do AGHUX associados ao paciente
+    *
+    * @return mixed
+    */
+    public function list_cultura()
+    {
+
+        $cultura = new CulturaModel();
+        $v['func'] = new HUAP_Functions();
+
+        $v['cultura'] = $cultura->list_paciente_cultura ($_SESSION['Paciente']['prontuario']);
+
+        /*
+        echo "<pre>";
+        print_r($v['atendimento']);
+        echo "</pre>";
+        exit('oi'.$_SESSION['Paciente']['prontuario']);
+        #*/
+
+        return view('admin/prescricao/list_cultura', $v);
 
     }
 

@@ -17,13 +17,18 @@
         </li>
         <li>
             <a href="<?= base_url('prescricao/list_prescricao/') ?>" class="nav-link text-white p-2" aria-current="page">
-                <i class="fa-solid fa-list"></i> Histórico de Prescrições
+                <i class="fa-solid fa-pills"></i> Histórico de Prescrições
             </a>
         </li>
         <li>
             <a href="<?= base_url('prescricao/list_atendimento/') ?>" class="nav-link text-white p-2" aria-current="page">
-                <i class="fa-solid fa-list"></i> Histórico de Atendimentos
+                <i class="fa-solid fa-hospital"></i> Histórico de Atendimentos
             </a>
         </li>        
+        <li>
+            <a href="<?= base_url('prescricao/list_cultura/') ?>" class="nav-link text-white p-2" aria-current="page">
+                <i class="fa-solid fa-bacterium"></i> Resultado de Cultura
+            </a>
+        </li>
     </ul>
 </div>
