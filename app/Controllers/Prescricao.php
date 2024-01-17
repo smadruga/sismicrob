@@ -23,6 +23,30 @@ class Prescricao extends BaseController
     }
 
     /**
+    * Apresenta na tela o TSA do paciente.
+    *
+    * @return mixed
+    */
+    public function show_tsa($solicitacao, $ordem)
+    {
+
+        $cultura = new CulturaModel();
+        $v['func'] = new HUAP_Functions();
+
+        $v['tsa'] = $cultura->show_paciente_tsa ($_SESSION['Paciente']['prontuario'], $solicitacao, $ordem);
+        
+        /*
+        echo "<pre>";
+        print_r($v['tsa']);
+        echo "</pre>";
+        #exit('oi >><< '.$v['tsa']['antimicrobiano'][20113][1]);
+        #*/
+
+        return view('admin/prescricao/page_tsa', $v);
+
+    }
+
+    /**
     * Lista os resultados de cultura do AGHUX associados ao paciente
     *
     * @return mixed
@@ -37,7 +61,7 @@ class Prescricao extends BaseController
 
         /*
         echo "<pre>";
-        print_r($v['atendimento']);
+        print_r($v['cultura']);
         echo "</pre>";
         exit('oi'.$_SESSION['Paciente']['prontuario']);
         #*/
@@ -80,7 +104,6 @@ class Prescricao extends BaseController
     {
 
         $prescricao = new PrescricaoModel();
-        $medicamento = new PrescricaoMedicamentoModel();
 
         $v['pager'] = \Config\Services::pager();
         $request = \Config\Services::request();
@@ -97,8 +120,6 @@ class Prescricao extends BaseController
                 $m['medicamento'][$val['idPreschuap_Prescricao']] = NULL;
             }
             $m['where'] = substr($m['where'], 0, -2);
-
-            $v['medicamento'] = $medicamento->read_medicamento($m);
 
         }
 
@@ -125,7 +146,6 @@ class Prescricao extends BaseController
     {
 
         $prescricao = new PrescricaoModel();
-        $medicamento = new PrescricaoMedicamentoModel();
 
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();
@@ -136,8 +156,6 @@ class Prescricao extends BaseController
 
             $m['where'] = $data;
             $m['medicamento'][$data] = NULL;
-
-            $v['medicamento'] = $medicamento->read_medicamento($m);
 
         }
 
@@ -426,52 +444,6 @@ class Prescricao extends BaseController
                         $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
                         
                         if($v['anterior']['idTabPreschuap_Protocolo'] && ($v['anterior']['idTabPreschuap_Protocolo'] != $v['data']['idTabPreschuap_Protocolo'])) {
-
-                            if($medicamento->where('idPreschuap_Prescricao', $v['id'])->delete()) {
-
-                                $v['medicamento'] = $tabela->list_medicamento_bd($v['data']['idTabPreschuap_Protocolo'], TRUE);
-        
-                                $i=0;
-                                foreach ($v['medicamento']->getResultArray() as $val) {
-                                    /*
-                                    echo "<pre>";
-                                    print_r($val);
-                                    echo "</pre>";
-                                    echo '<br> >>'.$i;
-                                    #*/
-        
-                                    $val['idPreschuap_Prescricao'] = $v['id'];
-                                    $v['campos'] = array_keys($val);
-        
-                                    if($val['idTabPreschuap_Formula'] == 2)
-                                        $val['Calculo'] = ($val['Dose']*$v['data']['Peso']);
-                                    elseif($val['idTabPreschuap_Formula'] == 4)
-                                        $val['Calculo'] = $v['func']->calc_DoseCarboplatina($val['Dose'], $v['data']['ClearanceCreatinina']);
-                                    elseif($val['idTabPreschuap_Formula'] == 3)
-                                        $val['Calculo'] = ($val['Dose']*$v['data']['SuperficieCorporal']);
-                                    else
-                                        $val['Calculo'] = $val['Dose'];
-        
-                                    if(isset($val['CalculoLimiteMaximo']) && ($val['Calculo'] > $val['CalculoLimiteMaximo']))
-                                        $val['Calculo'] = $val['CalculoLimiteMaximo'];
-                                    elseif(isset($val['CalculoLimiteMinimo']) && ($val['Calculo'] > $val['CalculoLimiteMinimo']))
-                                        $val['Calculo'] = $val['CalculoLimiteMinimo'];
-                                    
-                                    $val['Calculo'] = str_replace(",",".",$val['Calculo']);
-                                    
-                                    $v['mid'] = $medicamento->insert($val);
-        
-                                    if($v['mid']) {
-                                        $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao_Medicamento', 'CREATE', $v['mid']), TRUE);
-                                        $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $val, $v['campos'], $v['mid'], $v['auditoria']), TRUE);
-                                    }
-                                    $i++;
-        
-                                }
-                            }
-                            else {
-                                exit('ERRO. CONTATE O SETOR DE TI');
-                            }
                                 
                         }
                             
@@ -489,17 +461,6 @@ class Prescricao extends BaseController
                     $v['anterior'] = $prescricao->find($v['id']);
                     $v['campos'] = array_keys($v['anterior']);
                     $v['data'] = array();
-
-                    if($medicamento->where('idPreschuap_Prescricao', $v['id'])->delete() && $prescricao->delete($v['id'])) {
-
-                        $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao', 'DELETE', $v['id']), TRUE);
-                        $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], FALSE, TRUE), TRUE);
-
-                        session()->setFlashdata('success', 'Item excluído com sucesso!');
-
-                    }
-                    else
-                        session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
 
                 }
                 elseif($action == 'cadastrar') {
@@ -540,8 +501,6 @@ class Prescricao extends BaseController
                                 $val['Calculo'] = $val['CalculoLimiteMinimo'];
                             
                             $val['Calculo'] = str_replace(",",".",$val['Calculo']);
-                            
-                            $v['mid'] = $medicamento->insert($val);
 
                             if($v['mid']) {
                                 $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao_Medicamento', 'CREATE', $v['mid']), TRUE);

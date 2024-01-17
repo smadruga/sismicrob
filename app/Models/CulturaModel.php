@@ -21,6 +21,163 @@ class CulturaModel extends Model
                                     ];
 
     /**
+    * Busca o TSA realizado no AGHUX do paciente e ordem especificados.
+    *
+    * @return void
+    */
+    public function show_paciente_tsa($pront, $sol, $ordem)
+    {
+
+        $db = \Config\Database::connect('aghux');
+        /*
+         *
+         * CABEÇALHO TSA
+         * 
+        */
+        $query1 = $db->query('
+            select
+                ase.seq as seq_solic_ex
+                , to_char(are2.criado_em, \'DD/MM/YYYY HH24:MI:SS\') as dt_ult_mov
+                , to_char(aa2.dthr_entrada , \'DD/MM/YYYY HH24:MI:SS\') as dt_coleta
+                , are2.ise_seqp as ordem
+                , concat(aise.ufe_ema_exa_sigla, \' - \', avl.nome_desenho) as exame
+                , arc.descricao
+                , ase.atd_seq 
+                , auf.descricao as unidade_solicitante
+            from
+                agh.agh_atendimentos aa
+                , agh.agh_unidades_funcionais auf
+                , agh.ael_solicitacao_exames ase
+                , agh.aip_pacientes ap
+                , agh.ael_item_solicitacao_exames aise
+                , agh.ael_versao_laudos avl
+                , agh.ael_resultados_exames are2
+                , agh.ael_resultados_codificados arc
+                , agh.ael_parametro_campos_laudo apcl
+                , agh.ael_amostra_item_exames aaie 
+                , agh.ael_amostras aa2 
+            where
+                are2.ise_soe_seq = '. $sol . '
+                and are2.ise_seqp = '. $ordem . '
+                and avl.ind_situacao = \'A\'
+                and avl.nome_desenho ilike \'%CULTURA%\'
+                and ase.seq is not null
+                and ap.codigo = aa.pac_codigo
+                and aa.seq = ase.atd_seq
+                and ase.seq = aise.soe_seq	
+                and aise.ufe_ema_exa_sigla = avl.ema_exa_sigla
+                    and aise.ufe_ema_man_seq = avl.ema_man_seq
+                and aise.soe_seq = are2.ise_soe_seq	
+                    and aise.seqp = are2.ise_seqp
+                and are2.rcd_gtc_seq = arc.gtc_seq
+                    and are2.rcd_seqp = arc.seqp
+                and are2.pcl_vel_ema_exa_sigla = apcl.vel_ema_exa_sigla
+                    and are2.pcl_vel_ema_man_seq = apcl.vel_ema_man_seq
+                    and are2.pcl_vel_seqp = apcl.vel_seqp
+                    and are2.pcl_cal_seq = apcl.cal_seq
+                    and are2.pcl_seqp = apcl.seqp
+                and aaie.ise_soe_seq = aise.soe_seq  
+                    and aaie.ise_seqp = aise.seqp 
+                and aa2.soe_seq = aaie.amo_soe_seq  
+                    and aa2.seqp = aaie.amo_seqp 
+                and auf.seq = ase.unf_seq 
+            order by ase.seq desc, aise.seqp asc, dt_ult_mov asc, apcl.posicao_linha_tela asc
+        ');
+        $q = $query1->getResultArray();
+        #echo $db->getLastQuery();
+
+        $r['cabecalho'] = array();
+        $d = '';
+        foreach ($q as $k => $v) {
+            $r['cabecalho'] = $v;
+            $d .= '=> '.$v['descricao'].'<br>';
+        }
+
+        $r['cabecalho']['descricao'] = $d;
+
+       /*
+         *
+         * ANTIMICROBIANO E RESULTADO
+         * 
+        */
+        $query2 = $db->query('
+            select 
+                are2.ise_soe_seq 
+                , are2.ise_seqp 
+                , apcl.cal_seq 
+                , apcl.seqp 
+                , arc.gtc_seq 
+                , arc.seqp 
+                , arc.descricao 
+                , apcl.posicao_linha_tela 
+            from 
+                agh.ael_resultados_exames are2 
+                , agh.ael_resultados_codificados arc 
+                , agh.ael_parametro_campos_laudo apcl
+            where 
+                are2.ise_soe_seq 				= '.$sol.' 
+                and are2.pcl_vel_ema_exa_sigla 	= \'TSA\'
+                and are2.rcd_gtc_seq 			in (3, 6)
+                and are2.ise_seqp 				= '.($ordem+1).'
+                and are2.rcd_gtc_seq 			= arc.gtc_seq 
+                and are2.rcd_seqp 				= arc.seqp 
+                and are2.pcl_vel_ema_exa_sigla 	= apcl.vel_ema_exa_sigla 
+                and are2.pcl_vel_ema_man_seq 	= apcl.vel_ema_man_seq 
+                and are2.pcl_vel_seqp  			= apcl.vel_seqp 
+                and are2.pcl_cal_seq  			= apcl.cal_seq 
+                and are2.pcl_seqp  				= apcl.seqp 
+            order by 
+                apcl.posicao_linha_tela asc
+                , are2.rcd_gtc_seq asc
+        ');
+        $q = $query2->getResultArray();
+
+        $r['antimicrobiano'] = array();
+        foreach ($q as $k => $v)
+            $r['antimicrobiano'][$v['cal_seq']][] = $v;
+
+
+        /*
+         *
+         * MIC
+         * 
+        */
+        $query3 = $db->query('
+            select  
+                adr.ree_ise_soe_seq 
+                , adr.ree_pcl_cal_seq 
+                , adr.ree_pcl_seqp 
+                , adr.descricao	
+            from 
+                agh.ael_descricoes_resultado adr 
+                , agh.ael_parametro_campos_laudo apcl 
+            where 
+                adr.ree_ise_soe_seq					= '.$sol.' 
+                and adr.ree_ise_seqp 				= '.($ordem+1).'
+                and adr.ree_pcl_vel_ema_exa_sigla 	= apcl.vel_ema_exa_sigla 
+                and adr.ree_pcl_vel_ema_man_seq 	= apcl.vel_ema_man_seq 
+                and adr.ree_pcl_vel_seqp 			= apcl.vel_seqp 
+                and adr.ree_pcl_cal_seq 			= apcl.cal_seq 
+                and adr.ree_pcl_seqp 				= apcl.seqp
+            order by 
+                apcl.posicao_linha_tela asc
+        ');
+        $r['mic'] = $query3->getResultArray();
+
+        /*
+        echo "<br><><>1<br>";
+        echo "<pre>";
+        print_r($r);
+        echo "</pre>";
+        
+        #exit($data);
+        #*/
+
+        return $r;
+
+    }
+
+    /**
     * Relação de culturas realizadas no AGHUX do paciente especificado.
     *
     * @return void
@@ -30,14 +187,128 @@ class CulturaModel extends Model
 
         $db = \Config\Database::connect('aghux');
         $query = $db->query('
+            select
+                aa.seq as seq_atd  
+                , ase.seq as seq_solic_ex
+                , to_char(are2.criado_em, \'DD/MM/YYYY HH24:MI:SS\') as dt_ult_mov
+                , to_char(aa2.dthr_entrada, \'DD/MM/YYYY HH24:MI:SS\') as dt_coleta
+                , are2.ise_seqp as ordem
+                , concat(aise.ufe_ema_exa_sigla, \' - \', avl.nome_desenho) as exame
+                , avl.ema_man_seq
+                , arc.descricao
+                , are2.pcl_vel_seqp
+                , are2.pcl_cal_seq
+                , are2.pcl_seqp
+                , apcl.posicao_linha_tela
+            from
+                agh.agh_atendimentos aa
+                , agh.ael_solicitacao_exames ase
+                , agh.aip_pacientes ap
+                , agh.ael_item_solicitacao_exames aise
+                , agh.ael_versao_laudos avl
+                , agh.ael_resultados_exames are2
+                , agh.ael_resultados_codificados arc
+                , agh.ael_parametro_campos_laudo apcl
+                , agh.ael_amostra_item_exames aaie 
+                , agh.ael_amostras aa2 
+            where
+                aa.prontuario = '. $data . '
+                and avl.ind_situacao = \'A\'
+                and avl.nome_desenho ilike \'%CULTURA%\'
+                and ase.seq is not null
+                and ap.codigo = aa.pac_codigo
+                and aa.seq = ase.atd_seq
+                and ase.seq = aise.soe_seq	
+                and aise.ufe_ema_exa_sigla = avl.ema_exa_sigla
+                    and aise.ufe_ema_man_seq = avl.ema_man_seq
+                and aise.soe_seq = are2.ise_soe_seq	
+                    and aise.seqp = are2.ise_seqp
+                and are2.rcd_gtc_seq = arc.gtc_seq
+                    and are2.rcd_seqp = arc.seqp
+                and are2.pcl_vel_ema_exa_sigla = apcl.vel_ema_exa_sigla
+                    and are2.pcl_vel_ema_man_seq = apcl.vel_ema_man_seq
+                    and are2.pcl_vel_seqp = apcl.vel_seqp
+                    and are2.pcl_cal_seq = apcl.cal_seq
+                    and are2.pcl_seqp = apcl.seqp
+                	and aaie.ise_soe_seq = aise.soe_seq  
+                    and aaie.ise_seqp = aise.seqp 
+                and aa2.soe_seq = aaie.amo_soe_seq  
+                    and aa2.seqp = aaie.amo_seqp 
+            order by ase.seq desc, aise.seqp asc, dt_ult_mov asc, apcl.posicao_linha_tela asc
+        ');
+
+        $r['array2'] = $query->getResultArray();
+        #$r['count'] = $query->getNumRows();
+
+        $r['resultado'] = array();
+        $d = array();        
+        foreach ($r['array2'] as $k => $v) {
+            $r['resultado'][$v['seq_solic_ex']][$v['ordem']][$v['ema_man_seq']] = $v;
+            $d[$v['seq_solic_ex']][$v['ordem']][$v['ema_man_seq']][$v['pcl_cal_seq']] = $v['descricao'];
+        }        
+
+        foreach($r['resultado'] as $k => $v) { 
+            foreach($r['resultado'][$k] as $k2 => $v2) { 
+                foreach($r['resultado'][$k][$k2] as $k3 => $v3) {
+                    $r['resultado'][$k][$k2][$k3]['obs'] = '';
+                    foreach($d[$k][$k2][$k3] as $k4 => $v4) { 
+                        if(strlen($d[$k][$k2][$k3][$k4]) > 1) {
+                            $r['resultado'][$k][$k2][$k3]['obs'] .= '=> '.$d[$k][$k2][$k3][$k4].' <br>';
+                            #echo ' <br>>a '.$k.' '.$k2.' '.$k3.' '.$k4.' => '.$d[$k][$k2][$k3][$k4].' <br>';
+                        }
+                    }
+                    $r['array'][] = $r['resultado'][$k][$k2][$k3];
+                }
+            }
+        }
+
+        $r['count'] = count($r['array']);
+
+        /*
+        echo "<br><><>0<br>";
+        echo $db->getLastQuery();
+
+        echo "<br><><>1<br>";
+        echo "<pre>";
+        #print_r($r['array']);
+        echo "</pre>";
+        echo "<br><><>2<br>";
+        echo "<pre>";
+        #print_r($d);
+        echo "</pre>";
+        echo "<br><><>3<br>";
+        echo "<pre>";
+        print_r($r);
+        echo "</pre>";
+        echo "<br><><>4<br>";
+        
+        exit($data);
+        #*/
+        #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
+
+        #return $r['resultado'];
+        return $r;
+
+    }
+
+    /**
+    * Relação de culturas realizadas no AGHUX do paciente especificado.
+    *
+    * @return void
+    */
+    /*
+    public function list_paciente_cultura($data)
+    {
+
+        $db = \Config\Database::connect('aghux');
+        $query = $db->query('
                 select
                 aa.seq as seq_atd  
                 , ase.seq as seq_solic_ex
                 , ase.localizador 	
-                , to_char(aa.dthr_inicio, \'DD/MM/YYYY\') as dt_pedido
                 , to_char(aa.dthr_inicio, \'DD/MM/YYYY HH:MM:SS\') as dthr_inicio
                 , to_char(aa.dthr_fim, \'DD/MM/YYYY HH:MM:SS\') as dthr_fim
-                , to_char(are2.criado_em, \'DD/MM/YYYY HH:MM:SS\') as dthr_criado
+                , to_char(are2.criado_em, \'DD/MM/YYYY\') as dthr_criado
                 , CASE
                     WHEN aa.origem = \'I\' THEN \'INTERNAÇÃO\'
                     WHEN aa.origem = \'A\' THEN \'CONSULTA\'
@@ -102,7 +373,7 @@ class CulturaModel extends Model
                     and are2.pcl_vel_seqp = apcl.vel_seqp
                     and are2.pcl_cal_seq = apcl.cal_seq
                     and are2.pcl_seqp = apcl.seqp
-            order by ase.seq desc, aise.seqp asc, are2.criado_em asc, apcl.posicao_linha_tela asc
+                order by ase.seq desc, aise.seqp asc, dthr_criado asc, apcl.posicao_linha_tela asc
         ');
 
         #$query = $query->getResultArray();
@@ -126,7 +397,8 @@ class CulturaModel extends Model
                     foreach($d[$k][$k2][$k3] as $k4 => $v4) { 
                         echo ' <br>>>>>>>>>>d '.$k4.' '.$v4;
                         $r['culturas'][$k][$k2][$k3][$k4] = $d[$k][$k2][$k3][$k4];
-                        $r['culturas'][$k][$k2][$k3]['resultado'] = $d[$k][$k2][$k3][$k4];
+                        if($k4 != 171 AND $k4 != 60)
+                            $r['culturas'][$k][$k2][$k3]['resultado'] = $d[$k][$k2][$k3][$k4];
                     }
                 }
             }
@@ -147,16 +419,18 @@ class CulturaModel extends Model
         echo "</pre>";
         echo "<br><><>3<br>";
         echo "<pre>";
-        print_r($r);
+        #print_r($r);
         echo "</pre>";
         echo "<br><><>4<br>";
         
         exit($data);
-        #*/
+        /
         #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
 
         return $r;
 
     }
+*/
 
 }
+
