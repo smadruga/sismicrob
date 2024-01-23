@@ -61,9 +61,9 @@ class Prescricao extends BaseController
 
         /*
         echo "<pre>";
-        print_r($v['cultura']);
+        print_r($v['cultura']['tsa']);
         echo "</pre>";
-        exit('oi'.$_SESSION['Paciente']['prontuario']);
+        #exit('oi'.$_SESSION['Paciente']['prontuario'].' == '.$v['cultura']['tsa'][191332][10]);
         #*/
 
         return view('admin/prescricao/list_cultura', $v);

@@ -11,14 +11,23 @@
                 <th class="col">Data Coleta</th>
                 <th class="col">Data Última Movimentação</th>
                 <th class="col-3">Exame</th>
-                <th class="col-4">Observação</th>
+                <th class="col-4">Resultado</th>
                 <th scope="col">TSA</th>
             </tr>
         </thead>
         <tbody>
             <?php
             foreach($cultura['array'] as $v) {
-                $detalhe = (str_contains($v['obs'], 'POSITIV')) ? '<a href="'.base_url('prescricao/show_tsa/'.$v['seq_solic_ex'].'/'.$v['ordem']).'" type="button" class="btn btn-warning"><b><i class="fa-solid fa-square-plus"></i> Detalhes</b></a>' : NULL;
+
+                if(str_contains($v['obs'], 'POSITIV'))
+                    if(isset($cultura['tsa'][$v['seq_solic_ex']][($v['ordem']+1)]))
+                        $detalhe = '<a href="'.base_url('prescricao/show_tsa/'.$v['seq_solic_ex'].'/'.$v['ordem']).'" 
+                            type="button" class="btn btn-success btn-sm"><b><i class="fa-solid fa-square-plus"></i> Detalhes</b></a>';
+                    else
+                        $detalhe = '<button type="button" class="btn btn-warning btn-sm" disabled><b><i class="fa-solid fa-circle-exclamation"></i> Área Executora</b></button>';
+                else
+                    $detalhe = '';
+
                 echo '
                     <tr>
                         <td>'.$v['seq_solic_ex'].'</td>

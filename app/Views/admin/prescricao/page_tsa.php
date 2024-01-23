@@ -73,7 +73,7 @@
                 /*$i=0;
                 while($i=0) {*/
                 for($i=0;$i<count($tsa['antimicrobiano'][20113]);$i++) {
-                    $mic = (isset($tsa['mic'][$i]['descricao'])) ? $tsa['mic'][$i]['descricao'] : NULL;
+                    $mic = (isset($tsa['mic'][$tsa['antimicrobiano'][20113][$i]['pcl_seqp']]['descricao'])) ? $tsa['mic'][$tsa['antimicrobiano'][20113][$i]['pcl_seqp']]['descricao'] : NULL;
                     echo '
                         <tr>
                             <td>'.$tsa['antimicrobiano'][20113][$i]['descricao'].'</td>
