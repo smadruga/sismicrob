@@ -159,6 +159,30 @@ class CulturaModel extends Model
         foreach ($q as $k => $v)
             $r['antimicrobiano'][$v['cal_seq']][] = $v;
 
+        /*
+         *
+         * MICs DISPONÍVEIS E EM ORDEM CRESCENTE DE DISPOSIÇÃO
+         * 
+        */
+        $query4 = $db->query('
+            select 
+                apcl.seqp 
+            from
+                agh.ael_parametro_campos_laudo apcl 
+            where 
+                vel_ema_exa_sigla = \'TSA\' 
+                and cal_seq = 20135 
+                and script = 0
+            order by 
+                apcl.posicao_linha_tela asc
+        ');
+        $q = $query4->getResultArray();
+        #echo '<br><br>'.$db->getLastQuery();
+
+        $r['mic_ordem'] = array();
+        foreach ($q as $k => $v)
+            $r['mic_ordem'][] = $v['seqp'];
+
 
         /*
          *
@@ -208,7 +232,7 @@ class CulturaModel extends Model
         print_r($r);
         echo "</pre>";
         
-        #exit($data);
+        #exit('oi');
         #*/
 
         return $r;

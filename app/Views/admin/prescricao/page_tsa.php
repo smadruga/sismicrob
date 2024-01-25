@@ -73,7 +73,8 @@
                 /*$i=0;
                 while($i=0) {*/
                 for($i=0;$i<count($tsa['antimicrobiano'][20113]);$i++) {
-                    $mic = (isset($tsa['mic'][$tsa['antimicrobiano'][20113][$i]['pcl_seqp']]['descricao'])) ? $tsa['mic'][$tsa['antimicrobiano'][20113][$i]['pcl_seqp']]['descricao'] : NULL;
+                    #$mic = (isset($tsa['mic'][$tsa['antimicrobiano'][20113][$i]['pcl_seqp']]['descricao'])) ? $tsa['mic'][$tsa['antimicrobiano'][20113][$i]['pcl_seqp']]['descricao'] : NULL;
+                    $mic = (isset($tsa['mic'][$tsa['mic_ordem'][$i]])) ? $tsa['mic'][$tsa['mic_ordem'][$i]]['descricao'] : NULL;
                     $result = (isset($tsa['antimicrobiano'][20133][$i]['descricao'])) ? $tsa['antimicrobiano'][20133][$i]['descricao'] : NULL;
                     echo '
                         <tr>
