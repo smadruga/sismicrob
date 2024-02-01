@@ -231,3 +231,58 @@ function ajuste(campo) {
     }
 
 }
+
+
+/*
+ * Função responsável exibir/ocultar determinadas div's
+ *
+ * @param {string} value
+ * @returns {decimal}
+ */
+function showHideDiv(valor, campo, div, opcoes, autofocus, alternar, alternar0, alternar1, icon0, icon1) {
+
+    console.log('>v '+valor+'<>c '+campo+'<>d '+div+'<>o '+opcoes);
+
+    if (opcoes == 0) {
+
+        if(alternar){
+
+            if(valor == 1) {
+                $('#' + div).html(icon0 + ' ' + alternar0 + ' ' + icon0);
+                $('#' + campo).val('0');
+                $('.' + campo + div).removeAttr("style");
+            }
+            else {
+                $('#' + div).html(icon1 + ' ' + alternar1 + ' ' + icon1);
+                $('#' + campo).val('1');
+                $('.' + campo + div).attr("style", "display:none;");
+            }
+
+        }
+        else {
+            if (valor == 0)
+                $('.' + campo).attr("style", "display:none;");
+            else
+                $('.' + campo).removeAttr("style");
+        }
+        //console.log('>'+valor+'<>'+campo+'<>'+div+'<>'+opcoes+'<>'+autofocus+'<>'+alternar+'<>'+alternar0+'<>'+alternar1+'<>');
+
+    }
+    else {
+        var o = opcoes.split("|");
+
+        for (i=0; i < o.length; i++) {
+
+            $('.' + div + o[i]).attr("style", "display:none;");
+            if( document.getElementById('#' + campo + valor) ) {
+                $('.' + campo + valor).removeAttr("style");
+
+            }
+            $('.idTabSismicrob_IndicacaoDiv').removeAttr("style");
+            //console.log('>vvv '+valor+'<>c '+campo+'<>d '+div+'<>o '+opcoes);
+
+        }
+        //console.log('###>'+valor+'<>'+campo+'<>'+div+'<>'+opcoes+'<>'+autofocus+'<>'+alternar+'<>'+alternar0+'<>'+alternar1+'<>');
+    }
+    //console.log('>'+valor+'<>'+campo+'<>'+div+'<>'+opcoes+'<>'+autofocus+'<>'+alternar+'<>'+alternar0+'<>'+alternar1+'<>');
+}
