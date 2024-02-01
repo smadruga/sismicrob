@@ -17,33 +17,35 @@
         </thead>
         <tbody>
             <?php
-            foreach($cultura['array'] as $v) {
+            if(isset($cultura['array'])) {
+                foreach($cultura['array'] as $v) {
 
-                if(str_contains($v['obs'], 'POSITIV'))
-                    if(isset($cultura['tsa'][$v['seq_solic_ex']][($v['ordem']+1)]))
-                        $detalhe = '<a href="'.base_url('prescricao/show_tsa/'.$v['seq_solic_ex'].'/'.$v['ordem']).'" 
-                            type="button" class="btn btn-success btn-sm"><b><i class="fa-solid fa-square-plus"></i> Detalhes</b></a>';
+                    if(str_contains($v['obs'], 'POSITIV'))
+                        if(isset($cultura['tsa'][$v['seq_solic_ex']][($v['ordem']+1)]))
+                            $detalhe = '<a href="'.base_url('prescricao/show_tsa/'.$v['seq_solic_ex'].'/'.$v['ordem']).'" 
+                                type="button" class="btn btn-success btn-sm"><b><i class="fa-solid fa-square-plus"></i> Detalhes</b></a>';
+                        else
+                            $detalhe = '<button type="button" class="btn btn-warning btn-sm" disabled><b><i class="fa-solid fa-circle-exclamation"></i> Área Executora</b></button>';
                     else
-                        $detalhe = '<button type="button" class="btn btn-warning btn-sm" disabled><b><i class="fa-solid fa-circle-exclamation"></i> Área Executora</b></button>';
-                else
-                    $detalhe = '';
+                        $detalhe = '';
 
-                echo '
-                    <tr>
-                        <td>'.$v['seq_solic_ex'].'</td>
-                        <td>'.$v['dt_coleta'].'</td>
-                        <td>'.$v['dt_ult_mov'].'</td>
-                        <td>'.$v['exame'].'</td>
-                        <td>'.$v['obs'].'</td>
-                        <td>'.$detalhe.'</td>
-                    </tr>
-                ';
+                    echo '
+                        <tr>
+                            <td>'.$v['seq_solic_ex'].'</td>
+                            <td>'.$v['dt_coleta'].'</td>
+                            <td>'.$v['dt_ult_mov'].'</td>
+                            <td>'.$v['exame'].'</td>
+                            <td>'.$v['obs'].'</td>
+                            <td>'.$detalhe.'</td>
+                        </tr>
+                    ';
+                }
             }
             ?>
         </tbody>
         <tfoot>
             <tr>
-                <th colspan="5" class="text-center">Total: <?= $cultura['count'] ?> resultados.</th>
+                <th colspan="6" class="text-center">Total: <?= $cultura['count'] ?> resultados.</th>
             </tr>
         </tfoot>
     </table>

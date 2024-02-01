@@ -344,7 +344,7 @@ class CulturaModel extends Model
             }
         }
 
-        $r['count'] = count($r['array']);
+        $r['count'] = (isset($r['array'])) ? count($r['array']) : 0;
 
         $query3 = $db->query('
             select 
