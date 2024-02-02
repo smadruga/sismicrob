@@ -241,7 +241,7 @@ function ajuste(campo) {
  */
 function showHideDiv(valor, campo, div, opcoes, autofocus, alternar, alternar0, alternar1, icon0, icon1) {
 
-    console.log('>v '+valor+'<>c '+campo+'<>d '+div+'<>o '+opcoes);
+    //console.log('>v '+valor+'<>c '+campo+'<>d '+div+'<>o '+opcoes);
 
     if (opcoes == 0) {
 

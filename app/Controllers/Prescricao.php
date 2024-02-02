@@ -288,11 +288,12 @@ class Prescricao extends BaseController
         }
 
         $v['select'] = [
-            'Medicamento'       => $tabela->list_medicamento_aghux(), #Carrega os itens da tabela selecionada
-            'Indicacao'         => $tabela->list_tabela_bd('Indicacao', FALSE, FALSE, '*', 'idTabSismicrob_Indicacao', TRUE), #Carrega os itens da tabela selecionada
-            'Intervalo'         => $tabela->list_tabela_bd('Intervalo', FALSE, FALSE, '*', 'idTabSismicrob_Intervalo', TRUE), #Carrega os itens da tabela selecionada
-            'Especialidade'     => $tabela->list_tabela_bd('Especialidade', FALSE, FALSE, '*', 'idTabSismicrob_Especialidade', TRUE), #Carrega os itens da tabela selecionada
-            'ViaAdministracao'  => $tabela->list_tabela_bd('ViaAdministracao', FALSE, FALSE, '*', 'idTabSismicrob_ViaAdministracao', TRUE), #Carrega os itens da tabela selecionada
+            'Medicamento'           => $tabela->list_medicamento_aghux(), #Carrega os itens da tabela selecionada
+            'Indicacao'             => $tabela->list_tabela_bd('Indicacao', FALSE, FALSE, '*', 'idTabSismicrob_Indicacao', TRUE), #Carrega os itens da tabela selecionada
+            'Intervalo'             => $tabela->list_tabela_bd('Intervalo', FALSE, FALSE, '*', 'idTabSismicrob_Intervalo', TRUE), #Carrega os itens da tabela selecionada
+            'Especialidade'         => $tabela->list_tabela_bd('Especialidade', FALSE, FALSE, '*', 'idTabSismicrob_Especialidade', TRUE), #Carrega os itens da tabela selecionada
+            'ViaAdministracao'      => $tabela->list_tabela_bd('ViaAdministracao', FALSE, FALSE, '*', 'idTabSismicrob_ViaAdministracao', TRUE), #Carrega os itens da tabela selecionada
+            'DiagnosticoInfeccioso' => $tabela->list_tabela_bd('DiagnosticoInfeccioso', FALSE, FALSE, '*', 'idTabSismicrob_DiagnosticoInfeccioso', TRUE), #Carrega os itens da tabela selecionada
             /*
             'Categoria'         => $tabela->list_tabela_bd('Categoria',     FALSE, FALSE, '*', 'idTabPreschuap_Categoria', TRUE), #Carrega os itens da tabela selecionada
             'Subcategoria'      => $tabela->list_tabela_bd('Subcategoria',  FALSE, FALSE, '*', 'idTabPreschuap_Subcategoria', TRUE), #Carrega os itens da tabela selecionada
@@ -301,6 +302,22 @@ class Prescricao extends BaseController
             'Aplicabilidade'    => ['CANCEROLOGIA', 'HEMATOLOGIA'],
             */
         ];
+
+        $v['radio'] = array(
+            'UnidadeMedida' => $this->basico->radio_checked($data['query']['UnidadeMedida'], 'UnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE),
+            'DoseAtaque' => $this->basico->radio_checked($data['query']['DoseAtaque'], 'DoseAtaque', 'SN', 'N', FALSE, TRUE),
+            'DoseAtaqueUnidadeMedida' => $this->basico->radio_checked($data['query']['DoseAtaqueUnidadeMedida'], 'DoseAtaqueUnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE),
+            'DoseAtaqueNumeroDoses' => $this->basico->radio_checked($data['query']['DoseAtaqueNumeroDoses'], 'DoseAtaqueNumeroDoses', '1|2|3|4', FALSE, TRUE, TRUE),
+            'Cultura' => $this->basico->radio_checked($data['query']['Cultura'], 'Cultura', 'SNA', 'N', FALSE, TRUE),
+            'Hemodialise' => $this->basico->radio_checked($data['query']['Hemodialise'], 'Hemodialise', 'SN', NULL, FALSE, TRUE),
+        );
+
+        $v['div'] = array(
+            'DoseAtaque' => $this->basico->radio_showhide($data['query']['DoseAtaque'], 'S'),
+            'idTabSismicrob_DiagnosticoInfeccioso' => $this->basico->div_showhide($data['query']['idTabSismicrob_DiagnosticoInfeccioso'], 'idTabSismicrob_DiagnosticoInfeccioso', '7'),
+            'idTabSismicrob_Indicacao1' => $this->basico->div_showhide($data['query']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '1'),
+            'idTabSismicrob_Indicacao3' => $this->basico->div_showhide($data['query']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '3'),
+        );        
 
         if($action == 'editar') {
 
