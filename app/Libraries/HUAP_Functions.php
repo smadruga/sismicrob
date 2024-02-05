@@ -1071,4 +1071,105 @@ class HUAP_Functions
     	return $string;
     }
 
+
+    /**
+     * 
+     * Função que prepara os campos do tipo radio do formulário.
+     *
+     */
+
+    function radio_checked($data, $campo, $tipo = FALSE, $default = FALSE, $multi = FALSE, $array = FALSE) {
+
+        $radio = array();
+
+        if (!$data && $default)
+            $data = $default;
+
+        if ($multi) {
+            $tipo = explode('|', $tipo);
+            $i = count($tipo);
+        }
+        else {
+            $tipo = str_split($tipo);
+            $i = count($tipo);
+        }
+        
+        if ($array) {
+            
+            for ($j = 0; $j < $i; $j++) {
+                
+                if ($data == $tipo[$j]) {
+                    
+                    for ($k = 0; $k < $i; $k++)
+                        if ($k == $j) {
+
+                            $radio['c'][$k] = 'checked';
+                            $radio['a'][$k] = 'active';
+
+                        }
+                        else {
+                            
+                            $radio['c'][$k] = '';
+                            $radio['a'][$k] = '';
+
+                        }
+                        
+                }
+            }
+        }
+        else {
+            
+            for ($j = 0; $j < $i; $j++) {
+
+                if ($data == $tipo[$j]) {
+
+                    for ($k = 0; $k < $i; $k++)
+                        ($k == $j) ? $radio[$k] = 'checked' : $radio[$k] = '';
+
+                }
+            }
+        }
+
+        /*
+        print "<pre>";
+        print_r($radio);
+        print "</pre>";
+        #exit();
+        */
+
+        return $radio;
+
+    }
+
+    /**
+     * 
+     * Função que exibe/oculta o radio do formulário.
+     *
+     */
+    function radio_showhide($data, $valor, $default = FALSE) {
+        return ( ($data && $data == $valor) || (!$data && $default === TRUE) ) ? '' : 'style="display: none;"';
+    }
+
+    /**
+     * 
+     * Função que exibe/oculta uma div do formulário.
+     *
+     */
+    function div_showhide($data, $campo = FALSE, $valor = FALSE, $checkbox = FALSE, $default = FALSE, $todos = FALSE) {
+
+        if ($todos == 1)
+            return ($data != 0) ? '' : 'style="display: none;"';
+        else {
+            if ($checkbox)
+                return ($data) ? '' : 'style="display: none;"';
+            else {
+                if($default && !$data)
+                    return '';
+                else
+                    return ($data == $valor) ? '' : 'style="display: none;"';
+            }
+        }
+
+    }    
+
 }

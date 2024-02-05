@@ -45,6 +45,7 @@
                 </div>
 
                 <div class="form-row idTabSismicrob_Indicacao3" id="#idTabSismicrob_Indicacao3" style="display: none;">
+                    
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label>Diagnóstico Infeccioso <b class="text-danger">*</b></label>
@@ -71,11 +72,22 @@
                                     name="DiagnosticoInfecciosoOutro" value="<?php echo $data['DiagnosticoInfecciosoOutro'] ?>">
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label>Justificativa:</label>
+                            <textarea class="form-control" id="Justificativa" maxlength="65000"
+                                name="Justificativa"><?php echo $data['Justificativa'] ?></textarea>
+                            <small id="JustificativaHelp" class="form-text text-muted">
+                                <b class="text-warning">*</b>
+                                O campo "Justificativa" será obrigatório se o campo "Indicação" for "Terapêutica".
+                            </small>
+                        </div>
+                    </div>
+                    
                 </div>                
 
                 <div class="col idTabSismicrob_IndicacaoDiv" id="#idTabSismicrob_IndicacaoDiv" style="display: none;">
                     
-
                     <div class="col-md-12">
                         <label for="Codigo" class="form-label">Medicamento <b class="text-danger">*</b></label>
                         <div class="input-group mb-3">
@@ -101,45 +113,7 @@
                         </div>
                     </div>
 
-                    <div class="form-row idTabSismicrob_Indicacao3" id="#idTabSismicrob_Indicacao3" <?php echo $div['idTabSismicrob_Indicacao3'] ?>>
-                        <div class="form-group col-md-6">
-                            <label>Diagn�stico Infeccioso:</label>
-                            <select data-placeholder="Selecione uma op��o..." class="form-control Chosen"
-                                    id="idTabSismicrob_DiagnosticoInfeccioso" onchange="showHideDiv(this.value,this.name,'idTabSismicrob_DiagnosticoInfeccioso','7')" name="idTabSismicrob_DiagnosticoInfeccioso">
-                                <option value="">Selecione uma op��o...</option>
-                                <?php
-
-                                foreach ($select['DiagnosticoInfeccioso']->result_array() as $row) {
-                                    if ($query['idTabSismicrob_DiagnosticoInfeccioso'] == $row['idTabSismicrob_DiagnosticoInfeccioso']) {
-                                        echo '<option value="' . $row['idTabSismicrob_DiagnosticoInfeccioso'] . '" selected="selected">' . $row['DiagnosticoInfeccioso'] . '</option>';
-                                    }
-                                    else {
-                                        echo '<option value="' . $row['idTabSismicrob_DiagnosticoInfeccioso'] . '">' . $row['DiagnosticoInfeccioso'] . '</option>';
-                                    }
-                                }
-
-                                ?>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6 idTabSismicrob_DiagnosticoInfeccioso7" id="#idTabSismicrob_DiagnosticoInfeccioso7" <?php echo $div['idTabSismicrob_DiagnosticoInfeccioso'] ?>>
-                            <label>Especificar:</label>
-                            <input type="text" class="form-control" id="DiagnosticoInfecciosoOutro" maxlength="250"
-                                    name="DiagnosticoInfecciosoOutro" value="<?php echo $query['DiagnosticoInfecciosoOutro'] ?>">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label>Justificativa:</label>
-                            <textarea class="form-control" id="Justificativa" maxlength="65000"
-                                name="Justificativa"><?php echo $query['Justificativa'] ?></textarea>
-                            <small id="JustificativaHelp" class="form-text text-muted">
-                                <b class="text-warning">*</b>
-                                O campo "Justificativa" ser� obrigat�rio se "Indica��o" for "Terap�utica".
-                            </small>
-                        </div>
-                    </div>
-
+                    
 
                 </div>
 

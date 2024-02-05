@@ -304,19 +304,19 @@ class Prescricao extends BaseController
         ];
 
         $v['radio'] = array(
-            'UnidadeMedida' => $this->basico->radio_checked($data['query']['UnidadeMedida'], 'UnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE),
-            'DoseAtaque' => $this->basico->radio_checked($data['query']['DoseAtaque'], 'DoseAtaque', 'SN', 'N', FALSE, TRUE),
-            'DoseAtaqueUnidadeMedida' => $this->basico->radio_checked($data['query']['DoseAtaqueUnidadeMedida'], 'DoseAtaqueUnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE),
-            'DoseAtaqueNumeroDoses' => $this->basico->radio_checked($data['query']['DoseAtaqueNumeroDoses'], 'DoseAtaqueNumeroDoses', '1|2|3|4', FALSE, TRUE, TRUE),
-            'Cultura' => $this->basico->radio_checked($data['query']['Cultura'], 'Cultura', 'SNA', 'N', FALSE, TRUE),
-            'Hemodialise' => $this->basico->radio_checked($data['query']['Hemodialise'], 'Hemodialise', 'SN', NULL, FALSE, TRUE),
+            'UnidadeMedida'             => $v['func']->radio_checked($v['data']['UnidadeMedida'], 'UnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE),
+            'DoseAtaque'                => $v['func']->radio_checked($v['data']['DoseAtaque'], 'DoseAtaque', 'SN', 'N', FALSE, TRUE),
+            'DoseAtaqueUnidadeMedida'   => $v['func']->radio_checked($v['data']['DoseAtaqueUnidadeMedida'], 'DoseAtaqueUnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE),
+            'DoseAtaqueNumeroDoses'     => $v['func']->radio_checked($v['data']['DoseAtaqueNumeroDoses'], 'DoseAtaqueNumeroDoses', '1|2|3|4', FALSE, TRUE, TRUE),
+            #'Cultura'                   => $v['func']->radio_checked($v['data']['Cultura'], 'Cultura', 'SNA', 'N', FALSE, TRUE),
+            'Hemodialise'               => $v['func']->radio_checked($v['data']['Hemodialise'], 'Hemodialise', 'SN', NULL, FALSE, TRUE),
         );
 
         $v['div'] = array(
-            'DoseAtaque' => $this->basico->radio_showhide($data['query']['DoseAtaque'], 'S'),
-            'idTabSismicrob_DiagnosticoInfeccioso' => $this->basico->div_showhide($data['query']['idTabSismicrob_DiagnosticoInfeccioso'], 'idTabSismicrob_DiagnosticoInfeccioso', '7'),
-            'idTabSismicrob_Indicacao1' => $this->basico->div_showhide($data['query']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '1'),
-            'idTabSismicrob_Indicacao3' => $this->basico->div_showhide($data['query']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '3'),
+            'DoseAtaque' => $v['func']->radio_showhide($v['data']['DoseAtaque'], 'S'),
+            'idTabSismicrob_DiagnosticoInfeccioso' => $v['func']->div_showhide($v['data']['idTabSismicrob_DiagnosticoInfeccioso'], 'idTabSismicrob_DiagnosticoInfeccioso', '7'),
+            'idTabSismicrob_Indicacao1' => $v['func']->div_showhide($v['data']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '1'),
+            'idTabSismicrob_Indicacao3' => $v['func']->div_showhide($v['data']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '3'),
         );        
 
         if($action == 'editar') {
