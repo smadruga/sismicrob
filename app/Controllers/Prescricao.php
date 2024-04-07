@@ -294,14 +294,15 @@ class Prescricao extends BaseController
             'Especialidade'         => $tabela->list_tabela_bd('Especialidade', FALSE, FALSE, '*', 'idTabSismicrob_Especialidade', TRUE), #Carrega os itens da tabela selecionada
             'ViaAdministracao'      => $tabela->list_tabela_bd('ViaAdministracao', FALSE, FALSE, '*', 'idTabSismicrob_ViaAdministracao', TRUE), #Carrega os itens da tabela selecionada
             'DiagnosticoInfeccioso' => $tabela->list_tabela_bd('DiagnosticoInfeccioso', FALSE, FALSE, '*', 'idTabSismicrob_DiagnosticoInfeccioso', TRUE), #Carrega os itens da tabela selecionada
-            /*
-            'Categoria'         => $tabela->list_tabela_bd('Categoria',     FALSE, FALSE, '*', 'idTabPreschuap_Categoria', TRUE), #Carrega os itens da tabela selecionada
-            'Subcategoria'      => $tabela->list_tabela_bd('Subcategoria',  FALSE, FALSE, '*', 'idTabPreschuap_Subcategoria', TRUE), #Carrega os itens da tabela selecionada
-            'Protocolo'         => $tabela->list_tabela_bd('Protocolo',     FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
-            'TipoTerapia'       => $tabela->list_tabela_bd('TipoTerapia',   FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
-            'Aplicabilidade'    => ['CANCEROLOGIA', 'HEMATOLOGIA'],
-            */
         ];
+
+        /*
+        $t = $v['func']->radio_checked('mg', 'UnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE);
+        print "<pre>";
+        print_r($t);
+        print "</pre>";
+        exit('q?');
+        #*/
 
         $v['radio'] = array(
             'UnidadeMedida'             => $v['func']->radio_checked($v['data']['UnidadeMedida'], 'UnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE),
@@ -363,6 +364,13 @@ class Prescricao extends BaseController
             ];
 
         }
+
+                    #/*
+                    print "<pre>";
+                    print_r($v);
+                    print "</pre>";
+                    exit('???');
+                    #*/
 
         if($v['data']['submit']) {
 

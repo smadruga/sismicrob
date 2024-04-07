@@ -40,6 +40,8 @@
         <script src="<?= base_url('/assets/jquery.countdown-2.2.0/jquery.countdown.min.js') ?>" crossorigin="anonymous"></script>
         <script src="<?= base_url('/assets/js/jquery.maskedinput.min.js') ?>" crossorigin="anonymous"></script>
         <script src="<?= base_url('/assets/js/jquery.maskMoney.min.js') ?>" crossorigin="anonymous"></script>
+        <script src="<?= base_url('/assets/js/moment.min.js') ?>" crossorigin="anonymous"></script>
+        <script src="<?= base_url('/assets/js/moment-with-locales.min.js') ?>" crossorigin="anonymous"></script>
         <script src="<?= base_url('/assets/js/HUAP_ready_jquery.js') ?>" crossorigin="anonymous"></script>
         <script src="<?= base_url('/assets/js/HUAP_jquery.js') ?>" crossorigin="anonymous"></script>
 

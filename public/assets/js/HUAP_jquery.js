@@ -286,3 +286,86 @@ function showHideDiv(valor, campo, div, opcoes, autofocus, alternar, alternar0, 
     }
     //console.log('>'+valor+'<>'+campo+'<>'+div+'<>'+opcoes+'<>'+autofocus+'<>'+alternar+'<>'+alternar0+'<>'+alternar1+'<>');
 }
+
+/*
+ * Função responsável por calcular uma data fim de um tratamento a partir de uma data inicial mas os dias de tratamento
+ *
+ * @param {string} value
+ * @returns {decimal}
+ */
+function calculaTempoTratamento(c1, c2, cvalor) {
+
+    //busca os valores
+    var c1 = $("#"+c1).val();
+    var c2 = $("#"+c2).val();
+
+    valor = '';
+    if (c1 && c2 && c1.match(/[1-9][0-9][0-9]{2}-([0][1-9]|[1][0-2])-([1-2][0-9]|[0][1-9]|[3][0-1])/gm)) {
+
+        //define a data no formato do momentjs
+        var currentDate = moment(c1);
+
+        //calcula as datas das próximas parcelas
+        var futureDate = moment(currentDate).add(c2, 'd');
+
+        //retorna o valor final para o campo apropriado
+        valor = futureDate.format('YYYY-MM-DD')
+
+    }
+
+    //console.log("OI>>> "+valor+" "+c1+" "+c2);
+    //o valor é escrito no seu campo no formulário
+    $('#'+cvalor).val(valor);
+
+}
+
+/*
+ * Calcular o produto entre a Dose Posológica e o Intervalo
+ *
+ * @param {string} value
+ * @returns {decimal}
+ */
+function calculaProduto(c1, c2, cvalor) {
+
+    //busca os valores
+    var c1 = $("#"+c1).val();
+    var c2 = $("#"+c2).val();
+
+    s = c2.split('#');
+    c2 = s[0];
+
+    if(s[1] == 'horas' && c2 <= 24) {
+        var valor = (c1.replace(".","").replace(",",".") * (24 / c2));
+
+        valor = ($('input[name=UnidadeMedida]:checked').val()) ?
+            mascaraValorReal(valor) + ' ' + $('input[name=UnidadeMedida]:checked').val() :
+            mascaraValorReal(valor);
+    }
+    else
+        valor = '0,00';
+
+    console.log("OI >>> "+c1+" % > "+c2+" < & "+valor);
+
+    //console.log("OI>>> "+valor);
+    if(c1, c2)
+        $('#'+cvalor).val(valor);
+
+}
+/*
+ * Aplica a máscara de valor real com separação de decimais e milhares.
+ *
+ * @param {float} value
+ * @returns {decimal}
+ */
+function mascaraValorReal(value) {
+
+    var r;
+    r = value.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+    r = r.replace(/[,.]/g, function (m) {
+        // m is the match found in the string
+        // If `,` is matched return `.`, if `.` matched return `,`
+        return m === ',' ? '.' : ',';
+    });
+    return r;
+
+}

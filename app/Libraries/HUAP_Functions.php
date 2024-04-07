@@ -1134,8 +1134,8 @@ class HUAP_Functions
         print "<pre>";
         print_r($radio);
         print "</pre>";
-        #exit();
-        */
+        exit();
+        #*/
 
         return $radio;
 
