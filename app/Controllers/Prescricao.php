@@ -365,7 +365,7 @@ class Prescricao extends BaseController
 
         }
 
-                    #/*
+                    /*
                     print "<pre>";
                     print_r($v);
                     print "</pre>";

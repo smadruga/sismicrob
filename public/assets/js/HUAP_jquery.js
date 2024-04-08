@@ -344,7 +344,7 @@ function calculaProduto(c1, c2, cvalor) {
     else
         valor = '0,00';
 
-    console.log("OI >>> "+c1+" % > "+c2+" < & "+valor);
+    console.log("OI >>> "+c1+" % > "+c2+" < & "+valor+" unid >>> "+$('input[name=UnidadeMedida]:checked').val());
 
     //console.log("OI>>> "+valor);
     if(c1, c2)

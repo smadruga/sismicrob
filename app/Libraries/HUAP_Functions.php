@@ -1079,7 +1079,7 @@ class HUAP_Functions
      */
 
     function radio_checked($data, $campo, $tipo = FALSE, $default = FALSE, $multi = FALSE, $array = FALSE) {
-
+      
         $radio = array();
 
         if (!$data && $default)
@@ -1093,9 +1093,9 @@ class HUAP_Functions
             $tipo = str_split($tipo);
             $i = count($tipo);
         }
-        
+    
         if ($array) {
-            
+        
             for ($j = 0; $j < $i; $j++) {
                 
                 if ($data == $tipo[$j]) {
@@ -1115,7 +1115,14 @@ class HUAP_Functions
                         }
                         
                 }
+                else {
+
+                    $radio['c'][$j] = '';
+                    $radio['a'][$j] = '';
+
+                }
             }
+
         }
         else {
             

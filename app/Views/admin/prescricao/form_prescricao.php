@@ -164,19 +164,17 @@
 
                                 <div class="btn-group">
                                     <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidaG" autocomplete="off" 
-                                        onchange="calculaProduto('DosePosologica', 'Intervalo', 'DoseDiaria')" 
+                                        onchange="calculaProduto('DosePosologica', 'Intervalo', 'DoseDiaria')" value="g"
                                         <?php echo $radio['UnidadeMedida']['c'][0] ?>/>
                                     <label class="btn btn-secondary <?php echo $radio['UnidadeMedida']['a'][0] ?>" for="UnidadeMedidaG" 
                                         data-mdb-ripple-init>g</label>
-
                                     <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidamG" autocomplete="off" 
-                                        onchange="calculaProduto('DosePosologica', 'Intervalo', 'DoseDiaria')"
+                                        onchange="calculaProduto('DosePosologica', 'Intervalo', 'DoseDiaria')" value="mg"
                                         <?php echo $radio['UnidadeMedida']['c'][1] ?>/>
                                     <label class="btn btn-secondary <?php echo $radio['UnidadeMedida']['a'][1] ?>" for="UnidadeMedidamG" 
                                         data-mdb-ripple-init>mg</label>
-
                                     <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidaUI" autocomplete="off" 
-                                        onchange="calculaProduto('DosePosologica', 'Intervalo', 'DoseDiaria')"
+                                        onchange="calculaProduto('DosePosologica', 'Intervalo', 'DoseDiaria')" value="UI"
                                         <?php echo $radio['UnidadeMedida']['c'][2] ?>/>
                                     <label class="btn btn-secondary <?php echo $radio['UnidadeMedida']['a'][2] ?>" for="UnidadeMedidaUI" 
                                         data-mdb-ripple-init>UI</label>
