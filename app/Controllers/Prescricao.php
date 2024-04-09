@@ -258,13 +258,12 @@ class Prescricao extends BaseController
 
                 'submit'                            => '',
             ];
-            $v['data']['Aplicabilidade'] = (!isset($v['data']['Aplicabilidade'])) ? NULL : $v['data']['Aplicabilidade'];
+
         }
         else {
             #Captura os inputs do Formulário
             $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
             #echo '111111111oi';
-            #$v['data']['Aplicabilidade'] = (!isset($v['data']['Aplicabilidade'])) ? NULL : $v['data']['Aplicabilidade'];
         }
 
         if(($action == 'editar' || $action == 'excluir' || $action == 'concluir') && !$v['data']['submit']) {
@@ -305,12 +304,9 @@ class Prescricao extends BaseController
         #*/
 
         $v['radio'] = array(
-            'UnidadeMedida'             => $v['func']->radio_checked($v['data']['UnidadeMedida'], 'UnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE),
-            'DoseAtaque'                => $v['func']->radio_checked($v['data']['DoseAtaque'], 'DoseAtaque', 'SN', 'N', FALSE, TRUE),
-            'DoseAtaqueUnidadeMedida'   => $v['func']->radio_checked($v['data']['DoseAtaqueUnidadeMedida'], 'DoseAtaqueUnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE),
-            'DoseAtaqueNumeroDoses'     => $v['func']->radio_checked($v['data']['DoseAtaqueNumeroDoses'], 'DoseAtaqueNumeroDoses', '1|2|3|4', FALSE, TRUE, TRUE),
-            #'Cultura'                   => $v['func']->radio_checked($v['data']['Cultura'], 'Cultura', 'SNA', 'N', FALSE, TRUE),
-            'Hemodialise'               => $v['func']->radio_checked($v['data']['Hemodialise'], 'Hemodialise', 'SN', NULL, FALSE, TRUE),
+            'UnidadeMedida' => $v['func']->radio_checked($v['data']['UnidadeMedida'], 'UnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE),
+            'DoseAtaque'    => $v['func']->radio_checked($v['data']['DoseAtaque'], 'DoseAtaque', 'SN', FALSE, FALSE, TRUE),
+            'Hemodialise'   => $v['func']->radio_checked($v['data']['Hemodialise'], 'Hemodialise', 'SN', FALSE, FALSE, TRUE),
         );
 
         $v['div'] = array(
@@ -319,6 +315,13 @@ class Prescricao extends BaseController
             'idTabSismicrob_Indicacao1' => $v['func']->div_showhide($v['data']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '1'),
             'idTabSismicrob_Indicacao3' => $v['func']->div_showhide($v['data']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '3'),
         );        
+
+                    /*
+                    print "<pre>";
+                    print_r($v);
+                    print "</pre>";
+                    exit('???');
+                    #*/
 
         if($action == 'editar') {
 
@@ -364,13 +367,6 @@ class Prescricao extends BaseController
             ];
 
         }
-
-                    /*
-                    print "<pre>";
-                    print_r($v);
-                    print "</pre>";
-                    exit('???');
-                    #*/
 
         if($v['data']['submit']) {
 

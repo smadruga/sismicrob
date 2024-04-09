@@ -27,6 +27,7 @@ class TabelaModel extends Model
                 agh.afa_medicamentos am
             where
                 am.tum_sigla = \'M\'
+                and ind_situacao = \'A\'
             order by descricao asc
         ');
     

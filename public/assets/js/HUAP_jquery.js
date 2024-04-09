@@ -98,7 +98,7 @@ function clearanceCreatinina() {
     var peso        = $("#Peso").val();
     var idade       = $("#Idade").val();
     var sexo        = $("#Sexo").val();
-    var creatinina  = $("#CreatininaSerica").val();
+    var creatinina  = $("#Creatinina").val();
 
     if (sexo == 'F')
         sexo = 0.85;
@@ -112,9 +112,10 @@ function clearanceCreatinina() {
         clcr = ((140 - idade) * peso * sexo) / (72 * creatinina);
         clcr = clcr.toFixed(3);
         clcr = clcr.replace(".",",");
-
-        $('#ClearanceCreatinina').val(clcr);
+        //console.log('>vvv '+peso+'<>c '+idade+'<>d '+sexo+'<>o>> '+creatinina);
+        $('#Clearance').val(clcr);
     }
+
 
 }
 
@@ -344,7 +345,7 @@ function calculaProduto(c1, c2, cvalor) {
     else
         valor = '0,00';
 
-    console.log("OI >>> "+c1+" % > "+c2+" < & "+valor+" unid >>> "+$('input[name=UnidadeMedida]:checked').val());
+    //console.log("OI >>> "+c1+" % > "+c2+" < & "+valor+" unid >>> "+$('input[name=UnidadeMedida]:checked').val());
 
     //console.log("OI>>> "+valor);
     if(c1, c2)

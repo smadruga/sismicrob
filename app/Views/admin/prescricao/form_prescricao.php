@@ -27,12 +27,10 @@
                                 <?php
 
                                 foreach ($select['Indicacao']->getResultArray() as $row) {
-                                    if ($data['idTabSismicrob_Indicacao'] == $row['idTabSismicrob_Indicacao']) {
+                                    if ($data['idTabSismicrob_Indicacao'] == $row['idTabSismicrob_Indicacao'])
                                         echo '<option value="' . $row['idTabSismicrob_Indicacao'] . '" selected="selected">' . $row['Indicacao'] . '</option>';
-                                    }
-                                    else {
+                                    else
                                         echo '<option value="' . $row['idTabSismicrob_Indicacao'] . '">' . $row['Indicacao'] . '</option>';
-                                    }
                                 }
 
                                 ?>
@@ -62,34 +60,14 @@
                             <?php
 
                             foreach ($select['DiagnosticoInfeccioso']->getResultArray() as $row) {
-                                if ($data['idTabSismicrob_DiagnosticoInfeccioso'] == $row['idTabSismicrob_DiagnosticoInfeccioso']) {
+                                if ($data['idTabSismicrob_DiagnosticoInfeccioso'] == $row['idTabSismicrob_DiagnosticoInfeccioso'])
                                     echo '<option value="' . $row['idTabSismicrob_DiagnosticoInfeccioso'] . '" selected="selected">' . $row['DiagnosticoInfeccioso'] . '</option>';
-                                }
-                                else {
+                                else
                                     echo '<option value="' . $row['idTabSismicrob_DiagnosticoInfeccioso'] . '">' . $row['DiagnosticoInfeccioso'] . '</option>';
-                                }
                             }
 
                             ?>
                         </select>                            
-                        <select data-placeholder="Selecione uma opção..." class="form-control select2"
-                                id="idTabSismicrob_DiagnosticoInfeccioso" 
-                                onchange="showHideDiv(this.value,this.name,'idTabSismicrob_DiagnosticoInfeccioso','7')" 
-                                name="idTabSismicrob_DiagnosticoInfeccioso">
-                            <option value="">Selecione uma opção...</option>
-                            <?php
-
-                            foreach ($select['DiagnosticoInfeccioso']->getResultArray() as $row) {
-                                if ($data['idTabSismicrob_DiagnosticoInfeccioso'] == $row['idTabSismicrob_DiagnosticoInfeccioso']) {
-                                    echo '<option value="' . $row['idTabSismicrob_DiagnosticoInfeccioso'] . '" selected="selected">' . $row['DiagnosticoInfeccioso'] . '</option>';
-                                }
-                                else {
-                                    echo '<option value="' . $row['idTabSismicrob_DiagnosticoInfeccioso'] . '">' . $row['DiagnosticoInfeccioso'] . '</option>';
-                                }
-                            }
-
-                            ?>
-                        </select>
                     </div>
                     <div class="col-6">
                         <div class="form-label idTabSismicrob_DiagnosticoInfeccioso7" id="#idTabSismicrob_DiagnosticoInfeccioso7" 
@@ -103,6 +81,7 @@
             </div>
 
             <div class="container overflow-hidden py-3">
+                
                 <div class="row g-3">
                     <div class="col-12">
                         <div >
@@ -116,12 +95,36 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <hr/>
+                <hr/>
 
-            <div class="container overflow-hidden py-3">
                 <div class="row g-3">
+
+                    <div class="col-md-12">
+                            <label for="Codigo" class="form-label">Medicamento <b class="text-danger">*</b></label>
+                            <div class="input-group mb-3">
+
+                                <select <?= $opt['disabled'] ?>
+                                    class="form-select select2 <?php if($validation->getError('Codigo')): ?>is-invalid<?php endif ?>"
+                                    id="Codigo" name="Codigo" data-placeholder="Selecione uma opção"
+                                    data-allow-clear="1">
+                                    <option value="">Selecione uma opção</option>
+                                    <?php
+                                    foreach ($select['Medicamento']->getResultArray() as $val) {
+                                        $selected = ($data['Codigo'] == $val['Codigo']) ? 'selected' : '';
+                                        echo '<option value="'.$val['Codigo'].'" '.$selected.'>'.$val['Medicamento'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+
+                                <?php if ($validation->getError('Codigo')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('Codigo') ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
                     <div class="col-4">
                         <div>
                             <label for="DataInicioTratamento" class="form-label">Data de Início <b class="text-danger">*</b></label>
@@ -149,10 +152,8 @@
                                 name="DataFimTratamento" value="<?php echo $data['DataFimTratamento'] ?>">
                         </div>
                     </div>
-                </div>
-            </div>
-     
-            <div class="container overflow-hidden py-3">
+                </div>    
+
                 <div class="row g-3">
                     <div class="col-4">
                         <div>
@@ -166,17 +167,17 @@
                                     <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidaG" autocomplete="off" 
                                         onchange="calculaProduto('DosePosologica', 'Intervalo', 'DoseDiaria')" value="g"
                                         <?php echo $radio['UnidadeMedida']['c'][0] ?>/>
-                                    <label class="btn btn-secondary <?php echo $radio['UnidadeMedida']['a'][0] ?>" for="UnidadeMedidaG" 
+                                    <label class="btn btn-success <?php echo $radio['UnidadeMedida']['a'][0] ?>" for="UnidadeMedidaG" 
                                         data-mdb-ripple-init>g</label>
                                     <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidamG" autocomplete="off" 
                                         onchange="calculaProduto('DosePosologica', 'Intervalo', 'DoseDiaria')" value="mg"
                                         <?php echo $radio['UnidadeMedida']['c'][1] ?>/>
-                                    <label class="btn btn-secondary <?php echo $radio['UnidadeMedida']['a'][1] ?>" for="UnidadeMedidamG" 
+                                    <label class="btn btn-success <?php echo $radio['UnidadeMedida']['a'][1] ?>" for="UnidadeMedidamG" 
                                         data-mdb-ripple-init>mg</label>
                                     <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidaUI" autocomplete="off" 
                                         onchange="calculaProduto('DosePosologica', 'Intervalo', 'DoseDiaria')" value="UI"
                                         <?php echo $radio['UnidadeMedida']['c'][2] ?>/>
-                                    <label class="btn btn-secondary <?php echo $radio['UnidadeMedida']['a'][2] ?>" for="UnidadeMedidaUI" 
+                                    <label class="btn btn-success <?php echo $radio['UnidadeMedida']['a'][2] ?>" for="UnidadeMedidaUI" 
                                         data-mdb-ripple-init>UI</label>
                                 </div>
                             </div>
@@ -194,12 +195,10 @@
                                     <?php
 
                                     foreach ($select['Intervalo']->getResultArray() as $row) {
-                                        if ($data['idTabSismicrob_Intervalo'] == $row['Intervalo'].'#'.$row['Codigo']) {
+                                        if ($data['idTabSismicrob_Intervalo'] == $row['Intervalo'].'#'.$row['Codigo']) 
                                             echo '<option value="' . $row['Intervalo'].'#'.$row['Codigo'] . '" selected="selected">'.$row['Intervalo'].' '.$row['Codigo'].'</option>';
-                                        }
-                                        else {
+                                        else 
                                             echo '<option value="' . $row['Intervalo'].'#'.$row['Codigo'] . '">'.$row['Intervalo'].' '.$row['Codigo'].'</option>';
-                                        }
                                     }
 
                                     ?>
@@ -215,7 +214,117 @@
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <div class="row g-3">
+                    <div class="col-2">
+                        <div>
+                            <label for="DosePosologica" class="form-label">Dose de Ataque <b class="text-danger">*</b></label>
+                            <div class="input-group">
+    <div class="btn-group">
+        <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off"
+            id="DoseAtaqueS" value="S" <?php echo $radio['DoseAtaque']['c'][0] ?>/>
+        <label class="btn btn-success <?php echo $radio['DoseAtaque']['a'][0] ?>" for="DoseAtaqueS" 
+            data-mdb-ripple-init>Sim</label>
+        <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off" 
+            id="DoseAtaqueN" value="N" <?php echo $radio['DoseAtaque']['c'][1] ?>/>
+        <label class="btn btn-success <?php echo $radio['DoseAtaque']['a'][1] ?>" for="DoseAtaqueN" 
+            data-mdb-ripple-init>Não</label>
+    </div>
+</div>
+
+                        </div>                         
+                    </div>
+                    <div class="col-2">
+                        <div>
+                            <label for="Intervalo" class="form-label">Hemodiálise <b class="text-danger">*</b></label>
+                            <div class="input-group">
+                                <div class="btn-group">
+                                    <input type="radio" class="btn-check" name="Hemodialise" autocomplete="off" id="HemodialiseS" 
+                                        value="S" <?php echo $radio['Hemodialise']['c'][0] ?>/>
+                                    <label class="btn btn-success <?php echo $radio['Hemodialise']['a'][0] ?>" for="HemodialiseS"
+                                        data-mdb-ripple-init>Sim</label>
+                                    <input type="radio" class="btn-check" name="Hemodialise" autocomplete="off" id="HemodialiseN" 
+                                        value="N" <?php echo $radio['Hemodialise']['c'][1] ?>/>
+                                    <label class="btn btn-success <?php echo $radio['Hemodialise']['a'][1] ?>" for="HemodialiseN"
+                                        data-mdb-ripple-init>Não</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div>
+                            <label for="idTabSismicrob_ViaAdministracao" class="form-label">Via de Administração <b class="text-danger">*</b></label>
+                            <div class="input-group mb-3">
+                                <select data-placeholder="Selecione uma opção..." class="form-control select2"
+                                        id="idTabSismicrob_ViaAdministracao" name="idTabSismicrob_ViaAdministracao">
+                                    <option value="">Selecione uma opção...</option>
+                                    <?php
+                                    foreach ($select['ViaAdministracao']->getResultArray() as $row) {   
+                                        if ($data['idTabSismicrob_ViaAdministracao'] == $row['idTabSismicrob_ViaAdministracao'])
+                                            echo '<option value="' . $row['idTabSismicrob_ViaAdministracao'].'" selected="selected">'.$row['Codigo'].' '.$row['ViaAdministracao'].'</option>';
+                                        else
+                                            echo '<option value="' . $row['idTabSismicrob_ViaAdministracao'].'">'.$row['Codigo'].' - '.$row['ViaAdministracao'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div>
+                            <label for="idTabSismicrob_Especialidade" class="form-label">Especialidade <b class="text-danger">*</b></label>
+                            <div class="input-group mb-3">
+                                <select data-placeholder="Selecione uma opção..." class="form-control select2"
+                                        id="idTabSismicrob_Especialidade" name="idTabSismicrob_Especialidade">
+                                    <option value="">Selecione uma opção...</option>
+                                    <?php
+                                    foreach ($select['Especialidade']->getResultArray() as $row) {   
+                                        if ($data['idTabSismicrob_Especialidade'] == $row['idTabSismicrob_Especialidade'])
+                                            echo '<option value="'.$row['idTabSismicrob_Especialidade'].'" selected="selected">'.$row['Especialidade'].'</option>';
+                                        else
+                                            echo '<option value="'.$row['idTabSismicrob_Especialidade'].'">'.$row['Especialidade'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-4">
+                        <div>
+                            <label for="Peso" class="form-label">Peso <b class="text-danger">*</b></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="Peso" maxlength="18"
+                                    onkeyup="clearanceCreatinina('Peso', 'Creatinina', 'Sexo', 'Idade', 'Clearance')"
+                                    name="Peso" value="<?php echo $data['Peso'] ?>">
+                                <span class="input-group-text" id="basic-addon2">kg</span>
+                            </div>
+                        </div>                         
+                    </div>
+                    <div class="col-4">
+                        <div>
+                            <label for="Creatinina" class="form-label">Creatinina <b class="text-danger">*</b></label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="Creatinina" maxlength="18"
+                                    onkeyup="clearanceCreatinina('Peso', 'Creatinina', 'Sexo', 'Idade', 'Clearance')"
+                                    name="Peso" value="<?php echo $data['Creatinina'] ?>">
+                                <span class="input-group-text" id="basic-addon2">mg/dL</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div>
+                            <label for="Clearance" class="form-label">Filtração Glomerular</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="Clearance" readonly
+                                    name="Clearance" value="<?php echo $data['Clearance'] ?>">
+                                <span class="input-group-text" id="basic-addon2">mL/min/1.73m²</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                     <div class="col-12">
                         <div >

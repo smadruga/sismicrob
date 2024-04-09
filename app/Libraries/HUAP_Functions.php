@@ -87,7 +87,7 @@ class HUAP_Functions
     }
 
     /**
-    * Função que calcula o Clearance Creatinina
+    * Calcula o Clearance Creatinina
     *
     * ClCr (mL/min) = (140 – idade) × (peso em kg) × (0.85 se mulher) / (72 × Creatinina sérica)
     * Referência: https://www.mdsaude.com/nefrologia/calculadoras-clearance-creatinina/ ou
