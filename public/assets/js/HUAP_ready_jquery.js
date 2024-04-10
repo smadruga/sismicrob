@@ -42,6 +42,16 @@ $(document).ready(function() {
         $(this).replaceWith('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Aguarde...</span></div>');
     });
 
+    $('.btn-group input[type="radio"]').change(function(){
+        // Remover a classe 'active' de todos os labels dentro do grupo de botões
+        $(this).parent().find('label').removeClass('active');
+        
+        // Adicionar a classe 'active' apenas ao label do radio selecionado
+        if ($(this).is(':checked')) {
+            $(this).next('label').addClass('active');
+        }
+    });
+
 });
 
 $(document).on('select2:open', () => {

@@ -19,7 +19,8 @@
                     <div class="col-6">
                         <div>
                             <label for="Indicacao" class="form-label">Indicação <b class="text-danger">*</b></label>
-                            <select data-placeholder="Selecione uma opção..." class="form-control select2"
+                            <select data-placeholder="Selecione uma opção..." class="form-control select2
+                                    <?php if($validation->getError('Medicamento')): ?>is-invalid<?php endif ?>"
                                     id="idTabSismicrob_Indicacao Chosen" 
                                     onchange="showHideDiv(this.value,this.name,'idTabSismicrob_Indicacao','1|3')"
                                     name="idTabSismicrob_Indicacao">
@@ -34,25 +35,41 @@
                                 }
 
                                 ?>
+
+                                <?php if ($validation->getError('Indicacao')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('Indicacao') ?>
+                                    </div>
+                                <?php endif; ?>
                             </select>                            
                         </div>
                     </div>
                     <div class="col-6">
-                        <div class="form-label idTabSismicrob_Indicacao1" id="#idTabSismicrob_Indicacao1" style="display: none;">
+                        <div class="form-label idTabSismicrob_Indicacao1" id="#idTabSismicrob_Indicacao1" 
+                            <?php echo $div['idTabSismicrob_Indicacao1'] ?>>
                             <label for="IndicacaoTipoCirurgia" class="form-label">Tipo de Cirurgia <b class="text-danger">*</b></label>
                             <input type="text" class="form-control" id="IndicacaoTipoCirurgia" maxlength="250"
-                                    name="IndicacaoTipoCirurgia" value="<?php echo $data['IndicacaoTipoCirurgia'] ?>">
+                                    name="IndicacaoTipoCirurgia
+                                    <?php if($validation->getError('Medicamento')): ?>is-invalid<?php endif ?>" 
+                                    value="<?php echo $data['IndicacaoTipoCirurgia'] ?>">
                         </div>
+                        <?php if ($validation->getError('IndicacaoTipoCirurgia')): ?>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('IndicacaoTipoCirurgia') ?>
+                            </div>
+                        <?php endif; ?>                        
                     </div>
                 </div>
             </div>                    
                     
-            <div class="container overflow-hidden idTabSismicrob_Indicacao3" id="#idTabSismicrob_Indicacao3" style="display: none;">
+            <div class="container overflow-hidden idTabSismicrob_Indicacao3" id="#idTabSismicrob_Indicacao3" 
+                <?php echo $div['idTabSismicrob_Indicacao3'] ?>>
                 <div class="row g-3">
                     <div class="col-6">
                         <label for="idTabSismicrob_DiagnosticoInfeccioso" class="form-label">
                             Diagnóstico Infeccioso <b class="text-danger">*</b></label>
-                        <select data-placeholder="Selecione uma opção..." class="form-control select2"
+                        <select data-placeholder="Selecione uma opção..." class="form-control select2
+                                <?php if($validation->getError('Medicamento')): ?>is-invalid<?php endif ?>"
                                 id="idTabSismicrob_DiagnosticoInfeccioso" 
                                 onchange="showHideDiv(this.value,this.name,'idTabSismicrob_DiagnosticoInfeccioso','7')" 
                                 name="idTabSismicrob_DiagnosticoInfeccioso">
@@ -67,16 +84,26 @@
                             }
 
                             ?>
-                        </select>                            
+                        </select>      
+                        <?php if ($validation->getError('idTabSismicrob_DiagnosticoInfeccioso')): ?>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('idTabSismicrob_DiagnosticoInfeccioso') ?>
+                            </div>
+                        <?php endif; ?>                                              
                     </div>
                     <div class="col-6">
                         <div class="form-label idTabSismicrob_DiagnosticoInfeccioso7" id="#idTabSismicrob_DiagnosticoInfeccioso7" 
-                                style="display: none;">
+                            <?php echo $div['idTabSismicrob_DiagnosticoInfeccioso'] ?>>
                             <label for="DiagnosticoInfecciosoOutro" class="form-label">Especificar <b class="text-danger">*</b></label>
-                            <input type="text" class="form-control" id="DiagnosticoInfecciosoOutro" maxlength="250"
+                            <input type="text" class="form-control <?php if($validation->getError('Medicamento')): ?>is-invalid<?php endif ?>" id="DiagnosticoInfecciosoOutro" maxlength="250"
                                     name="DiagnosticoInfecciosoOutro" value="<?php echo $data['DiagnosticoInfecciosoOutro'] ?>">
                         </div>
                     </div>
+                    <?php if ($validation->getError('DiagnosticoInfecciosoOutro')): ?>
+                        <div class="invalid-feedback">
+                            <?= $validation->getError('DiagnosticoInfecciosoOutro') ?>
+                        </div>
+                    <?php endif; ?>                    
                 </div>
             </div>
 
@@ -86,12 +113,17 @@
                     <div class="col-12">
                         <div >
                             <label for="Justificativa" class="form-label">Justificativa</label>
-                            <textarea class="form-control" id="Justificativa" maxlength="65000"
+                            <textarea class="form-control <?php if($validation->getError('Medicamento')): ?>is-invalid<?php endif ?>" id="Justificativa" maxlength="65000"
                                 name="Justificativa"><?php echo $data['Justificativa'] ?></textarea>
                             <small id="JustificativaHelp" class="form-text text-muted">
                                 <b class="text-warning">*</b>
                                 O campo "Justificativa" será obrigatório se o campo "Indicação" for "Terapêutica".
                             </small>
+                            <?php if ($validation->getError('Justificativa')): ?>
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('Justificativa') ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -101,25 +133,25 @@
                 <div class="row g-3">
 
                     <div class="col-md-12">
-                            <label for="Codigo" class="form-label">Medicamento <b class="text-danger">*</b></label>
+                            <label for="Medicamento" class="form-label">Medicamento <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
                                 <select <?= $opt['disabled'] ?>
-                                    class="form-select select2 <?php if($validation->getError('Codigo')): ?>is-invalid<?php endif ?>"
-                                    id="Codigo" name="Codigo" data-placeholder="Selecione uma opção"
+                                    class="form-select select2 <?php if($validation->getError('Medicamento')): ?>is-invalid<?php endif ?>"
+                                    id="Medicamento" name="Medicamento" data-placeholder="Selecione uma opção"
                                     data-allow-clear="1">
                                     <option value="">Selecione uma opção</option>
                                     <?php
                                     foreach ($select['Medicamento']->getResultArray() as $val) {
-                                        $selected = ($data['Codigo'] == $val['Codigo']) ? 'selected' : '';
+                                        $selected = ($data['Medicamento'] == $val['Codigo']) ? 'selected' : '';
                                         echo '<option value="'.$val['Codigo'].'" '.$selected.'>'.$val['Medicamento'].'</option>';
                                     }
                                     ?>
                                 </select>
 
-                                <?php if ($validation->getError('Codigo')): ?>
+                                <?php if ($validation->getError('Medicamento')): ?>
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('Codigo') ?>
+                                        <?= $validation->getError('Medicamento') ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -128,20 +160,32 @@
                     <div class="col-4">
                         <div>
                             <label for="DataInicioTratamento" class="form-label">Data de Início <b class="text-danger">*</b></label>
-                            <input type="date" id="DataInicioTratamento" class="form-control" 
+                            <input type="date" id="DataInicioTratamento" class="form-control 
+                                <?php if($validation->getError('DataInicioTratamento')): ?>is-invalid<?php endif ?>" 
                                 onchange="calculaTempoTratamento('DataInicioTratamento', 'Duracao', 'DataFimTratamento')"
                                 name="DataInicioTratamento" value="<?php echo $data['DataInicioTratamento'] ?>">
                         </div>
+                        <?php if ($validation->getError('DataInicioTratamento')): ?>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('DataInicioTratamento') ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <div class="col-4">
                         <div>
                             <label for="Duracao" class="form-label">Duração <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
-                                <input type="number" id="Duracao" class="form-control" 
+                                <input type="number" id="Duracao" class="form-control
+                                    <?php if($validation->getError('Duracao')): ?>is-invalid<?php endif ?>" 
                                     onchange="calculaTempoTratamento('DataInicioTratamento', 'Duracao', 'DataFimTratamento')"
                                     name="Duracao" value="<?php echo $data['Duracao'] ?>">
                                 <span class="input-group-text" id="basic-addon2">dia(s)</span>
                             </div>
+                            <?php if ($validation->getError('Duracao')): ?>
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('Duracao') ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="col-4">
@@ -218,9 +262,9 @@
                 <div class="row g-3">
                     <div class="col-2">
                         <div>
-                            <label for="DosePosologica" class="form-label">Dose de Ataque <b class="text-danger">*</b></label>
+                            <label for="DoseAtaque" class="form-label">Dose de Ataque <b class="text-danger">*</b></label>
                             <div class="input-group">
-                                <div class="btn-group">
+                                <div class="btn-group" data-toggle="buttons">
                                     <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off"
                                         id="DoseAtaqueS" value="S" <?php echo $radio['DoseAtaque']['c'][0] ?>/>
                                     <label class="btn btn-success <?php echo $radio['DoseAtaque']['a'][0] ?>" for="DoseAtaqueS" 
@@ -235,7 +279,7 @@
                     </div>
                     <div class="col-2">
                         <div>
-                            <label for="Intervalo" class="form-label">Hemodiálise <b class="text-danger">*</b></label>
+                            <label for="Hemodialise" class="form-label">Hemodiálise <b class="text-danger">*</b></label>
                             <div class="input-group">
                                 <div class="btn-group">
                                     <input type="radio" class="btn-check" name="Hemodialise" autocomplete="off" id="HemodialiseS" 

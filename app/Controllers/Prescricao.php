@@ -201,67 +201,66 @@ class Prescricao extends BaseController
 
         if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
             $v['data'] = [
-                'idSismicrob_Tratamento' => '',
-                'Codigo' => '',
-                'Medicamento' => '',
-                'DataInicioTratamento' => '',
-                'Duracao' => '',
-                'DataFimTratamento' => '',
+                'idSismicrob_Tratamento'        => '',
+                'Medicamento'                   => '',
+                'DataInicioTratamento'          => '',
+                'Duracao'                       => '',
+                'DataFimTratamento'             => '',
                 
-                'DoseAtaque' => '',                
-                'DosePosologica' => '',
-                'UnidadeMedida' => '',
-                'IntervaloUnidade' => '',
-                'DoseDiaria' => '',
-                'Unidades' => '',
-                'Peso' => '',
-                'Creatinina' => '',
-                'Clearance' => '',
-                'Hemodialise' => '',
+                'DoseAtaque'                    => '',                
+                'DosePosologica'                => '',
+                'UnidadeMedida'                 => '',
+                'Intervalo'                     => '',
+                'DoseDiaria'                    => '',
+                'Unidades'                      => '',
+                'Peso'                          => '',
+                'Creatinina'                    => '',
+                'Clearance'                     => '',
+                'Hemodialise'                   => '',
                 
-                'DiagnosticoInfecciosoOutro' => '',
-                'SubstituicaoMedicamento' => '',
-                'IndicacaoTipoCirurgia' => '',
+                'DiagnosticoInfecciosoOutro'    => '',
+                'SubstituicaoMedicamento'       => '',
+                'IndicacaoTipoCirurgia'         => '',
                 
-                'Avaliacao' => '',
-                'AvaliacaoDose' => '',
-                'AvaliacaoDoseObs' => '',
-                'AvaliacaoDuracao' => '',
-                'AvaliacaoDuracaoObs' => '',
-                'AvaliacaoIntervalo' => '',
-                'AvaliacaoIntervaloObs' => '',
-                'AvaliacaoIndicacao' => '',
-                'AvaliacaoIndicacaoObs' => '',
-                'AvaliacaoPreenchimentoInadequado' => '',
-                'AvaliacaoPreenchimentoInadequadoObs' => '',
-                'AvaliacaoOutros' => '',
-                'AvaliacaoOutrosObs' => '',
+                'Avaliacao'                             => '',
+                'AvaliacaoDose'                         => '',
+                'AvaliacaoDoseObs'                      => '',
+                'AvaliacaoDuracao'                      => '',
+                'AvaliacaoDuracaoObs'                   => '',
+                'AvaliacaoIntervalo'                    => '',
+                'AvaliacaoIntervaloObs'                 => '',
+                'AvaliacaoIndicacao'                    => '',
+                'AvaliacaoIndicacaoObs'                 => '',
+                'AvaliacaoPreenchimentoInadequado'      => '',
+                'AvaliacaoPreenchimentoInadequadoObs'   => '',
+                'AvaliacaoOutros'                       => '',
+                'AvaliacaoOutrosObs'                    => '',
                 
-                'AlteracaoPorAlta' => '',
+                'AlteracaoPorAlta'              => '',
                 
-                'SubstituirTratamento' => '',
-                'SubstituidoPeloTratamento' => '',
+                'SubstituirTratamento'          => '',
+                'SubstituidoPeloTratamento'     => '',
                 
-                'Justificativa' => '',
-                'Suspender' => '',
-                'SuspenderObs' => '',
+                'Justificativa'                 => '',
+                'Suspender'                     => '',
+                'SuspenderObs'                  => '',
                 
-                'Prorrogar' => '',
-                'ProrrogarObs' => '',
+                'Prorrogar'                     => '',
+                'ProrrogarObs'                  => '',
                 
-                'idTabSismicrob_Produto' => '',
-                'idTabSismicrob_ViaAdministracao' => '',
-                'idTabSismicrob_Especialidade' => '',
-                'idTabSismicrob_DiagnosticoInfeccioso' => '',
-                'idTabSismicrob_Tratamento' => '',
-                'idTabSismicrob_Substituicao' => '',
-                'idTabSismicrob_Indicacao' => '',
-                'idTabSismicrob_Infeccao' => '',
-                'idTabSismicrob_Intervalo' => '',
+                'idTabSismicrob_Produto'                => '',
+                'idTabSismicrob_ViaAdministracao'       => '',
+                'idTabSismicrob_Especialidade'          => '',
+                'idTabSismicrob_DiagnosticoInfeccioso'  => '',
+                'idTabSismicrob_Tratamento'             => '',
+                'idTabSismicrob_Substituicao'           => '',
+                'idTabSismicrob_Indicacao'              => '',
+                'idTabSismicrob_Infeccao'               => '',
+                'idTabSismicrob_Intervalo'              => '',
 
                 'submit' => '',
             ];
-            echo '111112222111oi<br>';
+            #echo '111112222111oi<br>';
         }
         else {
             #Captura os inputs do Formulário
@@ -271,7 +270,7 @@ class Prescricao extends BaseController
             #$v['data']['DoseAtaque'] = (!isset($v['data']['DoseAtaque'])) ? null : $v['data']['DoseAtaque'];
             #$v['data']['Hemodialise'] = (!isset($v['data']['Hemodialise'])) ? null : $v['data']['Hemodialise'];
 
-            echo '111111111oi<br>';
+            #echo '111111111oi<br>';
         }
 
         if(($action == 'editar' || $action == 'excluir' || $action == 'concluir') && !$v['data']['submit']) {
@@ -303,7 +302,7 @@ class Prescricao extends BaseController
             'DiagnosticoInfeccioso' => $tabela->list_tabela_bd('DiagnosticoInfeccioso', FALSE, FALSE, '*', 'idTabSismicrob_DiagnosticoInfeccioso', TRUE), #Carrega os itens da tabela selecionada
         ];
 
-        #/*
+        /*
         #$t = $v['func']->radio_checked('mg', 'UnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE);
         print "<pre>";
         print_r($v['data']);
@@ -324,12 +323,6 @@ class Prescricao extends BaseController
             'idTabSismicrob_Indicacao3' => $v['func']->div_showhide($v['data']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '3'),
         );        
 
-                    /*
-                    print "<pre>";
-                    print_r($v);
-                    print "</pre>";
-                    exit('???');
-                    #*/
 
         if($action == 'editar') {
 
@@ -378,9 +371,31 @@ class Prescricao extends BaseController
 
         if($v['data']['submit']) {
 
+                    #/*
+                    print "<pre>";
+                    print_r($v['data']);
+                    print "</pre>";
+                    #exit('???');
+                    #*/
+
             if($action == 'cadastrar' || $action == 'editar') {
                 #Critérios de validação
                 $inputs = $this->validate([
+                    'Indicacao'                             => ['label' => 'Indicação', 'rules' => 'required'],
+                    
+                    'IndicacaoTipoCirurgia'                 => ['label' => 'Tipo de Cirurgia', 'rules' => 'required'],
+                    
+                    'idTabSismicrob_DiagnosticoInfeccioso'  => ['label' => 'Diagnóstico Infeccioso', 'rules' => 'required'],
+                    'DiagnosticoInfecciosoOutro'            => 'required',
+
+                    'Justificativa'                         => 'required',
+
+                    'Medicamento'                           => 'required',
+                    'DataInicioTratamento'                  => ['label' => 'Data de Início', 'rules' => 'required|valid_date[d/m/Y]'],
+                    'Duracao'                               => ['label' => 'Duração', 'rules' => 'required|integer'],
+
+
+                    
                     'DataPrescricao'                    => ['label' => 'Data da Prescrição', 'rules' => 'required|valid_date[d/m/Y]'],
                     'Dia'                               => 'required|integer',
                     'Ciclo'                             => 'required|integer',
@@ -401,6 +416,8 @@ class Prescricao extends BaseController
                     #'ReacaoAdversa'                     => ['label' => 'Reação Adversa', 'rules' => 'required'],
                     #'Alergia'            => ['label' => 'Alergia', 'rules' => 'required'],
                 ]);
+                echo '><br /><br />fácil não';
+                #exit('oi');
             }
             else
                 $inputs = '';

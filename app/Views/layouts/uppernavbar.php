@@ -1,12 +1,14 @@
 <?php $session = \Config\Services::session(); ?>
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-primary pt-1 pb-1">
     <div class="container-fluid">
-        <a class="navbar-brand" href="<?= base_url('admin') ?>"><?= HUAP_APPNAME ?></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
+
+            <a class="navbar-brand" href="<?= base_url('admin') ?>"><?= HUAP_APPNAME ?></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+                    
             <form class="d-inline-flex" method="post" action="<?= base_url('paciente/get_paciente') ?>">
                 <input class="form-control me-sm-2" type="text" name="Pesquisar" placeholder="Nome prontuário ou nascimento">
                 <button class="btn btn-info my-2 my-sm-0" style="width: 150px" id="submit" type="submit"><i class="fa-solid fa-search"></i> Buscar</button>
