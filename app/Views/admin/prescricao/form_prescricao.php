@@ -195,7 +195,7 @@
                                     <?php
 
                                     foreach ($select['Intervalo']->getResultArray() as $row) {
-                                        if ($data['idTabSismicrob_Intervalo'] == $row['Intervalo'].'#'.$row['Codigo']) 
+                                        if ($data['Intervalo'] == $row['Intervalo'].'#'.$row['Codigo']) 
                                             echo '<option value="' . $row['Intervalo'].'#'.$row['Codigo'] . '" selected="selected">'.$row['Intervalo'].' '.$row['Codigo'].'</option>';
                                         else 
                                             echo '<option value="' . $row['Intervalo'].'#'.$row['Codigo'] . '">'.$row['Intervalo'].' '.$row['Codigo'].'</option>';
@@ -220,18 +220,17 @@
                         <div>
                             <label for="DosePosologica" class="form-label">Dose de Ataque <b class="text-danger">*</b></label>
                             <div class="input-group">
-    <div class="btn-group">
-        <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off"
-            id="DoseAtaqueS" value="S" <?php echo $radio['DoseAtaque']['c'][0] ?>/>
-        <label class="btn btn-success <?php echo $radio['DoseAtaque']['a'][0] ?>" for="DoseAtaqueS" 
-            data-mdb-ripple-init>Sim</label>
-        <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off" 
-            id="DoseAtaqueN" value="N" <?php echo $radio['DoseAtaque']['c'][1] ?>/>
-        <label class="btn btn-success <?php echo $radio['DoseAtaque']['a'][1] ?>" for="DoseAtaqueN" 
-            data-mdb-ripple-init>Não</label>
-    </div>
-</div>
-
+                                <div class="btn-group">
+                                    <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off"
+                                        id="DoseAtaqueS" value="S" <?php echo $radio['DoseAtaque']['c'][0] ?>/>
+                                    <label class="btn btn-success <?php echo $radio['DoseAtaque']['a'][0] ?>" for="DoseAtaqueS" 
+                                        data-mdb-ripple-init>Sim</label>
+                                    <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off" 
+                                        id="DoseAtaqueN" value="N" <?php echo $radio['DoseAtaque']['c'][1] ?>/>
+                                    <label class="btn btn-success <?php echo $radio['DoseAtaque']['a'][1] ?>" for="DoseAtaqueN" 
+                                        data-mdb-ripple-init>Não</label>
+                                </div>
+                            </div>
                         </div>                         
                     </div>
                     <div class="col-2">
@@ -309,7 +308,7 @@
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" id="Creatinina" maxlength="18"
                                     onkeyup="clearanceCreatinina('Peso', 'Creatinina', 'Sexo', 'Idade', 'Clearance')"
-                                    name="Peso" value="<?php echo $data['Creatinina'] ?>">
+                                    name="Creatinina" value="<?php echo $data['Creatinina'] ?>">
                                 <span class="input-group-text" id="basic-addon2">mg/dL</span>
                             </div>
                         </div>
@@ -326,12 +325,24 @@
                     </div>
                 </div>
 
-                    <div class="col-12">
-                        <div >
-                            <hr />
+                <hr />                               
+                    
+                <div class="row g-3">
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-primary" name="submit" value="1">
+                            <i class="fas fa-save" aria-hidden="true"></i> Salvar e Finalizar
+                        </button>
+                        <button type="submit" class="btn btn-info" name="submit2" value="2">
+                            <i class="fas fa-plus" aria-hidden="true"></i> Salvar e Incluir Outro Tratamento
+                        </button>
+                    </div>       
+                    <div class="col-6 text-end">
+                        <a class="btn btn-warning" href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+                    </div>
+                </div>
 
-                            <?= $opt['button'] ?>
-                            <a class="btn btn-warning" href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+                                
+                            
                         </div>
                     </div>
 

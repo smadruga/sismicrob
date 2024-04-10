@@ -197,7 +197,7 @@ class Prescricao extends BaseController
         $auditorialog   = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
         $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias
 
-        $action = (!$action) ? $this->request->getVar('action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $action;
+        $action = (!$action) ? $this->request->getPostGet('action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $action;
 
         if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
             $v['data'] = [
@@ -207,12 +207,8 @@ class Prescricao extends BaseController
                 'DataInicioTratamento' => '',
                 'Duracao' => '',
                 'DataFimTratamento' => '',
-                'DoseAtaque' => '',
-                'DoseAtaquePosologica' => '',
-                'DoseAtaqueUnidadeMedida' => '',
-                'DoseAtaqueIntervalo' => '',
-                'DoseAtaqueIntervaloUnidade' => '',
-                'DoseAtaqueNumeroDoses' => '',
+                
+                'DoseAtaque' => '',                
                 'DosePosologica' => '',
                 'UnidadeMedida' => '',
                 'IntervaloUnidade' => '',
@@ -222,9 +218,11 @@ class Prescricao extends BaseController
                 'Creatinina' => '',
                 'Clearance' => '',
                 'Hemodialise' => '',
+                
                 'DiagnosticoInfecciosoOutro' => '',
                 'SubstituicaoMedicamento' => '',
                 'IndicacaoTipoCirurgia' => '',
+                
                 'Avaliacao' => '',
                 'AvaliacaoDose' => '',
                 'AvaliacaoDoseObs' => '',
@@ -238,14 +236,19 @@ class Prescricao extends BaseController
                 'AvaliacaoPreenchimentoInadequadoObs' => '',
                 'AvaliacaoOutros' => '',
                 'AvaliacaoOutrosObs' => '',
+                
                 'AlteracaoPorAlta' => '',
+                
                 'SubstituirTratamento' => '',
                 'SubstituidoPeloTratamento' => '',
+                
                 'Justificativa' => '',
                 'Suspender' => '',
                 'SuspenderObs' => '',
+                
                 'Prorrogar' => '',
                 'ProrrogarObs' => '',
+                
                 'idTabSismicrob_Produto' => '',
                 'idTabSismicrob_ViaAdministracao' => '',
                 'idTabSismicrob_Especialidade' => '',
@@ -256,14 +259,19 @@ class Prescricao extends BaseController
                 'idTabSismicrob_Infeccao' => '',
                 'idTabSismicrob_Intervalo' => '',
 
-                'submit'                            => '',
+                'submit' => '',
             ];
-
+            echo '111112222111oi<br>';
         }
         else {
             #Captura os inputs do Formulário
-            $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-            #echo '111111111oi';
+            $v['data'] = array_map('trim', $this->request->getPostGet(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+
+            $v['data']['UnidadeMedida'] = (!isset($v['data']['UnidadeMedida'])) ? null : $v['data']['UnidadeMedida'];
+            #$v['data']['DoseAtaque'] = (!isset($v['data']['DoseAtaque'])) ? null : $v['data']['DoseAtaque'];
+            #$v['data']['Hemodialise'] = (!isset($v['data']['Hemodialise'])) ? null : $v['data']['Hemodialise'];
+
+            echo '111111111oi<br>';
         }
 
         if(($action == 'editar' || $action == 'excluir' || $action == 'concluir') && !$v['data']['submit']) {
@@ -295,18 +303,18 @@ class Prescricao extends BaseController
             'DiagnosticoInfeccioso' => $tabela->list_tabela_bd('DiagnosticoInfeccioso', FALSE, FALSE, '*', 'idTabSismicrob_DiagnosticoInfeccioso', TRUE), #Carrega os itens da tabela selecionada
         ];
 
-        /*
-        $t = $v['func']->radio_checked('mg', 'UnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE);
+        #/*
+        #$t = $v['func']->radio_checked('mg', 'UnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE);
         print "<pre>";
-        print_r($t);
+        print_r($v['data']);
         print "</pre>";
-        exit('q?');
+        #exit('q?');
         #*/
 
         $v['radio'] = array(
             'UnidadeMedida' => $v['func']->radio_checked($v['data']['UnidadeMedida'], 'UnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE),
-            'DoseAtaque'    => $v['func']->radio_checked($v['data']['DoseAtaque'], 'DoseAtaque', 'SN', FALSE, FALSE, TRUE),
-            'Hemodialise'   => $v['func']->radio_checked($v['data']['Hemodialise'], 'Hemodialise', 'SN', FALSE, FALSE, TRUE),
+            'DoseAtaque'    => $v['func']->radio_checked($v['data']['DoseAtaque'], 'DoseAtaque', 'SN', 'N', FALSE, TRUE),
+            'Hemodialise'   => $v['func']->radio_checked($v['data']['Hemodialise'], 'Hemodialise', 'SN', 'N', FALSE, TRUE),
         );
 
         $v['div'] = array(
