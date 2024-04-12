@@ -371,17 +371,10 @@ class Prescricao extends BaseController
 
         if($v['data']['submit']) {
 
-                    #/*
-                    print "<pre>";
-                    print_r($v['data']);
-                    print "</pre>";
-                    #exit('???');
-                    #*/
-
             if($action == 'cadastrar' || $action == 'editar') {
                 #Critérios de validação
                 $inputs = $this->validate([
-                    'Indicacao'                             => ['label' => 'Indicação', 'rules' => 'required'],
+                    'idTabSismicrob_Indicacao'              => ['label' => 'Indicação', 'rules' => 'required'],
                     
                     'IndicacaoTipoCirurgia'                 => ['label' => 'Tipo de Cirurgia', 'rules' => 'required'],
                     
@@ -391,36 +384,31 @@ class Prescricao extends BaseController
                     'Justificativa'                         => 'required',
 
                     'Medicamento'                           => 'required',
-                    'DataInicioTratamento'                  => ['label' => 'Data de Início', 'rules' => 'required|valid_date[d/m/Y]'],
+                    'DataInicioTratamento'                  => ['label' => 'Data de Início', 'rules' => 'required|valid_date[Y-m-d]'],
                     'Duracao'                               => ['label' => 'Duração', 'rules' => 'required|integer'],
 
+                    'DosePosologica'                        => ['label' => 'Dose Posológica de Manutenção', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\,)\d+)?$/]'],
+                    'UnidadeMedida'                         => ['label' => 'Unidade de Medida', 'rules' => 'required'],
+                    'Intervalo'                             => 'required',
 
-                    
-                    'DataPrescricao'                    => ['label' => 'Data da Prescrição', 'rules' => 'required|valid_date[d/m/Y]'],
-                    'Dia'                               => 'required|integer',
-                    'Ciclo'                             => 'required|integer',
-                    'Aplicabilidade'                    => 'required',
-                    'idTabPreschuap_Categoria'          => ['label' => 'CID Categoria', 'rules' => 'required'],
-                    #'idTabPreschuap_Subcategoria'       => ['label' => 'CID Subcategoria', 'rules' => 'required'],
-                    'idTabPreschuap_Protocolo'          => ['label' => 'Protocolo', 'rules' => 'required'],
-                    #'idTabPreschuap_TipoTerapia'        => ['label' => 'Tipo de Terapia', 'rules' => 'required'],
-                    'CiclosTotais'                      => ['label' => 'Total de Ciclos', 'rules' => 'required|integer'],
-                    'EntreCiclos'                       => ['label' => 'Entre Ciclos', 'rules' => 'required|integer'],
+                    'idTabSismicrob_ViaAdministracao'       => ['label' => 'Via de Administração', 'rules' => 'required'],
+                    'idTabSismicrob_Especialidade'          => ['label' => 'Especialidade', 'rules' => 'required'],
 
-                    'Peso'                              => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
-                    'CreatininaSerica'                  => ['label' => 'Creatinina Sérica', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
-                    'Altura'                            => 'required|integer',
+                    'Peso'                                  => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\,)\d+)?$/]',
+                    'Creatinina'                            => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\,)\d+)?$/]',
 
-                    #'DescricaoServico'                  => ['label' => 'Serviço', 'rules' => 'required'],
-                    #'InformacaoComplementar'            => ['label' => 'Informação Complementar', 'rules' => 'required'],
-                    #'ReacaoAdversa'                     => ['label' => 'Reação Adversa', 'rules' => 'required'],
-                    #'Alergia'            => ['label' => 'Alergia', 'rules' => 'required'],
                 ]);
-                echo '><br /><br />fácil não';
-                #exit('oi');
+                    
+                    /*
+                    print "<pre>";
+                    print_r($v['data']);
+                    print "</pre>";
+                    #exit('???');
+                    #*/
             }
             else
                 $inputs = '';
+
 
             #Realiza a validação e retorna ao formulário se false
             if (!$inputs && ($action == 'cadastrar' || $action == 'editar'))
