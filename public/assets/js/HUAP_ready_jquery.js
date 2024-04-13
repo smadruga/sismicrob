@@ -52,6 +52,29 @@ $(document).ready(function() {
         }
     });
 
+    $('#idTabSismicrob_Indicacao').change(function(){
+        var selectedOption = $(this).val();
+
+        //console.log('>>> opção: '+selectedOption);
+        
+        // Verificar se a opção selecionada é "Profilaxia Cirúrgica"
+        if (selectedOption == 1) {
+            // Alterar os labels dos campos conforme necessário
+            $('label[for="DoseAtaque"]').html('Dose de indução anestésica  <b class="text-danger">*</b>');
+            $('label[for="Intervalo"]').html('Intervalo para repique intraoperatório <b class="text-danger">*</b>');
+            $('label[for="DoseDiaria"]').text('Dose diária - repiques intraoperatório');
+            // Adicionar o novo campo "Mantido"
+            $('#AntibioticobMantido').css('display', 'block');;
+        } else {
+            // Restaurar os labels dos campos ao original
+            $('label[for="DoseAtaque"]').html('Dose de ataque <b class="text-danger">*</b>');
+            $('label[for="Intervalo"]').html('Intervalo <b class="text-danger">*</b>');
+            $('label[for="DoseDiaria"]').text('Dose diária');
+            // Ocultar o campo "Mantido"
+            $('#AntibioticobMantido').css('display', 'none');;
+        }
+    });
+
 });
 
 $(document).on('select2:open', () => {

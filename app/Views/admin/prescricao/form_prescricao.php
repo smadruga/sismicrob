@@ -20,7 +20,7 @@
 
                             <label for="idTabSismicrob_Indicacao" class="form-label">Indicação <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
-                                <select <?= $opt['disabled'] ?> autofocus class="form-control select2
+                                <select <?= $opt['disabled'] ?> class="form-control select2
                                     <?php if($validation->getError('idTabSismicrob_Indicacao')): ?>is-invalid<?php endif ?>"
                                         id="idTabSismicrob_Indicacao" name="idTabSismicrob_Indicacao" data-placeholder="Selecione uma opção..."
                                         onchange="showHideDiv(this.value,this.name,'idTabSismicrob_Indicacao','1|3')"
@@ -245,7 +245,7 @@
                     </div>
                     <div class="col-4">
                         <div>
-                            <label for="Intervalo" class="form-label">Intervalo <b class="text-danger">*</b></label>
+                            <label for="Intervalo" class="form-label"><?= $data['mascara']['Intervalo'] ?> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
                                 <select data-placeholder="Selecione uma opção..." class="form-control select2
                                     <?php if($validation->getError('Intervalo')): ?>is-invalid<?php endif ?>"
@@ -256,10 +256,10 @@
                                     <?php
 
                                     foreach ($select['Intervalo']->getResultArray() as $row) {
-                                        if ($data['Intervalo'] == $row['Intervalo'].'#'.$row['Codigo']) 
-                                            echo '<option value="' . $row['Intervalo'].'#'.$row['Codigo'] . '" selected="selected">'.$row['Intervalo'].' '.$row['Codigo'].'</option>';
+                                        if ($data['Intervalo'] == $row['Intervalo'].'#'.$row['Codigo'].'#'.$row['idTabSismicrob_Intervalo']) 
+                                            echo '<option value="' . $row['Intervalo'].'#'.$row['Codigo'].'#'.$row['idTabSismicrob_Intervalo'].'" selected="selected">'.$row['Intervalo'].' '.$row['Codigo'].'</option>';
                                         else 
-                                            echo '<option value="' . $row['Intervalo'].'#'.$row['Codigo'] . '">'.$row['Intervalo'].' '.$row['Codigo'].'</option>';
+                                            echo '<option value="' . $row['Intervalo'].'#'.$row['Codigo'].'#'.$row['idTabSismicrob_Intervalo'].'">'.$row['Intervalo'].' '.$row['Codigo'].'</option>';
                                     }
 
                                     ?>
@@ -274,7 +274,7 @@
                     </div>
                     <div class="col-4">
                         <div>
-                            <label for="DoseDiaria" class="form-label">Dose diária</label>
+                            <label for="DoseDiaria" class="form-label"><?= $data['mascara']['DoseDiaria'] ?></label>
                             <input type="text" class="form-control" id="DoseDiaria" readonly
                                 name="DoseDiaria" value="<?php echo $data['DoseDiaria'] ?>">
                         </div>
@@ -282,9 +282,9 @@
                 </div>
 
                 <div class="row g-3">
-                    <div class="col-2">
+                    <div class="col-3">
                         <div>
-                            <label for="DoseAtaque" class="form-label">Dose de Ataque <b class="text-danger">*</b></label>
+                            <label for="DoseAtaque" class="form-label"><?= $data['mascara']['DoseAtaque'] ?> <b class="text-danger">*</b></label>
                             <div class="input-group">
                                 <div class="btn-group" data-toggle="buttons">
                                     <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off"
@@ -299,7 +299,7 @@
                             </div>
                         </div>                         
                     </div>
-                    <div class="col-2">
+                    <div class="col-3">
                         <div>
                             <label for="Hemodialise" class="form-label">Hemodiálise <b class="text-danger">*</b></label>
                             <div class="input-group">
@@ -316,7 +316,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div>
                             <label for="idTabSismicrob_ViaAdministracao" class="form-label">Via de Administração <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
@@ -341,7 +341,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div>
                             <label for="idTabSismicrob_Especialidade" class="form-label">Especialidade <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
@@ -369,7 +369,32 @@
                 </div>
 
                 <div class="row g-3">
-                    <div class="col-4">
+                    <div class="col-3 idTabSismicrob_Indicacao1" id="idTabSismicrob_Indicacao1" <?php echo $div['idTabSismicrob_Indicacao1'] ?>>
+                        <div>
+                            <label for="AntibioticoMantido" class="form-label">Antibiótico após cirurgia <b class="text-danger">*</b></label>
+                            <div class="input-group mb-3">
+                                <select data-placeholder="Selecione uma opção..." class="form-control select2
+                                    <?php if($validation->getError('AntibioticoMantido')): ?>is-invalid<?php endif ?>"
+                                    id="AntibioticoMantido" name="AntibioticoMantido">
+                                    <option value="">Selecione uma opção...</option>
+                                    <?php
+                                    foreach ($select['AntibioticoMantido']->getResultArray() as $row) {   
+                                        if ($data['AntibioticoMantido'] == $row['idTabSismicrob_AntibioticoMantido'])
+                                            echo '<option value="'.$row['idTabSismicrob_AntibioticoMantido'].'" selected="selected">'.$row['AntibioticoMantido'].'</option>';
+                                        else
+                                            echo '<option value="'.$row['idTabSismicrob_AntibioticoMantido'].'">'.$row['AntibioticoMantido'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                                <?php if ($validation->getError('AntibioticoMantido')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('AntibioticoMantido') ?>
+                                    </div>                                    
+                                <?php endif; ?>                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
                         <div>
                             <label for="Peso" class="form-label">Peso <b class="text-danger">*</b></label>
                             <div class="input-group">
@@ -386,7 +411,7 @@
                             </div>
                         </div>                         
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div>
                             <label for="Creatinina" class="form-label">Creatinina <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
@@ -403,7 +428,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <div>
                             <label for="Clearance" class="form-label">Filtração Glomerular</label>
                             <div class="input-group mb-3">
@@ -431,10 +456,7 @@
                     </div>
                 </div>
 
-                                
-                            
-                        </div>
-                    </div>
+            </div>
 
 
             <input type="hidden" name="Idade" id="Idade" value="<?= $_SESSION['Paciente']['idade'] ?>" />

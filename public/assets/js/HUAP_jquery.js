@@ -333,19 +333,23 @@ function calculaProduto(c1, c2, cvalor) {
     var c2 = $("#"+c2).val();
 
     s = c2.split('#');
-    c2 = s[0];
 
-    if(s[1] == 'horas' && c2 <= 24) {
-        var valor = (c1.replace(".","").replace(",",".") * (24 / c2));
+    if(s[2] < 6) {
+        var valor = (c1.replace(".","").replace(",",".") * (24 / s[0]));
 
         valor = ($('input[name=UnidadeMedida]:checked').val()) ?
             mascaraValorReal(valor) + ' ' + $('input[name=UnidadeMedida]:checked').val() :
             mascaraValorReal(valor);
     }
-    else
-        valor = '0,00';
+    else {
+        var valor = (c1.replace(".","").replace(",",".") * 1);
 
-    //console.log("OI >>> "+c1+" % > "+c2+" < & "+valor+" unid >>> "+$('input[name=UnidadeMedida]:checked').val());
+        valor = ($('input[name=UnidadeMedida]:checked').val()) ?
+            mascaraValorReal(valor) + ' ' + $('input[name=UnidadeMedida]:checked').val() :
+            mascaraValorReal(valor);
+    }
+
+    //console.log("OI3 >>> "+c1+" % > "+c2+" < & "+valor+" unid >>> "+$('input[name=UnidadeMedida]:checked').val()+' $$$ ');
 
     //console.log("OI>>> "+valor);
     if(c1, c2)

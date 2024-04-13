@@ -69,4 +69,7 @@ return [
     'mime_in'  => '{field} não tem um tipo mime válido.',
     'ext_in'   => '{field} não tem uma extensão de arquivo válida.',
     'max_dims' => '{field} não é uma imagem, ou ela é muito larga ou muito grande.',
+
+    //HUAP
+    'required_if' => 'O campo acima é obrigatório.',
 ];

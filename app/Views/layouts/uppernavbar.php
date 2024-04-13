@@ -37,6 +37,7 @@
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Substituicao') ?>"><i class="fa-solid fa-table-list"></i> Substituição</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Tratamento') ?>"><i class="fa-solid fa-table-list"></i> Tratamento</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/ViaAdministracao') ?>"><i class="fa-solid fa-table-list"></i> Via de Administração</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/AntibioticoMantido') ?>"><i class="fa-solid fa-table-list"></i> Manter Antibiótico</a>
                     </div>
                 </li>
                 <?php if (isset($_SESSION['Sessao']['Perfil'][1]) || isset($_SESSION['Sessao']['Perfil'][2]) ) { ?>
