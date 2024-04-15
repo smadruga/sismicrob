@@ -113,6 +113,13 @@ class Prescricao extends BaseController
 
         $v['prescricao'] = $prescricao->read_prescricao($_SESSION['Paciente']['prontuario']);
 
+        #/*
+        echo "<pre>";
+        print_r($_SESSION['Paciente']);
+        echo "</pre>";
+        exit('oi'.$_SESSION['Paciente']['prontuario']);
+        #*/
+
         if($v['prescricao']['count'] > 0) {
 
             $m['where'] = null;
@@ -200,6 +207,13 @@ class Prescricao extends BaseController
 
         $action = (!$action) ? $this->request->getPostGet('action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $action;
 
+        /*
+        echo "<pre>";
+        print_r($_SESSION['Paciente']);
+        echo "</pre>";
+        exit('oi'.$_SESSION['Paciente']['prontuario']);
+        #*/
+
         if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
             $v['data'] = [
                 'idSismicrob_Tratamento'        => '',
@@ -250,7 +264,6 @@ class Prescricao extends BaseController
                 'Prorrogar'                     => '',
                 'ProrrogarObs'                  => '',
                 
-                'idTabSismicrob_Produto'                => '',
                 'idTabSismicrob_ViaAdministracao'       => '',
                 'idTabSismicrob_Especialidade'          => '',
                 'idTabSismicrob_DiagnosticoInfeccioso'  => '',
@@ -259,6 +272,7 @@ class Prescricao extends BaseController
                 'idTabSismicrob_Indicacao'              => '',
                 'idTabSismicrob_Infeccao'               => '',
                 'idTabSismicrob_Intervalo'              => '',
+                'idTabSismicrob_AntibioticoMantido'     => '',
 
                 'submit' => '',
             ];
@@ -378,11 +392,10 @@ class Prescricao extends BaseController
                     'idTabSismicrob_Indicacao'              => ['label' => 'Indicação', 'rules' => 'required'],
                     
                     'IndicacaoTipoCirurgia'                 => ['label' => 'Tipo de Cirurgia', 'rules' => 'required_if['.$v['data']['idTabSismicrob_Indicacao'].', 1]'],
-                    'AntibioticoMantido'                    => ['label' => 'acima', 'rules' => 'required_if['.$v['data']['idTabSismicrob_Indicacao'].', 1]'],
+                    'idTabSismicrob_AntibioticoMantido'     => ['label' => 'acima', 'rules' => 'required_if['.$v['data']['idTabSismicrob_Indicacao'].', 1]'],
                     
                     'idTabSismicrob_DiagnosticoInfeccioso'  => ['label' => 'Diagnóstico Infeccioso', 'rules' => 'required_if['.$v['data']['idTabSismicrob_Indicacao'].', 3]'],
                     'DiagnosticoInfecciosoOutro'            => 'required_if['.$v['data']['idTabSismicrob_DiagnosticoInfeccioso'].', 7]',
-
 
                     'Justificativa'                         => 'required_if['.$v['data']['idTabSismicrob_Indicacao'].', 3]',
 
@@ -407,10 +420,11 @@ class Prescricao extends BaseController
                 $inputs = '';
 
             /*
+            $db->getLastQuery();
             print "<pre>";
             print_r($v['data']);
             print "</pre>";
-            #exit('???');
+            exit('???');
             #*/
 
             #Realiza a validação e retorna ao formulário se false
@@ -428,6 +442,31 @@ class Prescricao extends BaseController
                     $v['data']['Peso']                          = str_replace(",",".",$v['data']['Peso']);
                     $v['data']['Creatinina']                    = str_replace(",",".",$v['data']['Creatinina']);
                     $v['data']['Clearance']                     = str_replace(",",".",$v['data']['Clearance']);
+                    $v['data']['idTabSismicrob_Tratamento']     = 1;
+                    $v['data']['Prontuario']                    = $_SESSION['Paciente']['prontuario'];
+                    $v['data']['CodigoAghux']                   = $_SESSION['Paciente']['codigo'];
+
+                    $v['data']['idTabSismicrob_DiagnosticoInfeccioso']  = ($v['data']['idTabSismicrob_DiagnosticoInfeccioso']) ? $v['data']['idTabSismicrob_DiagnosticoInfeccioso'] : null;
+                    $v['data']['idTabSismicrob_AntibioticoMantido']     = ($v['data']['idTabSismicrob_AntibioticoMantido']) ? $v['data']['idTabSismicrob_AntibioticoMantido'] : null;
+
+                    if($v['data']['idTabSismicrob_Indicacao'] == 1) {
+                        $v['data']['idTabSismicrob_DiagnosticoInfeccioso'] = null;
+                        $v['data']['DiagnosticoInfecciosoOutro'] = null;
+                    }
+                    elseif($v['data']['idTabSismicrob_Indicacao'] == 3) {
+                        $v['data']['IndicacaoTipoCirurgia'] = null;
+                        $v['data']['idTabSismicrob_AntibioticoMantido'] = null;
+                    }
+                    else {
+                        $v['data']['idTabSismicrob_DiagnosticoInfeccioso'] = null;
+                        $v['data']['DiagnosticoInfecciosoOutro'] = null;
+                        $v['data']['IndicacaoTipoCirurgia'] = null;
+                        $v['data']['idTabSismicrob_AntibioticoMantido'] = null;                       
+                    }
+
+                    $l = explode('#', $v['data']['Intervalo']);
+                    $v['data']['idTabSismicrob_Intervalo'] = $l[2];
+
                 }
                 if($action == 'concluir')
                     $v['data']['Concluido'] = 1;
@@ -438,8 +477,10 @@ class Prescricao extends BaseController
                     $v['data']['Sexo'],
                     $v['data']['submit'],
                     $v['data']['action'],
+                    $v['data']['mascara'],
                 );
-            
+
+
                 $v['campos'] = array_keys($v['data']);
 
                 if($action == 'concluir') {
@@ -493,15 +534,23 @@ class Prescricao extends BaseController
 
                     $v['anterior'] = array();
 
+        /*
+        echo "<pre>";
+        print_r($v['data']);
+        echo "</pre>";
+        exit('oi');
+        #*/
+
                     $v['id'] = $prescricao->insert($v['data']);
 
                     if($v['id']) {
 
-                        $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Sismicrob_Tratamento', 'CREATE', $v['id']), TRUE);
+                        $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Sismicrob_Tratamento', 'CREATE', $v['id']), TRUE);       
                         $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
                                                 
                         session()->setFlashdata('success', 'Item adicionado com sucesso!');
-                        return redirect()->to('prescricao/manage_medicamento/'.$v['id']);
+                        #return redirect()->to('prescricao/manage_medicamento/'.$v['id']);
+                        return redirect()->to('prescricao/list_prescricao');
 
                     }
                     else
@@ -512,10 +561,7 @@ class Prescricao extends BaseController
                     session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação. ERRO: PRESCRIÇÃO-02');
 
 
-                if($action == 'editar' || $action == 'cadastrar')
-                    return redirect()->to('prescricao/manage_medicamento/'.$v['id']);
-                else
-                    return redirect()->to('prescricao/list_prescricao');
+                return redirect()->to('prescricao/list_prescricao');
 
             }
 

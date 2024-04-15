@@ -8,41 +8,70 @@ use App\Libraries\HUAP_Functions;
 class PrescricaoModel extends Model
 {
     protected $DBGroup              = 'default';
-    protected $table                = 'Preschuap_Prescricao';
-    protected $primaryKey           = 'idPreschuap_Prescricao';
+    protected $table                = 'Sismicrob_Tratamento';
+    protected $primaryKey           = 'idSismicrob_Tratamento';
     protected $useAutoIncrement     = true;
     protected $returnType           = 'array';
     protected $protectFields        = true;
     protected $allowedFields        = [
-                                        'Prontuario',
-                                        'DataMarcacao',
-                                        'DataPrescricao',
-                                        'Dia',
-                                        'Ciclo',
-                                        'Aplicabilidade',
-                                        'idTabPreschuap_Categoria',
-                                        'idTabPreschuap_Subcategoria',
-                                        'idTabPreschuap_Protocolo',
-                                        'idTabPreschuap_TipoTerapia',
-                                        'CiclosTotais',
-                                        'EntreCiclos',
+                                        'idSismicrob_Tratamento',      
+                                        'Medicamento',                 
+                                        'DataInicioTratamento',        
+                                        'Duracao',                     
+                                        'DataFimTratamento',           
+                                        
+                                        'DoseAtaque',                                
+                                        'DosePosologica',              
+                                        'UnidadeMedida',                              
+                                        'DoseDiaria',                  
+                                        'Unidades',                    
+                                        'Peso',                        
+                                        'Creatinina',                  
+                                        'Clearance',                   
+                                        'Hemodialise',                 
+                                        
+                                        'DiagnosticoInfecciosoOutro',  
+                                        'SubstituicaoMedicamento',     
+                                        'IndicacaoTipoCirurgia',               
+                                        
+                                        'Avaliacao',                           
+                                        'AvaliacaoDose',                       
+                                        'AvaliacaoDoseObs',                    
+                                        'AvaliacaoDuracao',                    
+                                        'AvaliacaoDuracaoObs',                 
+                                        'AvaliacaoIntervalo',                  
+                                        'AvaliacaoIntervaloObs',               
+                                        'AvaliacaoIndicacao',                  
+                                        'AvaliacaoIndicacaoObs',               
+                                        'AvaliacaoPreenchimentoInadequado',    
+                                        'AvaliacaoPreenchimentoInadequadoObs', 
+                                        'AvaliacaoOutros',                     
+                                        'AvaliacaoOutrosObs',                  
+                                        
+                                        'AlteracaoPorAlta',            
+                                        
+                                        'SubstituirTratamento',        
+                                        'SubstituidoPeloTratamento',   
+                                        
+                                        'Justificativa',               
+                                        'Suspender',                   
+                                        'SuspenderObs',                
+                                        
+                                        'Prorrogar',                   
+                                        'ProrrogarObs',                
+                                                 
+                                        'idTabSismicrob_ViaAdministracao',     
+                                        'idTabSismicrob_Especialidade',        
+                                        'idTabSismicrob_DiagnosticoInfeccioso',
+                                        'idTabSismicrob_Tratamento',           
+                                        'idTabSismicrob_Substituicao',         
+                                        'idTabSismicrob_Indicacao',            
+                                        'idTabSismicrob_Infeccao',             
+                                        'idTabSismicrob_Intervalo',           
+                                        'idTabSismicrob_AntibioticoMantido',
 
-                                        'Peso',
-                                        'CreatininaSerica',
-                                        'Altura',
-                                        'ClearanceCreatinina',
-                                        'IndiceMassaCorporal',
-                                        'SuperficieCorporal',
-
-                                        'idSishuap_Usuario',
-                                        'Status',
-                                        'Leito',
-                                        'DescricaoServico',
-                                        'idTabPreschuap_MotivoCancelamento',
-                                        'InformacaoComplementar',
-                                        'ReacaoAdversa',
-                                        'Alergia',
-                                        'Concluido',
+                                        'Prontuario',                   
+                                        'CodigoAghux',                
                                     ];
 
     /**
@@ -53,12 +82,12 @@ class PrescricaoModel extends Model
     public function read_prescricao($data, $buscaid = FALSE, $row = FALSE)
     {
 
-        $where = ($buscaid) ? 'p.idPreschuap_Prescricao = '.$data : 'p.Prontuario = '.$data;
+        $where = ($buscaid) ? 'p.idSismicrob_Tratamento = '.$data : 'p.Prontuario = '.$data;
 
         $db = \Config\Database::connect();
         $query = $db->query('
             SELECT
-                p.idPreschuap_Prescricao
+                p.idSismicrob_Tratamento
                 , p.Prontuario
                 , date_format(p.DataMarcacao, "%d/%m/%Y") as DataMarcacao
                 , date_format(p.DataPrescricao, "%d/%m/%Y") as DataPrescricao
@@ -91,7 +120,7 @@ class PrescricaoModel extends Model
                 , p.Alergia
                 , p.Concluido
             FROM
-                preschuapweb.Preschuap_Prescricao as p
+                preschuapweb.Sismicrob_Tratamento as st
                     left join TabPreschuap_Categoria as tc on p.idTabPreschuap_Categoria = tc.idTabPreschuap_Categoria
                     left join TabPreschuap_Subcategoria as ts on p.idTabPreschuap_Subcategoria = ts.idTabPreschuap_Subcategoria
                     left join TabPreschuap_Protocolo as tp on p.idTabPreschuap_Protocolo = tp.idTabPreschuap_Protocolo
@@ -100,7 +129,7 @@ class PrescricaoModel extends Model
                     left join TabPreschuap_MotivoCancelamento as tmc on p.idTabPreschuap_MotivoCancelamento = tmc.idTabPreschuap_MotivoCancelamento
             WHERE
                 '.$where.'
-            ORDER BY p.idPreschuap_Prescricao DESC
+            ORDER BY p.idSismicrob_Tratamento DESC
 
         ');
         /*
@@ -172,13 +201,13 @@ class PrescricaoModel extends Model
         $db = \Config\Database::connect();
         $query = $db->query('
             SELECT
-                idPreschuap_Prescricao
+                idSismicrob_Tratamento
             FROM
-                Preschuap_Prescricao
+                Sismicrob_Tratamento
             WHERE
                 Prontuario = '.$prontuario.'
                 AND Concluido = 1
-            ORDER BY idPreschuap_Prescricao DESC
+            ORDER BY idSismicrob_Tratamento DESC
             LIMIT 0,1;
         ');
 
@@ -192,7 +221,7 @@ class PrescricaoModel extends Model
         #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
 
         $query = $query->getRowArray();
-        return $query['idPreschuap_Prescricao'];
+        return $query['idSismicrob_Tratamento'];
 
     }
 

@@ -371,24 +371,24 @@
                 <div class="row g-3">
                     <div class="col-3 idTabSismicrob_Indicacao1" id="idTabSismicrob_Indicacao1" <?php echo $div['idTabSismicrob_Indicacao1'] ?>>
                         <div>
-                            <label for="AntibioticoMantido" class="form-label">Antibiótico após cirurgia <b class="text-danger">*</b></label>
+                            <label for="idTabSismicrob_AntibioticoMantido" class="form-label">Antibiótico após cirurgia <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
                                 <select data-placeholder="Selecione uma opção..." class="form-control select2
-                                    <?php if($validation->getError('AntibioticoMantido')): ?>is-invalid<?php endif ?>"
-                                    id="AntibioticoMantido" name="AntibioticoMantido">
+                                    <?php if($validation->getError('idTabSismicrob_AntibioticoMantido')): ?>is-invalid<?php endif ?>"
+                                    id="idTabSismicrob_AntibioticoMantido" name="idTabSismicrob_AntibioticoMantido">
                                     <option value="">Selecione uma opção...</option>
                                     <?php
                                     foreach ($select['AntibioticoMantido']->getResultArray() as $row) {   
-                                        if ($data['AntibioticoMantido'] == $row['idTabSismicrob_AntibioticoMantido'])
+                                        if ($data['idTabSismicrob_AntibioticoMantido'] == $row['idTabSismicrob_AntibioticoMantido'])
                                             echo '<option value="'.$row['idTabSismicrob_AntibioticoMantido'].'" selected="selected">'.$row['AntibioticoMantido'].'</option>';
                                         else
                                             echo '<option value="'.$row['idTabSismicrob_AntibioticoMantido'].'">'.$row['AntibioticoMantido'].'</option>';
                                     }
                                     ?>
                                 </select>
-                                <?php if ($validation->getError('AntibioticoMantido')): ?>
+                                <?php if ($validation->getError('idTabSismicrob_AntibioticoMantido')): ?>
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('AntibioticoMantido') ?>
+                                        <?= $validation->getError('idTabSismicrob_AntibioticoMantido') ?>
                                     </div>                                    
                                 <?php endif; ?>                                
                             </div>
