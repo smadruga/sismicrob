@@ -113,32 +113,11 @@ class Prescricao extends BaseController
 
         $v['prescricao'] = $prescricao->read_prescricao($_SESSION['Paciente']['prontuario']);
 
-        #/*
-        echo "<pre>";
-        print_r($_SESSION['Paciente']);
-        echo "</pre>";
-        exit('oi'.$_SESSION['Paciente']['prontuario']);
-        #*/
-
-        if($v['prescricao']['count'] > 0) {
-
-            $m['where'] = null;
-            foreach($v['prescricao']['array'] as $val) {
-                $m['where'] .= $val['idSismicrob_Tratamento'].', ';
-                $m['medicamento'][$val['idSismicrob_Tratamento']] = NULL;
-            }
-            $m['where'] = substr($m['where'], 0, -2);
-
-        }
-
         /*
         echo "<pre>";
-        print_r($v['prescricao']);
+        print_r($v);
         echo "</pre>";
-        echo "<pre>";
-        print_r($v['medicamento']);
-        echo "</pre>";
-        #exit('oi'.$_SESSION['Paciente']['prontuario']);
+        exit('oi'.$_SESSION['Paciente']['prontuario']);
         #*/
 
         return view('admin/prescricao/list_prescricao', $v);
@@ -292,7 +271,7 @@ class Prescricao extends BaseController
         }
         else {
             $v['data']['mascara']['DoseAtaque'] = 'Dose de indução anestésica';
-            $v['data']['mascara']['DoseDiaria'] = 'Dose diária - repiques intraoperatório';
+            $v['data']['mascara']['DoseDiaria'] = 'Dose diária - repique intraoperatório';
             $v['data']['mascara']['Intervalo']  = 'Intervalo para repique intraoperatório';
         }
 
@@ -462,10 +441,14 @@ class Prescricao extends BaseController
                         $v['data']['DiagnosticoInfecciosoOutro'] = null;
                         $v['data']['IndicacaoTipoCirurgia'] = null;
                         $v['data']['idTabSismicrob_AntibioticoMantido'] = null;                       
-                    }
+                    }                 
 
                     $l = explode('#', $v['data']['Intervalo']);
                     $v['data']['idTabSismicrob_Intervalo'] = $l[2];
+
+                    $l = explode('#', $v['data']['Medicamento']);
+                    $v['data']['CodigoMedicamento'] = $l[0];
+                    $v['data']['NomeMedicamento'] = $l[1];
 
                 }
                 if($action == 'concluir')
@@ -478,6 +461,8 @@ class Prescricao extends BaseController
                     $v['data']['submit'],
                     $v['data']['action'],
                     $v['data']['mascara'],
+                    $v['data']['Medicamento'],
+                    $v['data']['Intervalo'],
                 );
 
 

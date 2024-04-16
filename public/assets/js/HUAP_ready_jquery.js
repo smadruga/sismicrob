@@ -62,7 +62,7 @@ $(document).ready(function() {
             // Alterar os labels dos campos conforme necessário
             $('label[for="DoseAtaque"]').html('Dose de indução anestésica  <b class="text-danger">*</b>');
             $('label[for="Intervalo"]').html('Intervalo para repique intraoperatório <b class="text-danger">*</b>');
-            $('label[for="DoseDiaria"]').text('Dose diária - repiques intraoperatório');
+            $('label[for="DoseDiaria"]').text('Dose diária - repique intraoperatório');
             // Adicionar o novo campo "Mantido"
             $('#AntibioticobMantido').css('display', 'block');;
         } else {

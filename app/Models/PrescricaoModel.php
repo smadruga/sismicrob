@@ -70,6 +70,9 @@ class PrescricaoModel extends Model
                                         'idTabSismicrob_Intervalo',           
                                         'idTabSismicrob_AntibioticoMantido',
 
+                                        'CodigoMedicamento',
+                                        'NomeMedicamento',
+
                                         'Prontuario',                   
                                         'CodigoAghux',                
                                     ];
@@ -82,55 +85,78 @@ class PrescricaoModel extends Model
     public function read_prescricao($data, $buscaid = FALSE, $row = FALSE)
     {
 
-        $where = ($buscaid) ? 'p.idSismicrob_Tratamento = '.$data : 'p.Prontuario = '.$data;
+        $where = ($buscaid) ? 'st.idSismicrob_Tratamento = '.$data : 'st.Prontuario = '.$data;
 
         $db = \Config\Database::connect();
         $query = $db->query('
             SELECT
-                p.idSismicrob_Tratamento
-                , p.Prontuario
-                , date_format(p.DataMarcacao, "%d/%m/%Y") as DataMarcacao
-                , date_format(p.DataPrescricao, "%d/%m/%Y") as DataPrescricao
-                , concat("D",p.Dia) as Dia
-                , p.Ciclo
-                , p.Aplicabilidade
-                , concat(tc.idTabPreschuap_Categoria, " - ", tc.Categoria) as Categoria
-                , concat(ts.idTabPreschuap_Subcategoria, " - ", ts.Subcategoria) as Subcategoria
-                , tp.Protocolo
-                , tp.Observacoes
-                , ttt.TipoTerapia
-                , p.CiclosTotais
-                , p.EntreCiclos
-
-                , format(p.Peso, 2, "pt_BR") as Peso
-                , format(p.CreatininaSerica, 2, "pt_BR") as CreatininaSerica
-                , Altura
-                , format(p.ClearanceCreatinina, 2, "pt_BR") as ClearanceCreatinina
-                , format(p.IndiceMassaCorporal, 2, "pt_BR") as IndiceMassaCorporal
-                , format(p.SuperficieCorporal, 2, "pt_BR") as SuperficieCorporal
-
-                , u.Nome
-                , u.Cpf
-                , p.Status
-                , p.Leito
-                , p.DescricaoServico
-                , tmc.MotivoCancelamento
-                , p.InformacaoComplementar
-                , p.ReacaoAdversa
-                , p.Alergia
-                , p.Concluido
+                st.idSismicrob_Tratamento
+                , date_format(st.DataInicioTratamento, "%d/%m/%Y") as DataInicioTratamento
+                , st.Duracao
+                , date_format(st.DataFimTratamento, "%d/%m/%Y") as DataFimTratamento
+                , st.DoseAtaque
+                , concat(format(st.DosePosologica, 2, "pt_BR"), " ", st.UnidadeMedida) as DosePosologica
+                , st.IntervaloUnidade
+                , concat(format(st.DoseDiaria, 2, "pt_BR"), " ", st.UnidadeMedida) as DoseDiaria
+                , st.Unidades
+                , format(st.Peso, 2, "pt_BR") as Peso
+                , format(st.Creatinina, 2, "pt_BR") as Creatinina
+                , format(st.Clearance, 2, "pt_BR") as Clearance
+                , st.Hemodialise
+                , st.DiagnosticoInfecciosoOutro
+                , st.SubstituicaoMedicamento
+                , st.IndicacaoTipoCirurgia
+                , st.Avaliacao
+                , st.AvaliacaoDose
+                , st.AvaliacaoDoseObs
+                , st.AvaliacaoDuracao
+                , st.AvaliacaoDuracaoObs
+                , st.AvaliacaoIntervalo
+                , st.AvaliacaoIntervaloObs
+                , st.AvaliacaoIndicacao
+                , st.AvaliacaoIndicacaoObs
+                , st.AvaliacaoPreenchimentoInadequado
+                , st.AvaliacaoPreenchimentoInadequadoObs
+                , st.AvaliacaoOutros
+                , st.AvaliacaoOutrosObs
+                , st.AlteracaoPorAlta
+                , st.SubstituirTratamento
+                , st.SubstituidoPeloTratamento
+                , st.Justificativa                
+                , st.Suspender
+                , st.SuspenderObs                
+                , st.Prorrogar
+                , st.ProrrogarObs                
+                , va.ViaAdministracao
+                , e.Especialidade
+                , di.DiagnosticoInfeccioso
+                , t.Tratamento
+                , s.Substituicao
+                , ind.Indicacao
+                , inf.Infeccao
+                , st.idTabSismicrob_Intervalo
+                , inte.Intervalo
+                , concat(inte.Intervalo, " ", inte.Codigo) as Intervalo
+                , st.CodigoMedicamento
+                , st.NomeMedicamento
+                , am.AntibioticoMantido
+                , st.Prontuario
+                , st.CodigoAghux
+                , st.Concluido
             FROM
                 preschuapweb.Sismicrob_Tratamento as st
-                    left join TabPreschuap_Categoria as tc on p.idTabPreschuap_Categoria = tc.idTabPreschuap_Categoria
-                    left join TabPreschuap_Subcategoria as ts on p.idTabPreschuap_Subcategoria = ts.idTabPreschuap_Subcategoria
-                    left join TabPreschuap_Protocolo as tp on p.idTabPreschuap_Protocolo = tp.idTabPreschuap_Protocolo
-                    left join TabPreschuap_TipoTerapia as ttt on p.idTabPreschuap_TipoTerapia = ttt.idTabPreschuap_TipoTerapia
-                    left join Sishuap_Usuario as u on p.idSishuap_Usuario = u.idSishuap_Usuario
-                    left join TabPreschuap_MotivoCancelamento as tmc on p.idTabPreschuap_MotivoCancelamento = tmc.idTabPreschuap_MotivoCancelamento
+                    left join TabSismicrob_AntibioticoMantido as am     on st.idTabSismicrob_AntibioticoMantido     = am.idTabSismicrob_AntibioticoMantido
+                    left join TabSismicrob_DiagnosticoInfeccioso as di  on st.idTabSismicrob_DiagnosticoInfeccioso  = di.idTabSismicrob_DiagnosticoInfeccioso
+                    left join TabSismicrob_Especialidade as e           on st.idTabSismicrob_Especialidade          = e.idTabSismicrob_Especialidade
+                    left join TabSismicrob_Indicacao as ind             on st.idTabSismicrob_Indicacao              = ind.idTabSismicrob_Indicacao
+                    left join TabSismicrob_Infeccao as inf              on st.idTabSismicrob_Infeccao               = inf.idTabSismicrob_Infeccao
+                    left join TabSismicrob_Intervalo as inte            on st.idTabSismicrob_Intervalo              = inte.idTabSismicrob_Intervalo
+                    left join TabSismicrob_Substituicao s               on st.idTabSismicrob_Substituicao           = s.idTabSismicrob_Substituicao
+                    left join TabSismicrob_Tratamento t                 on st.idTabSismicrob_Tratamento             = t.idTabSismicrob_Tratamento
+                    left join TabSismicrob_ViaAdministracao as va       on st.idTabSismicrob_ViaAdministracao       = va.idTabSismicrob_ViaAdministracao
             WHERE
-                '.$where.'
-            ORDER BY p.idSismicrob_Tratamento DESC
-
+                    '.$where.'            
+            ORDER BY st.idSismicrob_Tratamento DESC
         ');
         /*
         echo $db->getLastQuery();
@@ -139,6 +165,7 @@ class PrescricaoModel extends Model
         echo "</pre>";
         exit($data.' <> '.$query->getNumRows());
         #*/
+
         #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
 
 
@@ -154,7 +181,7 @@ class PrescricaoModel extends Model
     }
 
     /**
-    * Tela inicial do preschuapweb
+    * Tela inicial do sismicrob
     *
     * @return void
     */

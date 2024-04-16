@@ -143,8 +143,8 @@
                                         <option value="">Selecione uma opção</option>
                                         <?php
                                         foreach ($select['Medicamento']->getResultArray() as $val) {
-                                            $selected = ($data['Medicamento'] == $val['Codigo']) ? 'selected' : '';
-                                            echo '<option value="'.$val['Codigo'].'" '.$selected.'>'.$val['Medicamento'].'</option>';
+                                            $selected = ($data['Medicamento'] == $val['Codigo'].'#'.$val['Medicamento']) ? 'selected' : '';
+                                            echo '<option value="'.$val['Codigo'].'#'.$val['Medicamento'].'" '.$selected.'>'.$val['Medicamento'].'</option>';
                                         }
                                     ?>
                                 </select>
