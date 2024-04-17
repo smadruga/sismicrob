@@ -76,10 +76,8 @@
                             <?php
 
                             foreach ($select['DiagnosticoInfeccioso']->getResultArray() as $row) {
-                                if ($data['idTabSismicrob_DiagnosticoInfeccioso'] == $row['idTabSismicrob_DiagnosticoInfeccioso'])
-                                    echo '<option value="' . $row['idTabSismicrob_DiagnosticoInfeccioso'] . '" selected="selected">' . $row['DiagnosticoInfeccioso'] . '</option>';
-                                else
-                                    echo '<option value="' . $row['idTabSismicrob_DiagnosticoInfeccioso'] . '">' . $row['DiagnosticoInfeccioso'] . '</option>';
+                                $selected = ($data['idTabSismicrob_DiagnosticoInfeccioso'] == $row['idTabSismicrob_DiagnosticoInfeccioso']) ? 'selected' : '';
+                                echo '<option value="'.$row['idTabSismicrob_DiagnosticoInfeccioso'].'" '.$selected.'>'.$row['DiagnosticoInfeccioso'].'</option>';
                             }
 
                             ?>
@@ -142,9 +140,9 @@
                                         data-allow-clear="1">
                                         <option value="">Selecione uma opção</option>
                                         <?php
-                                        foreach ($select['Medicamento']->getResultArray() as $val) {
-                                            $selected = ($data['Medicamento'] == $val['Codigo'].'#'.$val['Medicamento']) ? 'selected' : '';
-                                            echo '<option value="'.$val['Codigo'].'#'.$val['Medicamento'].'" '.$selected.'>'.$val['Medicamento'].'</option>';
+                                        foreach ($select['Medicamento']->getResultArray() as $row) {
+                                            $selected = ($data['Medicamento'] == $row['Codigo'].'#'.$row['Medicamento']) ? 'selected' : '';
+                                            echo '<option value="'.$row['Codigo'].'#'.$row['Medicamento'].'" '.$selected.'>'.$row['Medicamento'].'</option>';
                                         }
                                     ?>
                                 </select>
@@ -206,29 +204,27 @@
                             <div class="input-group">
                                 <input type="text" class="form-control
                                 <?php if($validation->getError('DosePosologica')): ?>is-invalid<?php endif ?>" 
-                                    onkeyup="calculaProduto('DosePosologica', 'Intervalo', 'DoseDiaria')"
+                                    onkeyup="calculaProduto('DosePosologica', 'idTabSismicrob_Intervalo', 'DoseDiaria')"
                                     name="DosePosologica" id="DosePosologica" maxlength="18" value="<?php echo $data['DosePosologica'] ?>">
 
                                 
-                                    <input type="radio" class="btn-check
-                                        <?php if($validation->getError('UnidadeMedida')): ?>is-invalid<?php endif ?>" 
-                                        name="UnidadeMedida" id="UnidadeMedidaG" autocomplete="off" 
-                                        onchange="calculaProduto('DosePosologica', 'Intervalo', 'DoseDiaria')" value="g"
+                                    <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidaG" autocomplete="off" value="g"
+                                        onchange="calculaProduto('DosePosologica', 'idTabSismicrob_Intervalo', 'DoseDiaria')" 
                                         <?php echo $radio['UnidadeMedida']['c'][0] ?>/>
                                     <label class="btn btn-success <?php echo $radio['UnidadeMedida']['a'][0] ?>" for="UnidadeMedidaG" 
-                                        data-mdb-ripple-init>g</label>
-                                    <input type="radio" class="btn-check
-                                        <?php if($validation->getError('UnidadeMedida')): ?>is-invalid<?php endif ?>" name="UnidadeMedida" id="UnidadeMedidamG" autocomplete="off" 
-                                        onchange="calculaProduto('DosePosologica', 'Intervalo', 'DoseDiaria')" value="mg"
+                                        data-mdb-ripple-init name="UnidadeMedida">g</label>
+
+                                    <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidamG" autocomplete="off" value="mg"
+                                        onchange="calculaProduto('DosePosologica', 'idTabSismicrob_Intervalo', 'DoseDiaria')"
                                         <?php echo $radio['UnidadeMedida']['c'][1] ?>/>
                                     <label class="btn btn-success <?php echo $radio['UnidadeMedida']['a'][1] ?>" for="UnidadeMedidamG" 
-                                        data-mdb-ripple-init>mg</label>
-                                    <input type="radio" class="btn-check
-                                        <?php if($validation->getError('UnidadeMedida')): ?>is-invalid<?php endif ?>" name="UnidadeMedida" id="UnidadeMedidaUI" autocomplete="off" 
-                                        onchange="calculaProduto('DosePosologica', 'Intervalo', 'DoseDiaria')" value="UI"
+                                        data-mdb-ripple-init name="UnidadeMedida">mg</label>
+
+                                    <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidaUI" autocomplete="off" value="UI"
+                                        onchange="calculaProduto('DosePosologica', 'idTabSismicrob_Intervalo', 'DoseDiaria')" 
                                         <?php echo $radio['UnidadeMedida']['c'][2] ?>/>
                                     <label class="btn btn-success <?php echo $radio['UnidadeMedida']['a'][2] ?>" for="UnidadeMedidaUI" 
-                                        data-mdb-ripple-init>UI</label>
+                                        data-mdb-ripple-init name="UnidadeMedida">UI</label>
 
                                     <?php if ($validation->getError('DosePosologica')): ?>
                                         <div class="invalid-feedback">
@@ -245,28 +241,26 @@
                     </div>
                     <div class="col-4">
                         <div>
-                            <label for="Intervalo" class="form-label"><?= $data['mascara']['Intervalo'] ?> <b class="text-danger">*</b></label>
+                            <label for="idTabSismicrob_Intervalo" class="form-label"><?= $data['mascara']['Intervalo'] ?> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
                                 <select data-placeholder="Selecione uma opção..." class="form-control select2
-                                    <?php if($validation->getError('Intervalo')): ?>is-invalid<?php endif ?>"
-                                    onchange="calculaProduto('DosePosologica', 'Intervalo', 'DoseDiaria')"
-                                    id="Intervalo" name="Intervalo">
+                                    <?php if($validation->getError('idTabSismicrob_Intervalo')): ?>is-invalid<?php endif ?>"
+                                    onchange="calculaProduto('DosePosologica', 'idTabSismicrob_Intervalo', 'DoseDiaria')"
+                                    id="idTabSismicrob_Intervalo" name="idTabSismicrob_Intervalo">
 
                                     <option value="">Selecione uma opção...</option>
                                     <?php
 
                                     foreach ($select['Intervalo']->getResultArray() as $row) {
-                                        if ($data['Intervalo'] == $row['Intervalo'].'#'.$row['Codigo'].'#'.$row['idTabSismicrob_Intervalo']) 
-                                            echo '<option value="' . $row['Intervalo'].'#'.$row['Codigo'].'#'.$row['idTabSismicrob_Intervalo'].'" selected="selected">'.$row['Intervalo'].' '.$row['Codigo'].'</option>';
-                                        else 
-                                            echo '<option value="' . $row['Intervalo'].'#'.$row['Codigo'].'#'.$row['idTabSismicrob_Intervalo'].'">'.$row['Intervalo'].' '.$row['Codigo'].'</option>';
+                                        $selected = ($data['idTabSismicrob_Intervalo'] == $row['Intervalo'].'#'.$row['Codigo'].'#'.$row['idTabSismicrob_Intervalo']) ? 'selected' : '';
+                                        echo '<option value="'.$row['Intervalo'].'#'.$row['Codigo'].'#'.$row['idTabSismicrob_Intervalo'].'" '.$selected.'>'.$row['Intervalo'].' '.$row['Codigo'].'</option>';
                                     }
 
                                     ?>
                                 </select>
-                                <?php if ($validation->getError('Intervalo')): ?>
+                                <?php if ($validation->getError('idTabSismicrob_Intervalo')): ?>
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('Intervalo') ?>
+                                        <?= $validation->getError('idTabSismicrob_Intervalo') ?>
                                     </div>                                    
                                 <?php endif; ?>
                             </div>
@@ -326,10 +320,8 @@
                                     <option value="">Selecione uma opção...</option>
                                     <?php
                                     foreach ($select['ViaAdministracao']->getResultArray() as $row) {   
-                                        if ($data['idTabSismicrob_ViaAdministracao'] == $row['idTabSismicrob_ViaAdministracao'])
-                                            echo '<option value="' . $row['idTabSismicrob_ViaAdministracao'].'" selected="selected">'.$row['Codigo'].' '.$row['ViaAdministracao'].'</option>';
-                                        else
-                                            echo '<option value="' . $row['idTabSismicrob_ViaAdministracao'].'">'.$row['Codigo'].' - '.$row['ViaAdministracao'].'</option>';
+                                        $selected = ($data['idTabSismicrob_ViaAdministracao'] == $row['idTabSismicrob_ViaAdministracao']) ? 'selected' : '';
+                                        echo '<option value="'.$row['idTabSismicrob_ViaAdministracao'].'" '.$selected.'>'.$row['Codigo'].' '.$row['ViaAdministracao'].'</option>';
                                     }
                                     ?>
                                 </select>
@@ -351,10 +343,8 @@
                                     <option value="">Selecione uma opção...</option>
                                     <?php
                                     foreach ($select['Especialidade']->getResultArray() as $row) {   
-                                        if ($data['idTabSismicrob_Especialidade'] == $row['idTabSismicrob_Especialidade'])
-                                            echo '<option value="'.$row['idTabSismicrob_Especialidade'].'" selected="selected">'.$row['Especialidade'].'</option>';
-                                        else
-                                            echo '<option value="'.$row['idTabSismicrob_Especialidade'].'">'.$row['Especialidade'].'</option>';
+                                        $selected = ($data['idTabSismicrob_Especialidade'] == $row['idTabSismicrob_Especialidade']) ? 'selected' : '';
+                                        echo '<option value="'.$row['idTabSismicrob_Especialidade'].'" '.$selected.'>'.$row['Especialidade'].'</option>';                                            
                                     }
                                     ?>
                                 </select>
@@ -379,10 +369,8 @@
                                     <option value="">Selecione uma opção...</option>
                                     <?php
                                     foreach ($select['AntibioticoMantido']->getResultArray() as $row) {   
-                                        if ($data['idTabSismicrob_AntibioticoMantido'] == $row['idTabSismicrob_AntibioticoMantido'])
-                                            echo '<option value="'.$row['idTabSismicrob_AntibioticoMantido'].'" selected="selected">'.$row['AntibioticoMantido'].'</option>';
-                                        else
-                                            echo '<option value="'.$row['idTabSismicrob_AntibioticoMantido'].'">'.$row['AntibioticoMantido'].'</option>';
+                                        $selected = ($data['idTabSismicrob_AntibioticoMantido'] == $row['idTabSismicrob_AntibioticoMantido']) ? 'selected' : '';
+                                        echo '<option value="'.$row['idTabSismicrob_AntibioticoMantido'].'" '.$selected.'>'.$row['AntibioticoMantido'].'</option>';                                                                                    
                                     }
                                     ?>
                                 </select>
@@ -444,15 +432,18 @@
                     
                 <div class="row g-3">
                     <div class="col-6">
-                        <button type="submit" class="btn btn-primary" name="submit" value="1">
+                        
+                        <?= $opt['button'] ?>
+                        
+                        <!--<button type="submit" class="btn btn-primary" name="submit" value="1">
                             <i class="fas fa-save" aria-hidden="true"></i> Salvar e Finalizar
                         </button>
                         <button type="submit" class="btn btn-info" name="submit2" value="2">
                             <i class="fas fa-plus" aria-hidden="true"></i> Salvar e Incluir Outro Tratamento
-                        </button>
+                        </button>-->
                     </div>       
                     <div class="col-6 text-end">
-                        <a class="btn btn-warning" href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+                        <a class="btn btn-warning" href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i> Cancelar</a>
                     </div>
                 </div>
 
@@ -463,7 +454,7 @@
             <input type="hidden" name="Sexo" id="Sexo" value="<?= $_SESSION['Paciente']['sexo'] ?>" />
             <input type="hidden" name="action" value="<?= $opt['action'] ?>" />
             <?php if($opt['action'] == 'editar' || $opt['action'] == 'excluir' || $opt['action'] == 'concluir') { ?>
-            <input type="hidden" name="idPreschuap_Prescricao" value="<?= $data['idPreschuap_Prescricao'] ?>" />
+            <input type="hidden" name="idSismicrob_Tratamento" value="<?= $data['idSismicrob_Tratamento'] ?>" />
             <?php } ?>
 
             

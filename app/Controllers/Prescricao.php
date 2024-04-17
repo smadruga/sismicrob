@@ -196,7 +196,6 @@ class Prescricao extends BaseController
         if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
             $v['data'] = [
                 'idSismicrob_Tratamento'        => '',
-                'Medicamento'                   => '',
                 'DataInicioTratamento'          => '',
                 'Duracao'                       => '',
                 'DataFimTratamento'             => '',
@@ -204,7 +203,6 @@ class Prescricao extends BaseController
                 'DoseAtaque'                    => '',                
                 'DosePosologica'                => '',
                 'UnidadeMedida'                 => '',
-                'Intervalo'                     => '',
                 'DoseDiaria'                    => '',
                 'Unidades'                      => '',
                 'Peso'                          => '',
@@ -253,6 +251,8 @@ class Prescricao extends BaseController
                 'idTabSismicrob_Intervalo'              => '',
                 'idTabSismicrob_AntibioticoMantido'     => '',
 
+                'Medicamento'                       => '',
+
                 'submit' => '',
             ];
             
@@ -264,6 +264,28 @@ class Prescricao extends BaseController
             $v['data']['UnidadeMedida'] = (!isset($v['data']['UnidadeMedida'])) ? null : $v['data']['UnidadeMedida'];
         }
 
+        if(($action == 'editar' || $action == 'excluir' || $action == 'concluir') && !$v['data']['submit']) {
+
+            $v['idSismicrob_Tratamento'] = $id;
+            $v['data'] = $prescricao->find($v['idSismicrob_Tratamento']); #Carrega os itens da tabela selecionada
+            $v['data']['submit'] = '';
+
+            $v['data']['Medicamento']       = $v['data']['CodigoMedicamento'];
+
+            $v['data']['DosePosologica']    = str_replace(".",",",$v['data']['DosePosologica']);
+            $v['data']['DoseDiaria']        = str_replace(".",",",$v['data']['DoseDiaria']).' '.$v['data']['UnidadeMedida'];
+            
+            $v['data']['Peso']              = str_replace(".",",",$v['data']['Peso']);
+            $v['data']['Creatinina']        = str_replace(".",",",$v['data']['Creatinina']);
+            $v['data']['Clearance']         = str_replace(".",",",$v['data']['Clearance']);
+
+            $z = $tabela->get_item($v['data']['idTabSismicrob_Intervalo'], 'Intervalo'); #Carrega os itens da tabela selecionada
+            $v['data']['idTabSismicrob_Intervalo'] = $z['Intervalo'].'#'.$z['Codigo'].'#'.$z['idTabSismicrob_Intervalo'];
+            
+            $z = $tabela->get_item_aghux($v['data']['Medicamento'], 'agh.afa_medicamentos', 'mat_codigo = '); #Carrega os itens da tabela selecionada
+            $v['data']['Medicamento'] = $z['mat_codigo'].'#'.$z['descricao'];
+        }
+
         if ($v['data']['idTabSismicrob_Indicacao'] != 1) {
             $v['data']['mascara']['DoseAtaque'] = 'Dose de Ataque';
             $v['data']['mascara']['DoseDiaria'] = 'Dose diária';
@@ -273,26 +295,6 @@ class Prescricao extends BaseController
             $v['data']['mascara']['DoseAtaque'] = 'Dose de indução anestésica';
             $v['data']['mascara']['DoseDiaria'] = 'Dose diária - repique intraoperatório';
             $v['data']['mascara']['Intervalo']  = 'Intervalo para repique intraoperatório';
-        }
-
-        if(($action == 'editar' || $action == 'excluir' || $action == 'concluir') && !$v['data']['submit']) {
-
-            $v['idSismicrob_Tratamento'] = $id;
-            $v['data'] = $prescricao->find($v['idSismicrob_Tratamento']); #Carrega os itens da tabela selecionada
-            $v['data']['submit'] = '';
-
-            $v['data']['ClearanceCreatinina']   = (!$v['data']['ClearanceCreatinina']) ? $v['func']->calc_ClearanceCreatinina($v['data']['Peso'], $_SESSION['Paciente']['idade'], $_SESSION['Paciente']['sexo'], $v['data']['CreatininaSerica']) : $v['data']['ClearanceCreatinina'];
-            $v['data']['IndiceMassaCorporal']   = (!$v['data']['IndiceMassaCorporal']) ? $v['func']->calc_IndiceMassaCorporal($v['data']['Peso'], $v['data']['Altura']) : $v['data']['IndiceMassaCorporal'];
-            $v['data']['SuperficieCorporal']    = (!$v['data']['SuperficieCorporal']) ? $v['func']->calc_SuperficieCorporal($v['data']['Peso'], $v['data']['Altura']) : $v['data']['SuperficieCorporal'];
-
-            $v['data']['DataPrescricao']        = date("d/m/Y", strtotime($v['data']['DataPrescricao']));
-
-            $v['data']['Peso']                  = str_replace(".",",",$v['data']['Peso']);
-            $v['data']['CreatininaSerica']      = str_replace(".",",",$v['data']['CreatininaSerica']);
-
-            $v['data']['ClearanceCreatinina']   = str_replace(".",",",$v['data']['ClearanceCreatinina']);
-            $v['data']['IndiceMassaCorporal']   = str_replace(".",",",$v['data']['IndiceMassaCorporal']);
-            $v['data']['SuperficieCorporal']    = str_replace(".",",",$v['data']['SuperficieCorporal']);
         }
 
         $v['select'] = [
@@ -364,8 +366,9 @@ class Prescricao extends BaseController
         }
 
         if($v['data']['submit']) {
-
+            
             if($action == 'cadastrar' || $action == 'editar') {
+
                 #Critérios de validação
                 $inputs = $this->validate([
                     'idTabSismicrob_Indicacao'              => ['label' => 'Indicação', 'rules' => 'required'],
@@ -384,7 +387,7 @@ class Prescricao extends BaseController
 
                     'DosePosologica'                        => ['label' => 'acima', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\,)\d+)?$/]'],
                     'UnidadeMedida'                         => ['label' => 'Unidade de Medida', 'rules' => 'required'],
-                    'Intervalo'                             => 'required',
+                    'idTabSismicrob_Intervalo'              => 'required',
 
                     'idTabSismicrob_ViaAdministracao'       => ['label' => 'acima', 'rules' => 'required'],
                     'idTabSismicrob_Especialidade'          => ['label' => 'Especialidade', 'rules' => 'required'],
@@ -393,19 +396,24 @@ class Prescricao extends BaseController
                     'Creatinina'                            => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\,)\d+)?$/]',
 
                 ]);
-                    
+
             }
             else
                 $inputs = '';
 
             /*
-            $db->getLastQuery();
+            #$db->getLastQuery();
             print "<pre>";
-            print_r($v['data']);
+            #print_r($v);
+            #print_r($v['select']['Medicamento']->getResultArray());
+            #print_r($v['data']);
+            #print_r($v['opt']);
+            print_r($v['radio']);
             print "</pre>";
-            exit('???');
+            exit('oioioioi '.$action).' <br> '. $inputs;
+            #exit('???');
             #*/
-
+            
             #Realiza a validação e retorna ao formulário se false
             if (!$inputs && ($action == 'cadastrar' || $action == 'editar')) {
                 $v['validation'] = $this->validator;
@@ -443,7 +451,7 @@ class Prescricao extends BaseController
                         $v['data']['idTabSismicrob_AntibioticoMantido'] = null;                       
                     }                 
 
-                    $l = explode('#', $v['data']['Intervalo']);
+                    $l = explode('#', $v['data']['idTabSismicrob_Intervalo']);
                     $v['data']['idTabSismicrob_Intervalo'] = $l[2];
 
                     $l = explode('#', $v['data']['Medicamento']);
@@ -464,7 +472,6 @@ class Prescricao extends BaseController
                     $v['data']['Medicamento'],
                     $v['data']['Intervalo'],
                 );
-
 
                 $v['campos'] = array_keys($v['data']);
 

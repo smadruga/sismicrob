@@ -34,7 +34,7 @@
                 <button class="accordion-button collapsed bg-info text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $v['idSismicrob_Tratamento'] ?>" aria-expanded="false" aria-controls="collapse<?= $v['idSismicrob_Tratamento'] ?>">
                     <div class="container">
                         <div class="row">
-                            <div class="col-6 text-start"><b> Prescrição #<?= 
+                            <div class="col-6 text-start"><b> #<?= 
                                     $v['idSismicrob_Tratamento'] .' - '. $v['NomeMedicamento']
                                 ?>                                
                             </b></div>

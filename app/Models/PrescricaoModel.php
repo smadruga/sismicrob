@@ -137,6 +137,7 @@ class PrescricaoModel extends Model
                 , st.idTabSismicrob_Intervalo
                 , inte.Intervalo
                 , concat(inte.Intervalo, " ", inte.Codigo) as Intervalo
+                , st.idTabSismicrob_Intervalo
                 , st.CodigoMedicamento
                 , st.NomeMedicamento
                 , am.AntibioticoMantido

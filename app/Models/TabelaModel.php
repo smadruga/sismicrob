@@ -260,6 +260,42 @@ class TabelaModel extends Model
 
     }
 
+   /**
+    * Lista os itens da tabela Protocolo_Medicamentos
+    *
+    * @return array
+    */
+    public function get_item_aghux($data, $tabela, $where)
+    {
+
+        /*
+        select
+            mat_codigo as "Codigo"
+            , descricao as "Medicamento"
+        from
+            agh.afa_medicamentos am
+        where
+            am.tum_sigla = \'M\'
+            and ind_situacao = \'A\'
+        order by descricao asc
+        */
+        $db = \Config\Database::connect('aghux');
+        $query = $db->query('
+            select * from '.$tabela.' where '.$where.' '.$data.'
+        ');
+        
+        /*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query->getRowArray());
+        echo "</pre>";
+        exit('oi222');
+        #*/
+
+        return $query->getRowArray();
+    }
+
+
     /**
     * Retorna o item no banco de dados de acordo com seu id
     *

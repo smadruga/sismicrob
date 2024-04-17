@@ -45,11 +45,24 @@ $(document).ready(function() {
     $('.btn-group input[type="radio"]').change(function(){
         // Remover a classe 'active' de todos os labels dentro do grupo de botões
         $(this).parent().find('label').removeClass('active');
+
+        //console.log("OI3453 >>> "+$(this).val());
         
         // Adicionar a classe 'active' apenas ao label do radio selecionado
         if ($(this).is(':checked')) {
             $(this).next('label').addClass('active');
         }
+
+    });
+    $('label[name="UnidadeMedida"]').click(function() {
+        // Captura o valor do elemento que disparou o evento de clique
+        //var valor = $(this).text();
+
+        // Remove a classe de todos os elementos com o mesmo nome
+        $('label[name="UnidadeMedida"]').removeClass('active');
+
+        // Exibe o valor no console
+        //console.log('Novo valor do elementooo:', valor);
     });
 
     $('#idTabSismicrob_Indicacao').change(function(){
