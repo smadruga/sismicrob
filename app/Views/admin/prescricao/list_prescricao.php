@@ -19,8 +19,7 @@
         $mascara['DoseDiaria'] = 'Dose diária';
         $mascara['DoseAtaque'] = 'Dose de ataque';    
 
-
-        if($v['idTabSismicrob_Intervalo'] == 1) {
+        if($v['idTabSismicrob_Indicacao'] == 1) {
             $mascara['Intervalo'] = 'Intervalo para repique intraoperatório';
             $mascara['DoseDiaria'] = 'Dose diária - repique intraoperatório';
             $mascara['DoseAtaque'] = 'Dose de indução anestésica';
@@ -34,11 +33,11 @@
                 <button class="accordion-button collapsed bg-info text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $v['idSismicrob_Tratamento'] ?>" aria-expanded="false" aria-controls="collapse<?= $v['idSismicrob_Tratamento'] ?>">
                     <div class="container">
                         <div class="row">
-                            <div class="col-6 text-start"><b> #<?= 
+                            <div class="col-10 text-start"><b> #<?= 
                                     $v['idSismicrob_Tratamento'] .' - '. $v['NomeMedicamento']
                                 ?>                                
                             </b></div>
-                            <div class="col-6 text-end">
+                            <div class="col text-end">
                                 <?php
                                 if($v['Concluido'] == 1)
                                     echo '<span class="badge bg-primary text-white"><i class="fa-solid fa-check-circle"></i> Fechada</span>';
@@ -72,21 +71,24 @@
                             <div class="col"><b>Indicação:</b> <?= $v['Indicacao'] ?></div>
                         </div>
                         
-                        <? 
-                        if($v['idTabSismicrob_Intervalo'] == 1) {                        
+                        <?php
+                        if($v['idTabSismicrob_Indicacao'] == 1) {
                         ?>
                         <div class="row">
                             <div class="col"><b>Tipo de Cirurgia:</b> <?= $v['IndicacaoTipoCirurgia'] ?></div>
                         </div>
-                        <? } ?>
-
+                        <?php
+                        }
+                        elseif ($v['idTabSismicrob_Indicacao'] == 3) {
+                        ?>
                         <div class="row">
                             <div class="col"><b>Diagnóstico Infeccioso:</b> <?= $v['DiagnosticoInfeccioso'] ?></div>
                             <div class="col"><b>Especificar:</b> <?= $v['DiagnosticoInfecciosoOutro'] ?> dia(s)</div>
                         </div>
+                        <?php } ?>
 
                         <div class="row">
-                            <div class="col"><b>Justificativa:</b> <?= '<br>'.nl2br($v['Justificativa']) ?></div>
+                            <div class="col"><b>Justificativa:</b> <?= '<br>'.nl2br($v['Justificativa']) .'<br>'.$v['idTabSismicrob_Indicacao']?></div>
                         </div>
 
                         <hr />
@@ -107,7 +109,7 @@
 
                         <div class="row">
                             <div class="col"><b><?= $mascara['DoseDiaria'] ?>:</b> <?= $v['DoseDiaria'] ?></div>
-                            <?php if($v['idTabSismicrob_Intervalo'] == 1) { ?>
+                            <?php if($v['idTabSismicrob_Indicacao'] == 1) { ?>
                                 <div class="col"><b>Antibiótico após cirurgia:</b> <?= $v['AntibioticoMantido'] ?></div>
                             <?php } ?>
                         </div>

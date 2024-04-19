@@ -186,13 +186,6 @@ class Prescricao extends BaseController
 
         $action = (!$action) ? $this->request->getPostGet('action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $action;
 
-        /*
-        echo "<pre>";
-        print_r($_SESSION['Paciente']);
-        echo "</pre>";
-        exit('oi'.$_SESSION['Paciente']['prontuario']);
-        #*/
-
         if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
             $v['data'] = [
                 'idSismicrob_Tratamento'        => '',
@@ -286,39 +279,48 @@ class Prescricao extends BaseController
             $v['data']['Medicamento'] = $z['mat_codigo'].'#'.$z['descricao'];
         }
 
-        if ($v['data']['idTabSismicrob_Indicacao'] != 1) {
-            $v['data']['mascara']['DoseAtaque'] = 'Dose de Ataque';
-            $v['data']['mascara']['DoseDiaria'] = 'Dose diária';
-            $v['data']['mascara']['Intervalo']  = 'Intervalo';
+        #if(($action == 'excluir' || $action == 'concluir') && !$v['data']['submit']) { 
+        if(
+            #(($action == 'cadastrar' || $action == 'editar') && (!$v['data']['submit'] || $v['data']['submit'] == 1))
+            (!$v['data']['submit']) || 
+            (($action == 'cadastrar' || $action == 'editar') && (!$v['data']['submit'] || $v['data']['submit'] == 1))
+            
+        ) { 
+
+            if ($v['data']['idTabSismicrob_Indicacao'] != 1) {
+                $v['data']['mascara']['DoseAtaque'] = 'Dose de Ataque';
+                $v['data']['mascara']['DoseDiaria'] = 'Dose diária';
+                $v['data']['mascara']['Intervalo']  = 'Intervalo';
+            }
+            else {
+                $v['data']['mascara']['DoseAtaque'] = 'Dose de indução anestésica';
+                $v['data']['mascara']['DoseDiaria'] = 'Dose diária - repique intraoperatório';
+                $v['data']['mascara']['Intervalo']  = 'Intervalo para repique intraoperatório';
+            }
+
+            $v['select'] = [
+                'Medicamento'           => $tabela->list_medicamento_aghux(), #Carrega os itens da tabela selecionada
+                'Indicacao'             => $tabela->list_tabela_bd('Indicacao', FALSE, FALSE, '*', 'idTabSismicrob_Indicacao', TRUE), #Carrega os itens da tabela selecionada
+                'Intervalo'             => $tabela->list_tabela_bd('Intervalo', FALSE, FALSE, '*', 'idTabSismicrob_Intervalo', TRUE), #Carrega os itens da tabela selecionada
+                'Especialidade'         => $tabela->list_tabela_bd('Especialidade', FALSE, FALSE, '*', 'idTabSismicrob_Especialidade', TRUE), #Carrega os itens da tabela selecionada
+                'ViaAdministracao'      => $tabela->list_tabela_bd('ViaAdministracao', FALSE, FALSE, '*', 'idTabSismicrob_ViaAdministracao', TRUE), #Carrega os itens da tabela selecionada
+                'DiagnosticoInfeccioso' => $tabela->list_tabela_bd('DiagnosticoInfeccioso', FALSE, FALSE, '*', 'idTabSismicrob_DiagnosticoInfeccioso', TRUE), #Carrega os itens da tabela selecionada
+                'AntibioticoMantido'    => $tabela->list_tabela_bd('AntibioticoMantido', FALSE, FALSE, '*', 'idTabSismicrob_AntibioticoMantido', TRUE), #Carrega os itens da tabela selecionada
+            ];
+    
+            $v['radio'] = array(
+                'UnidadeMedida' => $v['func']->radio_checked($v['data']['UnidadeMedida'], 'UnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE),
+                'DoseAtaque'    => $v['func']->radio_checked($v['data']['DoseAtaque'], 'DoseAtaque', 'SN', 'N', FALSE, TRUE),
+                'Hemodialise'   => $v['func']->radio_checked($v['data']['Hemodialise'], 'Hemodialise', 'SN', 'N', FALSE, TRUE),        );
+    
+            $v['div'] = array(
+                'DoseAtaque'                            => $v['func']->radio_showhide($v['data']['DoseAtaque'], 'S'),
+                'idTabSismicrob_DiagnosticoInfeccioso'  => $v['func']->div_showhide($v['data']['idTabSismicrob_DiagnosticoInfeccioso'], 'idTabSismicrob_DiagnosticoInfeccioso', '7'),
+                'idTabSismicrob_Indicacao1'             => $v['func']->div_showhide($v['data']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '1'),
+                'idTabSismicrob_Indicacao3'             => $v['func']->div_showhide($v['data']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '3'),
+            );                  
+        
         }
-        else {
-            $v['data']['mascara']['DoseAtaque'] = 'Dose de indução anestésica';
-            $v['data']['mascara']['DoseDiaria'] = 'Dose diária - repique intraoperatório';
-            $v['data']['mascara']['Intervalo']  = 'Intervalo para repique intraoperatório';
-        }
-
-        $v['select'] = [
-            'Medicamento'           => $tabela->list_medicamento_aghux(), #Carrega os itens da tabela selecionada
-            'Indicacao'             => $tabela->list_tabela_bd('Indicacao', FALSE, FALSE, '*', 'idTabSismicrob_Indicacao', TRUE), #Carrega os itens da tabela selecionada
-            'Intervalo'             => $tabela->list_tabela_bd('Intervalo', FALSE, FALSE, '*', 'idTabSismicrob_Intervalo', TRUE), #Carrega os itens da tabela selecionada
-            'Especialidade'         => $tabela->list_tabela_bd('Especialidade', FALSE, FALSE, '*', 'idTabSismicrob_Especialidade', TRUE), #Carrega os itens da tabela selecionada
-            'ViaAdministracao'      => $tabela->list_tabela_bd('ViaAdministracao', FALSE, FALSE, '*', 'idTabSismicrob_ViaAdministracao', TRUE), #Carrega os itens da tabela selecionada
-            'DiagnosticoInfeccioso' => $tabela->list_tabela_bd('DiagnosticoInfeccioso', FALSE, FALSE, '*', 'idTabSismicrob_DiagnosticoInfeccioso', TRUE), #Carrega os itens da tabela selecionada
-            'AntibioticoMantido'    => $tabela->list_tabela_bd('AntibioticoMantido', FALSE, FALSE, '*', 'idTabSismicrob_AntibioticoMantido', TRUE), #Carrega os itens da tabela selecionada
-        ];
-
-        $v['radio'] = array(
-            'UnidadeMedida' => $v['func']->radio_checked($v['data']['UnidadeMedida'], 'UnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE),
-            'DoseAtaque'    => $v['func']->radio_checked($v['data']['DoseAtaque'], 'DoseAtaque', 'SN', 'N', FALSE, TRUE),
-            'Hemodialise'   => $v['func']->radio_checked($v['data']['Hemodialise'], 'Hemodialise', 'SN', 'N', FALSE, TRUE),        );
-
-        $v['div'] = array(
-            'DoseAtaque'                            => $v['func']->radio_showhide($v['data']['DoseAtaque'], 'S'),
-            'idTabSismicrob_DiagnosticoInfeccioso'  => $v['func']->div_showhide($v['data']['idTabSismicrob_DiagnosticoInfeccioso'], 'idTabSismicrob_DiagnosticoInfeccioso', '7'),
-            'idTabSismicrob_Indicacao1'             => $v['func']->div_showhide($v['data']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '1'),
-            'idTabSismicrob_Indicacao3'             => $v['func']->div_showhide($v['data']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '3'),
-        );        
-
 
         if($action == 'editar') {
 
@@ -335,7 +337,7 @@ class Prescricao extends BaseController
 
             $v['opt'] = [
                 'bg'        => 'bg-danger',
-                'button'    => '<button class="btn btn-danger" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-trash-can"></i> Excluir</button>',
+                'button'    => '<button class="btn btn-danger" id="submit" name="submit" value="2" type="submit"><i class="fa-solid fa-trash-can"></i> Excluir</button>',
                 'title'     => 'Tem certeza que deseja excluir os dados abaixo? Essa operação não pode ser desfeita.',
                 'disabled'  => 'disabled',
                 'action'    => 'excluir',
@@ -346,7 +348,7 @@ class Prescricao extends BaseController
 
             $v['opt'] = [
                 'bg'        => 'bg-success',
-                'button'    => '<button class="btn btn-success" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-check-circle"></i> Concluir</button>',
+                'button'    => '<button class="btn btn-success" id="submit" name="submit" value="2" type="submit"><i class="fa-solid fa-check-circle"></i> Concluir</button>',
                 'title'     => 'Tem certeza que deseja concluir a prescrição abaixo?',
                 'disabled'  => 'disabled',
                 'action'    => 'concluir',
@@ -357,7 +359,9 @@ class Prescricao extends BaseController
 
             $v['opt'] = [
                 'bg'        => 'bg-secondary',
-                'button'    => '<button class="btn btn-info" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-circle-chevron-right"></i> Próximo</button>',
+                #'button'    => '<button class="btn btn-info" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-circle-chevron-right"></i> Próximo</button>',
+                'button'    => '<button type="submit" class="btn btn-primary" name="submit" value="1"><i class="fas fa-save" aria-hidden="true"></i> Salvar e Finalizar</button>
+                <button type="submit" class="btn btn-info" name="submit2" value="2"><i class="fas fa-plus" aria-hidden="true"></i> Salvar e Incluir Outro Tratamento</button>',
                 'title'     => 'Cadastrar Prescrição',
                 'disabled'  => '',
                 'action'    => 'cadastrar',
@@ -477,13 +481,21 @@ class Prescricao extends BaseController
 
                 if($action == 'concluir') {
 
+
+                    unset(
+                        $v['data']['DataFimTratamento'],
+                        $v['data']['DoseDiaria'],
+                        $v['data']['Clearance'],
+                        $v['data']['UnidadeMedida'],
+                    );
+
                     $v['id'] = $v['data']['idSismicrob_Tratamento'];
                     $v['anterior'] = $prescricao->find($v['id']);
 
-                    if($prescricao->update($v['id'], $v['data']) ) {
+                    if($prescricao->update($v['id'], $v['data'])) {
 
                         $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Sismicrob_Tratamento', 'UPDATE', $v['id']), TRUE);
-                        $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
+                        $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);                  
 
                         session()->setFlashdata('success', 'Item atualizado com sucesso!');
 
@@ -501,12 +513,8 @@ class Prescricao extends BaseController
 
                         $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Sismicrob_Tratamento', 'UPDATE', $v['id']), TRUE);
                         $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
-                        
-                        if($v['anterior']['idTabPreschuap_Protocolo'] && ($v['anterior']['idTabPreschuap_Protocolo'] != $v['data']['idTabPreschuap_Protocolo'])) {
-                                
-                        }
-                            
-                    session()->setFlashdata('success', 'Item atualizado com sucesso!');
+                                                    
+                        session()->setFlashdata('success', 'Item atualizado com sucesso!');
 
                     }
                     else {
@@ -516,22 +524,40 @@ class Prescricao extends BaseController
                 }
                 elseif($action == 'excluir') {
 
+                    /*
+                    echo "<pre>";
+                    print_r($v['data']);
+                    echo "</pre>";
+                    exit('oi');
+                    #*/
+
                     $v['id'] = $v['data']['idSismicrob_Tratamento'];
                     $v['anterior'] = $prescricao->find($v['id']);
                     $v['campos'] = array_keys($v['anterior']);
                     $v['data'] = array();
+
+                    if($prescricao->delete($v['id'])) {
+
+                        $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Sismicrob_Tratamento', 'DELETE', $v['id']), TRUE);
+                        $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], FALSE, TRUE), TRUE);
+
+                        session()->setFlashdata('success', 'Item excluído com sucesso!');
+
+                    }
+                    else
+                        session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação. ERRO: XPT3');
 
                 }
                 elseif($action == 'cadastrar') {
 
                     $v['anterior'] = array();
 
-        /*
-        echo "<pre>";
-        print_r($v['data']);
-        echo "</pre>";
-        exit('oi');
-        #*/
+                    /*
+                    echo "<pre>";
+                    print_r($v['data']);
+                    echo "</pre>";
+                    exit('oi');
+                    #*/
 
                     $v['id'] = $prescricao->insert($v['data']);
 

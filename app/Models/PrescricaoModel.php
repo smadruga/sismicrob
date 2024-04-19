@@ -73,8 +73,10 @@ class PrescricaoModel extends Model
                                         'CodigoMedicamento',
                                         'NomeMedicamento',
 
-                                        'Prontuario',                   
-                                        'CodigoAghux',                
+                                        'Prontuario',
+                                        'CodigoAghux',
+
+                                        'Concluido',
                                     ];
 
     /**
@@ -133,6 +135,7 @@ class PrescricaoModel extends Model
                 , t.Tratamento
                 , s.Substituicao
                 , ind.Indicacao
+                , st.idTabSismicrob_Indicacao
                 , inf.Infeccao
                 , st.idTabSismicrob_Intervalo
                 , inte.Intervalo
