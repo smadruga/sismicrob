@@ -6,6 +6,7 @@ use App\Models\TabelaModel;
 use App\Models\PrescricaoModel;
 use App\Models\AtendimentoModel;
 use App\Models\CulturaModel;
+use App\Models\PacienteModel;
 
 use App\Models\AuditoriaModel;
 use App\Models\AuditoriaLogModel;
@@ -117,7 +118,7 @@ class Prescricao extends BaseController
         echo "<pre>";
         print_r($v);
         echo "</pre>";
-        exit('oi'.$_SESSION['Paciente']['prontuario']);
+        #exit('oi'.$_SESSION['Paciente']['prontuario']);
         #*/
 
         return view('admin/prescricao/list_prescricao', $v);
@@ -133,26 +134,33 @@ class Prescricao extends BaseController
     {
 
         $prescricao = new PrescricaoModel();
+        $aghux      = new PacienteModel();
 
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();
 
-        $v['prescricao'] = $prescricao->read_prescricao($data, TRUE);
+        $v['prescricao']    = $prescricao->read_prescricao($data, TRUE, TRUE);
+        $aghux              = $aghux->get_paciente_codigo($v['prescricao']['CodigoAghux']);
 
-        if($v['prescricao']['count'] > 0) {
+        $v['prescricao']['NomePaciente']    = $aghux['nome'];
+        $v['prescricao']['DataNascimento']  = $aghux['dt_nascimento'];
+        
+        if ($aghux['sexo'] == 'M')
+            $v['prescricao']['Sexo'] =  'MASCULINO';
+        elseif ($aghux['sexo'] == 'F') 
+            'FEMININO';
+        else
+            'NÃO INFORMADO';
 
-            $m['where'] = $data;
-            $m['medicamento'][$data] = NULL;
 
-        }
-
-        $v['prescricao']['conselho'] = $prescricao->get_conselho($v['prescricao']['array'][0]['Cpf']);
+        #$v['prescricao']['conselho'] = $prescricao->get_conselho($v['prescricao']['array'][0]['Cpf']);
 
         /*
         echo "<pre>";
-        print_r($v['medicamento']);
+        print_r($v['prescricao']);
+        print_r($_SESSION['Usuario']);
         echo "</pre>";
-        exit('oi');
+        #exit('oi'.$v['prescricao']['NomeMedicamento']);
         #*/
 
         return view('admin/prescricao/print_prescricao', $v);

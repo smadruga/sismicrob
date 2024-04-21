@@ -138,4 +138,42 @@ class PacienteModel extends Model
 
     }
 
+    /**
+    * Tela inicial do preschuapweb
+    *
+    * @return void
+    */
+    public function get_conselho($data)
+    {
+
+        $db = \Config\Database::connect('aghux');
+        $query = $db->query('
+            SELECT
+                concat(cpr_sigla, \'-\',nro_reg_conselho) as conselho
+                , nome
+            FROM
+                agh.v_rap_servidor_conselho
+            WHERE
+                cpf = '.$data.'
+        ');
+
+        /*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit($data);
+        #*/
+        #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
+
+        if($query->getNumRows()) {
+            $query = $query->getRowArray();
+            return $query['conselho'];
+        }
+        else
+            return 'NÃO ENCONTRADO';
+
+
+    }    
+
 }

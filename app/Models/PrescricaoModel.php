@@ -77,6 +77,12 @@ class PrescricaoModel extends Model
                                         'CodigoAghux',
 
                                         'Concluido',
+
+                                        'DataPrescricao',
+                                        'DataUltimaAtualizacao',
+
+                                        'idSishuap_Usuario',
+                                        'Nome',
                                     ];
 
     /**
@@ -86,6 +92,8 @@ class PrescricaoModel extends Model
     */
     public function read_prescricao($data, $buscaid = FALSE, $row = FALSE)
     {
+
+        #$prescricao     = new PrescricaoModel(); #Inicia o objeto baseado na TabelaModel
 
         $where = ($buscaid) ? 'st.idSismicrob_Tratamento = '.$data : 'st.Prontuario = '.$data;
 
@@ -132,6 +140,7 @@ class PrescricaoModel extends Model
                 , va.ViaAdministracao
                 , e.Especialidade
                 , di.DiagnosticoInfeccioso
+                , st.idTabSismicrob_DiagnosticoInfeccioso
                 , t.Tratamento
                 , s.Substituicao
                 , ind.Indicacao
@@ -147,6 +156,11 @@ class PrescricaoModel extends Model
                 , st.Prontuario
                 , st.CodigoAghux
                 , st.Concluido
+                , date_format(st.DataPrescricao, "%d/%m/%Y %H:%i:%s") as DataPrescricao
+                , date_format(st.DataUltimaAtualizacao, "%d/%m/%Y %H:%i:%s") as DataUltimaAtualizacao
+                , st.idSishuap_Usuario
+                , u.Cpf as CpfPrescritor
+                , u.Nome as NomePrescritor
             FROM
                 preschuapweb.Sismicrob_Tratamento as st
                     left join TabSismicrob_AntibioticoMantido as am     on st.idTabSismicrob_AntibioticoMantido     = am.idTabSismicrob_AntibioticoMantido
@@ -158,10 +172,14 @@ class PrescricaoModel extends Model
                     left join TabSismicrob_Substituicao s               on st.idTabSismicrob_Substituicao           = s.idTabSismicrob_Substituicao
                     left join TabSismicrob_Tratamento t                 on st.idTabSismicrob_Tratamento             = t.idTabSismicrob_Tratamento
                     left join TabSismicrob_ViaAdministracao as va       on st.idTabSismicrob_ViaAdministracao       = va.idTabSismicrob_ViaAdministracao
+                    left join Sishuap_Usuario as u                      on st.idSishuap_Usuario                     = u.idSishuap_Usuario
             WHERE
                     '.$where.'            
             ORDER BY st.idSismicrob_Tratamento DESC
         ');
+
+        #foreach($prescricao['array'] as $v) {        }
+
         /*
         echo $db->getLastQuery();
         echo "<pre>";
@@ -170,17 +188,72 @@ class PrescricaoModel extends Model
         exit($data.' <> '.$query->getNumRows());
         #*/
 
-        #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
+        /*
+        $qr = $query->getResultArray();
+        $qn = $query->getNumRows();
 
-
+        
+        echo "<pre>";
+        print_r($qr);
+        echo "</pre>";
+        exit($data.' <> '.$qn);
+        #*/
+    
         if($buscaid && $row) {
-            return $query->getRowArray();
+
+            $r['array'] = $query->getRowArray();
+            $r['array']['Conselho'] = $this->get_conselho($r['array']['CpfPrescritor']);
+
+            return $r['array'];
+
         }
         else {
             $r['array'] = $query->getResultArray();
             $r['count'] = $query->getNumRows();
+
+            $i = 0;
+            foreach($query->getResultArray() as $v) {        
+                $r['array'][$i]['Conselho'] = $this->get_conselho($v['CpfPrescritor']);
+                $i++;
+            }
+
             return $r;
         }
+
+    }
+
+    /**
+    * Captura o id da prescrição concluída mais recente.
+    *
+    * @return void
+    */
+    public function get_last_id($prontuario)
+    {
+
+        $db = \Config\Database::connect();
+        $query = $db->query('
+            SELECT
+                idSismicrob_Tratamento
+            FROM
+                Sismicrob_Tratamento
+            WHERE
+                Prontuario = '.$prontuario.'
+                AND Concluido = 1
+            ORDER BY idSismicrob_Tratamento DESC
+            LIMIT 0,1;
+        ');
+
+        /*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit($data.'<><>');
+        #*/
+        #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
+
+        $query = $query->getRowArray();
+        return $query['idSismicrob_Tratamento'];
 
     }
 
@@ -219,41 +292,6 @@ class PrescricaoModel extends Model
             return 'NÃO ENCONTRADO';
 
 
-    }
-
-    /**
-    * Captura o id da prescrição concluída mais recente.
-    *
-    * @return void
-    */
-    public function get_last_id($prontuario)
-    {
-
-        $db = \Config\Database::connect();
-        $query = $db->query('
-            SELECT
-                idSismicrob_Tratamento
-            FROM
-                Sismicrob_Tratamento
-            WHERE
-                Prontuario = '.$prontuario.'
-                AND Concluido = 1
-            ORDER BY idSismicrob_Tratamento DESC
-            LIMIT 0,1;
-        ');
-
-        /*
-        echo $db->getLastQuery();
-        echo "<pre>";
-        print_r($query);
-        echo "</pre>";
-        exit($data.'<><>');
-        #*/
-        #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
-
-        $query = $query->getRowArray();
-        return $query['idSismicrob_Tratamento'];
-
-    }
+    }    
 
 }

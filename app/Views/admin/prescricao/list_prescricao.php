@@ -83,12 +83,14 @@
                         ?>
                         <div class="row">
                             <div class="col"><b>Diagnóstico Infeccioso:</b> <?= $v['DiagnosticoInfeccioso'] ?></div>
-                            <div class="col"><b>Especificar:</b> <?= $v['DiagnosticoInfecciosoOutro'] ?> dia(s)</div>
+                            <?php if($v['idTabSismicrob_DiagnosticoInfeccioso'] == 7) { ?>
+                            <div class="col"><b>Especificar:</b> <?= $v['DiagnosticoInfecciosoOutro'] ?></div>
+                            <?php } ?>
                         </div>
                         <?php } ?>
 
                         <div class="row">
-                            <div class="col"><b>Justificativa:</b> <?= '<br>'.nl2br($v['Justificativa']) .'<br>'.$v['idTabSismicrob_Indicacao']?></div>
+                            <div class="col"><b>Justificativa:</b> <br><?= nl2br($v['Justificativa']) ?><br></div>
                         </div>
 
                         <hr />
@@ -130,7 +132,15 @@
                         <div class="row">
                             <div class="col"><b><?= $mascara['DoseAtaque'] ?>:</b> <?= ($v['DoseAtaque'] == 'S') ? 'Sim' : 'Não' ?></div>
                             <div class="col"><b>Hemodiálise:</b> <?= ($v['Hemodialise']) ? 'Sim' : 'Não' ?></div>
-                        </div>                        
+                        </div>
+                        
+                        <hr>
+
+                        <div class="row">
+                            <div class="col"><b>Prescritor:</b> <?= $v['NomePrescritor'] ?></div>
+                            <div class="col"><b>Conselho:</b> <?= $v['Conselho'] ?></div>
+                        </div>
+
 
                     </div>
                 </div>
