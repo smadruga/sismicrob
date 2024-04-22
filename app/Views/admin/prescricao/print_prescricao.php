@@ -55,13 +55,13 @@ if($prescricao['idTabSismicrob_Indicacao'] == 1) {
                         <div class="container border border-dark">
                             <div class="row">
                                 <div class="col">
-                                    <b>Prontuário:</b> <?= $prescricao['Prontuario'] ?>
-                                </div>
-                                <div class="col">
                                     <b>Paciente:</b> <?= $prescricao['NomePaciente'] ?>
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col">
+                                    <b>Prontuário:</b> <?= $prescricao['Prontuario'] ?>
+                                </div>                                
                                 <div class="col">
                                     <b>Sexo:</b> <?= $prescricao['Sexo'] ?>
                                 </div>
@@ -155,10 +155,10 @@ if($prescricao['idTabSismicrob_Indicacao'] == 1) {
                                 <div class="col">
                                     <b>Peso:</b> <?= $prescricao['Peso'] ?> kg
                                 </div>
-                                <div class="col">
+                                <div class="col-4">
                                     <b>Creatinina:</b> <?= $prescricao['Creatinina'] ?> mg/dL
                                 </div>
-                                <div class="col">
+                                <div class="col-5">
                                     <b>Filtração Glomerular:</b> <?= $prescricao['Clearance'] ?> mL/min/1.73m²
                                 </div>                                
                             </div>    
@@ -167,7 +167,7 @@ if($prescricao['idTabSismicrob_Indicacao'] == 1) {
                                 <div class="col">
                                     <b><?= $mascara['DoseAtaque'] ?>:</b> <?= ($prescricao['DoseAtaque']) == 'S' ? 'Sim' : 'Não' ?>
                                 </div>
-                                <div class="col">
+                                <div class="col-5">
                                     <b>Hemodiálise:</b> <?= ($prescricao['Hemodialise']) == 'S' ? 'Sim' : 'Não' ?>
                                 </div>
                             </div>                                
@@ -192,11 +192,13 @@ if($prescricao['idTabSismicrob_Indicacao'] == 1) {
                         
                             <div class="col fs-6 p-2">
                                 <br>
+                                    <b>Criada em:</b> <?= $prescricao['DataPrescricao'] ?> ||
                                     <b>Prescritor:</b> <?= $prescricao['NomePrescritor'] ?> ||
                                     <b>Conselho:</b> <?= $prescricao['Conselho'] ?>
                                     <br>
-                                    <b>Prescrição criada em:</b> <?= $prescricao['DataPrescricao'] ?> ||
-                                    <b>Prescrição concluída em:</b> <?= $prescricao['DataUltimaAtualizacao'] ?>
+                                    <b>Concluída em:</b> <?= $prescricao['DataConclusao'] ?> ||
+                                    <b>Concluída por:</b> <?= $prescricao['NomeResponsavel'] ?> ||
+                                    <b>Conselho:</b> <?= $prescricao['Conselho1'] ?>
                                 <br><br>
                             </div>
                             

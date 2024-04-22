@@ -114,6 +114,8 @@ class Prescricao extends BaseController
 
         $v['prescricao'] = $prescricao->read_prescricao($_SESSION['Paciente']['prontuario']);
 
+        $v['layout'] = 'list';
+
         /*
         echo "<pre>";
         print_r($v);
@@ -179,7 +181,7 @@ class Prescricao extends BaseController
     }
 
     /**
-    * Cria, edita, excluir e gerencia uma prescrição
+    * Cria, edita, exclui, imprime e gerencia uma prescrição
     *
     * @return void
     */
@@ -265,6 +267,8 @@ class Prescricao extends BaseController
             $v['data']['UnidadeMedida'] = (!isset($v['data']['UnidadeMedida'])) ? null : $v['data']['UnidadeMedida'];
         }
 
+        $v['data']['layout'] = 'list';
+
         if(($action == 'editar' || $action == 'excluir' || $action == 'concluir') && !$v['data']['submit']) {
 
             $v['idSismicrob_Tratamento'] = $id;
@@ -274,11 +278,11 @@ class Prescricao extends BaseController
             $v['data']['Medicamento']       = $v['data']['CodigoMedicamento'];
 
             $v['data']['DosePosologica']    = str_replace(".",",",$v['data']['DosePosologica']);
-            $v['data']['DoseDiaria']        = str_replace(".",",",$v['data']['DoseDiaria']).' '.$v['data']['UnidadeMedida'];
+            $v['data']['DoseDiaria']        = ($v['data']['DoseDiaria']) ? str_replace(".",",",$v['data']['DoseDiaria']).' '.$v['data']['UnidadeMedida'] : 0;
             
             $v['data']['Peso']              = str_replace(".",",",$v['data']['Peso']);
             $v['data']['Creatinina']        = str_replace(".",",",$v['data']['Creatinina']);
-            $v['data']['Clearance']         = str_replace(".",",",$v['data']['Clearance']);
+            $v['data']['Clearance']         = ($v['data']['Clearance']) ? str_replace(".",",",$v['data']['Clearance']) : 0;
 
             $z = $tabela->get_item($v['data']['idTabSismicrob_Intervalo'], 'Intervalo'); #Carrega os itens da tabela selecionada
             $v['data']['idTabSismicrob_Intervalo'] = $z['Intervalo'].'#'.$z['Codigo'].'#'.$z['idTabSismicrob_Intervalo'];
@@ -319,7 +323,8 @@ class Prescricao extends BaseController
             $v['radio'] = array(
                 'UnidadeMedida' => $v['func']->radio_checked($v['data']['UnidadeMedida'], 'UnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE),
                 'DoseAtaque'    => $v['func']->radio_checked($v['data']['DoseAtaque'], 'DoseAtaque', 'SN', 'N', FALSE, TRUE),
-                'Hemodialise'   => $v['func']->radio_checked($v['data']['Hemodialise'], 'Hemodialise', 'SN', 'N', FALSE, TRUE),        );
+                'Hemodialise'   => $v['func']->radio_checked($v['data']['Hemodialise'], 'Hemodialise', 'SN', 'N', FALSE, TRUE),        
+            );
     
             $v['div'] = array(
                 'DoseAtaque'                            => $v['func']->radio_showhide($v['data']['DoseAtaque'], 'S'),
@@ -396,16 +401,19 @@ class Prescricao extends BaseController
                     'Medicamento'                           => 'required',
                     'DataInicioTratamento'                  => ['label' => 'Data de Início', 'rules' => 'required|valid_date[Y-m-d]'],
                     'Duracao'                               => ['label' => 'Duração', 'rules' => 'required|integer'],
+                    'DataFimTratamento'                     => ['label' => 'Fim do Tratamento', 'rules' => 'required|valid_date[Y-m-d]'],
 
                     'DosePosologica'                        => ['label' => 'acima', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\,)\d+)?$/]'],
                     'UnidadeMedida'                         => ['label' => 'Unidade de Medida', 'rules' => 'required'],
                     'idTabSismicrob_Intervalo'              => 'required',
+                    'DoseDiaria'                            => ['label' => 'acima', 'rules' => 'required'],
 
                     'idTabSismicrob_ViaAdministracao'       => ['label' => 'acima', 'rules' => 'required'],
                     'idTabSismicrob_Especialidade'          => ['label' => 'Especialidade', 'rules' => 'required'],
 
                     'Peso'                                  => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\,)\d+)?$/]',
                     'Creatinina'                            => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\,)\d+)?$/]',
+                    'Clearance'                             => ['label' => 'Filtração Glomerular', 'rules' => 'required'],
 
                 ]);
 
@@ -420,7 +428,7 @@ class Prescricao extends BaseController
             #print_r($v['select']['Medicamento']->getResultArray());
             #print_r($v['data']);
             #print_r($v['opt']);
-            print_r($v['radio']);
+            print_r($_SESSION);
             print "</pre>";
             exit('oioioioi '.$action).' <br> '. $inputs;
             #exit('???');
@@ -471,8 +479,14 @@ class Prescricao extends BaseController
                     $v['data']['NomeMedicamento'] = $l[1];
 
                 }
-                if($action == 'concluir')
-                    $v['data']['Concluido'] = 1;
+                if($action == 'concluir') {
+                    $v['data']['Concluido']             = 1;
+                    $v['data']['DataConclusao']         = date('Y-m-d H:i:s', time());
+                    $v['data']['idSishuap_Usuario1']    = $_SESSION['Sessao']['idSishuap_Usuario'];
+                }
+                if($action == 'cadastrar')
+                    $v['data']['idSishuap_Usuario']     = $_SESSION['Sessao']['idSishuap_Usuario'];
+                
 
                 unset(
                     $v['data']['csrf_test_name'],
@@ -488,8 +502,7 @@ class Prescricao extends BaseController
                 $v['campos'] = array_keys($v['data']);
 
                 if($action == 'concluir') {
-
-
+                    
                     unset(
                         $v['data']['DataFimTratamento'],
                         $v['data']['DoseDiaria'],
@@ -604,6 +617,95 @@ class Prescricao extends BaseController
         #*/
 
         return view('admin/prescricao/form_prescricao', $v);
+    }
+
+    /**
+    * Cria, edita, exclui, imprime e gerencia uma prescrição
+    *
+    * @return void
+    */
+    public function assess_prescricao($assess)
+    {
+
+        $prescricao     = new PrescricaoModel(); #Inicia o objeto baseado na PrescricaoModel
+        $auditoria      = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
+        $auditorialog   = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
+        $aghux          = new PacienteModel();
+        $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias
+
+        $v['pager'] = \Config\Services::pager();
+        $request = \Config\Services::request();
+        #Inicia a classe de funções próprias
+        $v['func'] = new HUAP_Functions();
+
+        $v['prescricao'] = $prescricao->read_prescricao(FALSE, FALSE, FALSE, $assess);
+
+        $i = 0;
+        foreach($v['prescricao']['array'] as $x) {
+
+            $a = $aghux->get_paciente_codigo($x['CodigoAghux']);
+
+            $v['prescricao']['array'][$i]['NomePaciente']    = $a['nome'];
+            $v['prescricao']['array'][$i]['DataNascimento']  = $a['dt_nascimento'];
+            
+            if ($a['sexo'] == 'M')
+                $v['prescricao']['array'][$i]['Sexo'] = 'MASCULINO';
+            elseif ($a['sexo'] == 'F') 
+                $v['prescricao']['array'][$i]['Sexo'] ='FEMININO';
+            else
+                $v['prescricao']['array'][$i]['Sexo'] ='NÃO INFORMADO';
+    
+            $i++;          
+        }
+
+        $v['layout'] = 'assess';
+        
+        if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
+            $v['data'] = [
+                'idSismicrob_Tratamento'    => '',
+
+                'Avaliacao'                 => '',
+                'AvaliacaoDose'             => '',
+                
+
+                'submit'                    => '',
+            ];
+            
+        }
+        else
+            #Captura os inputs do Formulário
+            $v['data'] = array_map('trim', $this->request->getPostGet(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+
+        $v['radio'] = array(
+            'Avaliacao'    => $v['func']->radio_checked($v['data']['Avaliacao'], 'Avaliacao', 'SN', 'S', FALSE, TRUE),
+        );
+
+        if($v['data']['submit']) {
+            
+            #Critérios de validação
+            $inputs = $this->validate([
+                'Avaliacao'     => ['label' => 'Avaliação', 'rules' => 'required'],
+                'Justificativa' => 'required',
+
+            ]);
+
+            #Realiza a validação e retorna ao formulário se false
+            if (!$inputs) {
+                $v['validation'] = $this->validator;
+            }
+            else {
+                exit('oioioioi ');
+            }
+        }
+        
+        /*
+        echo "<pre>";
+        print_r($v['prescricao']['array']);
+        echo "</pre>";
+        exit('oi'.$_SESSION['Paciente']['prontuario']);
+        #*/
+
+        return view('admin/prescricao/list_prescricao', $v);
     }
 
     

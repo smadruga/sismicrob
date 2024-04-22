@@ -79,10 +79,15 @@ class PrescricaoModel extends Model
                                         'Concluido',
 
                                         'DataPrescricao',
-                                        'DataUltimaAtualizacao',
+                                        'DataConclusao',
 
                                         'idSishuap_Usuario',
                                         'Nome',
+
+                                        'idSishuap_Usuario1',
+                                        'idSishuap_Usuario2',
+                                        'AvaliacaoObs',
+                                        'DataAvaliacao',
                                     ];
 
     /**
@@ -90,12 +95,24 @@ class PrescricaoModel extends Model
     *
     * @return void
     */
-    public function read_prescricao($data, $buscaid = FALSE, $row = FALSE)
+    public function read_prescricao($data = FALSE, $buscaid = FALSE, $row = FALSE, $avaliacao = FALSE)
     {
 
         #$prescricao     = new PrescricaoModel(); #Inicia o objeto baseado na TabelaModel
 
-        $where = ($buscaid) ? 'st.idSismicrob_Tratamento = '.$data : 'st.Prontuario = '.$data;
+        #$where = ($buscaid) ? 'st.idSismicrob_Tratamento = '.$data : 'st.Prontuario = '.$data;
+        if ($data && $buscaid)
+            $where = 'st.idSismicrob_Tratamento = '.$data;
+        elseif ($data && !$buscaid)
+            $where = 'st.Prontuario = '.$data;
+        elseif (!$data && $avaliacao)
+            $where = 'st.Avaliacao = "'.$avaliacao.'" AND st.Concluido = 1 ';
+        else
+            exit('ERRO 5XEZ');
+
+        #exit('ERRO 5XEZ'.$where);
+
+        #exit('ERRO 5XEZ'.$where);
 
         $db = \Config\Database::connect();
         $query = $db->query('
@@ -157,10 +174,14 @@ class PrescricaoModel extends Model
                 , st.CodigoAghux
                 , st.Concluido
                 , date_format(st.DataPrescricao, "%d/%m/%Y %H:%i:%s") as DataPrescricao
-                , date_format(st.DataUltimaAtualizacao, "%d/%m/%Y %H:%i:%s") as DataUltimaAtualizacao
+                , date_format(st.DataConclusao, "%d/%m/%Y %H:%i:%s") as DataConclusao
                 , st.idSishuap_Usuario
                 , u.Cpf as CpfPrescritor
                 , u.Nome as NomePrescritor
+                , u1.Cpf as CpfResponsavel
+                , u1.Nome as NomeResponsavel
+                , u2.Cpf as CpfAvaliador
+                , u2.Nome as NomeAvaliador
             FROM
                 preschuapweb.Sismicrob_Tratamento as st
                     left join TabSismicrob_AntibioticoMantido as am     on st.idTabSismicrob_AntibioticoMantido     = am.idTabSismicrob_AntibioticoMantido
@@ -173,6 +194,8 @@ class PrescricaoModel extends Model
                     left join TabSismicrob_Tratamento t                 on st.idTabSismicrob_Tratamento             = t.idTabSismicrob_Tratamento
                     left join TabSismicrob_ViaAdministracao as va       on st.idTabSismicrob_ViaAdministracao       = va.idTabSismicrob_ViaAdministracao
                     left join Sishuap_Usuario as u                      on st.idSishuap_Usuario                     = u.idSishuap_Usuario
+                    left join Sishuap_Usuario as u1                     on st.idSishuap_Usuario1                    = u1.idSishuap_Usuario
+                    left join Sishuap_Usuario as u2                     on st.idSishuap_Usuario2                    = u2.idSishuap_Usuario
             WHERE
                     '.$where.'            
             ORDER BY st.idSismicrob_Tratamento DESC
@@ -203,6 +226,8 @@ class PrescricaoModel extends Model
 
             $r['array'] = $query->getRowArray();
             $r['array']['Conselho'] = $this->get_conselho($r['array']['CpfPrescritor']);
+            $r['array']['Conselho1'] = ($r['array']['CpfResponsavel']) ? $this->get_conselho($r['array']['CpfResponsavel']) : NULL;
+            $r['array']['Conselho2'] = ($r['array']['CpfAvaliador']) ? $this->get_conselho($r['array']['CpfAvaliador']) : NULL;
 
             return $r['array'];
 
@@ -214,6 +239,8 @@ class PrescricaoModel extends Model
             $i = 0;
             foreach($query->getResultArray() as $v) {        
                 $r['array'][$i]['Conselho'] = $this->get_conselho($v['CpfPrescritor']);
+                $r['array'][$i]['Conselho1'] = ($v['CpfResponsavel']) ? $this->get_conselho($v['CpfResponsavel']) : NULL;
+                $r['array'][$i]['Conselho2'] = ($v['CpfAvaliador']) ? $this->get_conselho($v['CpfAvaliador']) : NULL;
                 $i++;
             }
 

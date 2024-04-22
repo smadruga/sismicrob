@@ -20,11 +20,14 @@
                         <span class="visually-hidden"></span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('paciente/assess_paciente') ?>"><i class="fas fa-gavel"></i> Avaliar
-                        <span class="visually-hidden"></span>
-                    </a>
-                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-gavel"></i> Avaliação</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="<?= base_url('prescricao/assess_prescricao/P') ?>"><i class="fa-solid fa-hourglass-half"></i> Pendentes</a>
+                        <a class="dropdown-item" href="<?= base_url('prescricao/assess_prescricao/S') ?>"><i class="fa-solid fa-thumbs-up"></i> Aprovados</a>
+                        <a class="dropdown-item" href="<?= base_url('prescricao/assess_prescricao/N') ?>"><i class="fa-solid fa-thumbs-down"></i> Reprovados</a>
+                    </div>
+                </li>                
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-table"></i> Tabelas</a>
                     <div class="dropdown-menu">
