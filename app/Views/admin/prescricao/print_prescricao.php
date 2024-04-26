@@ -195,10 +195,10 @@ if($prescricao['idTabSismicrob_Indicacao'] == 1) {
                                     <b>Criada em:</b> <?= $prescricao['DataPrescricao'] ?> ||
                                     <b>Prescritor:</b> <?= $prescricao['NomePrescritor'] ?> ||
                                     <b>Conselho:</b> <?= $prescricao['Conselho'] ?>
-                                    <br>
+                                    <!--<br>
                                     <b>Concluída em:</b> <?= $prescricao['DataConclusao'] ?> ||
                                     <b>Concluída por:</b> <?= $prescricao['NomeResponsavel'] ?> ||
-                                    <b>Conselho:</b> <?= $prescricao['Conselho1'] ?>
+                                    <b>Conselho:</b> <?= $prescricao['Conselho1'] ?>-->
                                 <br><br>
                             </div>
                             

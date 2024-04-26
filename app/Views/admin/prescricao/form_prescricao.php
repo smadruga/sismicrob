@@ -192,8 +192,77 @@
                     </div>
                 </div>    
 
+                <div class="row g-4">
+                    <div class="col">
+                        <div>
+                            <label for="DoseAtaque" class="form-label"><?= $data['mascara']['DoseAtaque'] ?> <b class="text-danger">*</b></label>
+                            <div class="input-group">
+                                <div class="btn-group" data-toggle="buttons">
+                                    <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off"
+                                        id="DoseAtaqueS" value="S" <?php echo $radio['DoseAtaque']['c'][0] ?> <?= $opt['disabled'] ?>/>
+                                    <label class="btn btn-success <?php echo $radio['DoseAtaque']['a'][0] ?>" for="DoseAtaqueS" 
+                                        data-mdb-ripple-init>Sim</label>
+                                    <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off" 
+                                        id="DoseAtaqueN" value="N" <?php echo $radio['DoseAtaque']['c'][1] ?> <?= $opt['disabled'] ?>/>
+                                    <label class="btn btn-success <?php echo $radio['DoseAtaque']['a'][1] ?>" for="DoseAtaqueN" 
+                                        data-mdb-ripple-init>Não</label>
+                                </div>
+                            </div>
+                        </div>                         
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="row g-4">
+                    <div class="col">
+                        <div>
+                            <label for="idTabSismicrob_ViaAdministracao" class="form-label">Via de Administração <b class="text-danger">*</b></label>
+                            <div class="input-group mb-3">
+                                <select data-placeholder="Selecione uma opção..." class="form-control select2 <?php if($validation->getError('idTabSismicrob_ViaAdministracao')): ?>is-invalid<?php endif ?>"
+                                    id="idTabSismicrob_ViaAdministracao" name="idTabSismicrob_ViaAdministracao" <?= $opt['disabled'] ?>>
+                                    <option value="">Selecione uma opção...</option>
+                                    <?php
+                                    foreach ($select['ViaAdministracao']->getResultArray() as $row) {   
+                                        $selected = ($data['idTabSismicrob_ViaAdministracao'] == $row['idTabSismicrob_ViaAdministracao']) ? 'selected' : '';
+                                        echo '<option value="'.$row['idTabSismicrob_ViaAdministracao'].'" '.$selected.'>'.$row['Codigo'].' '.$row['ViaAdministracao'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                                <?php if ($validation->getError('idTabSismicrob_ViaAdministracao')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('idTabSismicrob_ViaAdministracao') ?>
+                                    </div>                                    
+                                <?php endif; ?>                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div>
+                            <label for="idTabSismicrob_Especialidade" class="form-label">Especialidade <b class="text-danger">*</b></label>
+                            <div class="input-group mb-3">
+                                <select data-placeholder="Selecione uma opção..." class="form-control select2 <?php if($validation->getError('idTabSismicrob_Especialidade')): ?>is-invalid<?php endif ?>"
+                                    id="idTabSismicrob_Especialidade" name="idTabSismicrob_Especialidade" <?= $opt['disabled'] ?>>
+                                    <option value="">Selecione uma opção...</option>
+                                    <?php
+                                    foreach ($select['Especialidade']->getResultArray() as $row) {   
+                                        $selected = ($data['idTabSismicrob_Especialidade'] == $row['idTabSismicrob_Especialidade']) ? 'selected' : '';
+                                        echo '<option value="'.$row['idTabSismicrob_Especialidade'].'" '.$selected.'>'.$row['Especialidade'].'</option>';                                            
+                                    }
+                                    ?>
+                                </select>
+                                <?php if ($validation->getError('idTabSismicrob_Especialidade')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('idTabSismicrob_Especialidade') ?>
+                                    </div>                                    
+                                <?php endif; ?>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row g-3">
-                    <div class="col-4">
+                    <div class="col-5">
                         <div>
                             <label for="DosePosologica" class="form-label">Dose Posológica de Manutenção <b class="text-danger">*</b></label>
                             <div class="input-group">
@@ -232,7 +301,7 @@
                             </div>
                         </div>                         
                     </div>
-                    <div class="col-4">
+                    <div class="col">
                         <div>
                             <label for="idTabSismicrob_Intervalo" class="form-label"><?= $data['mascara']['Intervalo'] ?> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
@@ -258,34 +327,62 @@
                             </div>
                         </div>
                     </div>
+                </div>              
+
+                <div class="row g-3">
                     <div class="col-4">
                         <div>
                             <label for="DoseDiaria" class="form-label"><?= $data['mascara']['DoseDiaria'] ?></label>
                             <input type="text" class="form-control" id="DoseDiaria" readonly
                                 name="DoseDiaria" value="<?php echo $data['DoseDiaria'] ?>">
                         </div>
+                    </div>                    
+                    <div class="col">
+                        <div>
+                            <label for="Peso" class="form-label">Peso <b class="text-danger">*</b></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control <?php if($validation->getError('Peso')): ?>is-invalid<?php endif ?>" 
+                                    id="Peso" maxlength="18" name="Peso" value="<?php echo $data['Peso'] ?>" <?= $opt['disabled'] ?>
+                                    onkeyup="clearanceCreatinina('Peso', 'Creatinina', 'Sexo', 'Idade', 'Clearance')">
+                                <span class="input-group-text" id="basic-addon2">kg</span>
+                                <?php if ($validation->getError('Peso')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('Peso') ?>
+                                    </div>                                    
+                                <?php endif; ?>
+                            </div>
+                        </div>                         
+                    </div>
+                    <div class="col">
+                        <div>
+                            <label for="Creatinina" class="form-label">Creatinina <b class="text-danger">*</b></label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control <?php if($validation->getError('Creatinina')): ?>is-invalid<?php endif ?>" 
+                                    onkeyup="clearanceCreatinina('Peso', 'Creatinina', 'Sexo', 'Idade', 'Clearance')" <?= $opt['disabled'] ?>
+                                    id="Creatinina" maxlength="18" name="Creatinina" value="<?php echo $data['Creatinina'] ?>">
+                                <span class="input-group-text" id="basic-addon2">mg/dL</span>
+                                <?php if ($validation->getError('Creatinina')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('Creatinina') ?>
+                                    </div>                                    
+                                <?php endif; ?>                                
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row g-3">
-                    <div class="col-3">
+                    <div class="col-5">
                         <div>
-                            <label for="DoseAtaque" class="form-label"><?= $data['mascara']['DoseAtaque'] ?> <b class="text-danger">*</b></label>
-                            <div class="input-group">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off"
-                                        id="DoseAtaqueS" value="S" <?php echo $radio['DoseAtaque']['c'][0] ?> <?= $opt['disabled'] ?>/>
-                                    <label class="btn btn-success <?php echo $radio['DoseAtaque']['a'][0] ?>" for="DoseAtaqueS" 
-                                        data-mdb-ripple-init>Sim</label>
-                                    <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off" 
-                                        id="DoseAtaqueN" value="N" <?php echo $radio['DoseAtaque']['c'][1] ?> <?= $opt['disabled'] ?>/>
-                                    <label class="btn btn-success <?php echo $radio['DoseAtaque']['a'][1] ?>" for="DoseAtaqueN" 
-                                        data-mdb-ripple-init>Não</label>
-                                </div>
+                            <label for="Clearance" class="form-label">Filtração Glomerular</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="Clearance" readonly
+                                    name="Clearance" value="<?php echo $data['Clearance'] ?>">
+                                <span class="input-group-text" id="basic-addon2">mL/min/1.73m²</span>
                             </div>
-                        </div>                         
+                        </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col">
                         <div>
                             <label for="Hemodialise" class="form-label">Hemodiálise <b class="text-danger">*</b></label>
                             <div class="input-group">
@@ -301,55 +398,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3">
-                        <div>
-                            <label for="idTabSismicrob_ViaAdministracao" class="form-label">Via de Administração <b class="text-danger">*</b></label>
-                            <div class="input-group mb-3">
-                                <select data-placeholder="Selecione uma opção..." class="form-control select2 <?php if($validation->getError('idTabSismicrob_ViaAdministracao')): ?>is-invalid<?php endif ?>"
-                                    id="idTabSismicrob_ViaAdministracao" name="idTabSismicrob_ViaAdministracao" <?= $opt['disabled'] ?>>
-                                    <option value="">Selecione uma opção...</option>
-                                    <?php
-                                    foreach ($select['ViaAdministracao']->getResultArray() as $row) {   
-                                        $selected = ($data['idTabSismicrob_ViaAdministracao'] == $row['idTabSismicrob_ViaAdministracao']) ? 'selected' : '';
-                                        echo '<option value="'.$row['idTabSismicrob_ViaAdministracao'].'" '.$selected.'>'.$row['Codigo'].' '.$row['ViaAdministracao'].'</option>';
-                                    }
-                                    ?>
-                                </select>
-                                <?php if ($validation->getError('idTabSismicrob_ViaAdministracao')): ?>
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('idTabSismicrob_ViaAdministracao') ?>
-                                    </div>                                    
-                                <?php endif; ?>                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div>
-                            <label for="idTabSismicrob_Especialidade" class="form-label">Especialidade <b class="text-danger">*</b></label>
-                            <div class="input-group mb-3">
-                                <select data-placeholder="Selecione uma opção..." class="form-control select2 <?php if($validation->getError('idTabSismicrob_Especialidade')): ?>is-invalid<?php endif ?>"
-                                    id="idTabSismicrob_Especialidade" name="idTabSismicrob_Especialidade" <?= $opt['disabled'] ?>>
-                                    <option value="">Selecione uma opção...</option>
-                                    <?php
-                                    foreach ($select['Especialidade']->getResultArray() as $row) {   
-                                        $selected = ($data['idTabSismicrob_Especialidade'] == $row['idTabSismicrob_Especialidade']) ? 'selected' : '';
-                                        echo '<option value="'.$row['idTabSismicrob_Especialidade'].'" '.$selected.'>'.$row['Especialidade'].'</option>';                                            
-                                    }
-                                    ?>
-                                </select>
-                                <?php if ($validation->getError('idTabSismicrob_Especialidade')): ?>
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('idTabSismicrob_Especialidade') ?>
-                                    </div>                                    
-                                <?php endif; ?>                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row g-3">
-                    <div class="col-3 idTabSismicrob_Indicacao1" id="idTabSismicrob_Indicacao1" <?php echo $div['idTabSismicrob_Indicacao1'] ?>>
+                    </div>    
+                    <div class="col-5 idTabSismicrob_Indicacao1" id="idTabSismicrob_Indicacao1" <?php echo $div['idTabSismicrob_Indicacao1'] ?>>
                         <div>
                             <label for="idTabSismicrob_AntibioticoMantido" class="form-label">Antibiótico após cirurgia <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
@@ -370,49 +420,7 @@
                                 <?php endif; ?>                                
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3">
-                        <div>
-                            <label for="Peso" class="form-label">Peso <b class="text-danger">*</b></label>
-                            <div class="input-group">
-                                <input type="text" class="form-control <?php if($validation->getError('Peso')): ?>is-invalid<?php endif ?>" 
-                                    id="Peso" maxlength="18" name="Peso" value="<?php echo $data['Peso'] ?>" <?= $opt['disabled'] ?>
-                                    onkeyup="clearanceCreatinina('Peso', 'Creatinina', 'Sexo', 'Idade', 'Clearance')">
-                                <span class="input-group-text" id="basic-addon2">kg</span>
-                                <?php if ($validation->getError('Peso')): ?>
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('Peso') ?>
-                                    </div>                                    
-                                <?php endif; ?>
-                            </div>
-                        </div>                         
-                    </div>
-                    <div class="col-3">
-                        <div>
-                            <label for="Creatinina" class="form-label">Creatinina <b class="text-danger">*</b></label>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control <?php if($validation->getError('Creatinina')): ?>is-invalid<?php endif ?>" 
-                                    onkeyup="clearanceCreatinina('Peso', 'Creatinina', 'Sexo', 'Idade', 'Clearance')" <?= $opt['disabled'] ?>
-                                    id="Creatinina" maxlength="18" name="Creatinina" value="<?php echo $data['Creatinina'] ?>">
-                                <span class="input-group-text" id="basic-addon2">mg/dL</span>
-                                <?php if ($validation->getError('Creatinina')): ?>
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('Creatinina') ?>
-                                    </div>                                    
-                                <?php endif; ?>                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div>
-                            <label for="Clearance" class="form-label">Filtração Glomerular</label>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" id="Clearance" readonly
-                                    name="Clearance" value="<?php echo $data['Clearance'] ?>">
-                                <span class="input-group-text" id="basic-addon2">mL/min/1.73m²</span>
-                            </div>
-                        </div>
-                    </div>
+                    </div>                                    
                 </div>
 
                 <hr />                               
@@ -432,7 +440,7 @@
             <input type="hidden" name="Idade" id="Idade" value="<?= $_SESSION['Paciente']['idade'] ?>" />
             <input type="hidden" name="Sexo" id="Sexo" value="<?= $_SESSION['Paciente']['sexo'] ?>" />
             <input type="hidden" name="action" value="<?= $opt['action'] ?>" />
-            <?php if($opt['action'] == 'editar' || $opt['action'] == 'excluir' || $opt['action'] == 'concluir') { ?>
+            <?php if($opt['action'] == 'editar' || $opt['action'] == 'excluir') { ?>
             <input type="hidden" name="idSismicrob_Tratamento" value="<?= $data['idSismicrob_Tratamento'] ?>" />
             <?php } ?>
 

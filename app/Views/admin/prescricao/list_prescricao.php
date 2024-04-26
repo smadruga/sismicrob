@@ -63,7 +63,6 @@
                                 <?php } else { ?>
                                     <a class="btn btn-outline-warning" id="click" href="<?= base_url('prescricao/manage_prescricao/editar/'.$v['idSismicrob_Tratamento']) ?>" role="button"><i class="fa-solid fa-edit"></i> Editar</a>
                                     <a class="btn btn-outline-danger" id="click" href="<?= base_url('prescricao/manage_prescricao/excluir/'.$v['idSismicrob_Tratamento']) ?>" role="button"><i class="fa-solid fa-trash-can"></i> Excluir</a>
-                                    <a class="btn btn-outline-success" id="click" href="<?= base_url('prescricao/manage_prescricao/concluir/'.$v['idSismicrob_Tratamento']) ?>" role="button"><i class="fa-solid fa-check-circle"></i> Concluir</a>
                             <?php } ?>
                                 <hr>
                             <?php } ?>
@@ -166,14 +165,6 @@
                                 <div class="col"><b>Conselho:</b> <?= $v['Conselho'] ?></div>
                             </div>
                             <?php
-                            if ($v['Concluido'] == 1) {
-                            ?>
-                            <div class="row">
-                                <div class="col"><b>Concluída em:</b> <?= $v['DataConclusao'] ?></div>
-                                <div class="col"><b>Concluída por:</b> <?= $v['NomeResponsavel'] ?></div>
-                                <div class="col"><b>Conselho:</b> <?= $v['Conselho1'] ?></div>
-                            </div>
-                            <?php } 
                             if ($layout == 'assess' && $v['Avaliacao'] == 'P') {
                             ?>
                             <hr />

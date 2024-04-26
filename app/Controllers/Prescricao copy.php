@@ -269,7 +269,7 @@ class Prescricao extends BaseController
 
         $v['data']['layout'] = 'list';
 
-        if(($action == 'editar' || $action == 'excluir') && !$v['data']['submit']) {
+        if(($action == 'editar' || $action == 'excluir' || $action == 'concluir') && !$v['data']['submit']) {
 
             $v['idSismicrob_Tratamento'] = $id;
             $v['data'] = $prescricao->find($v['idSismicrob_Tratamento']); #Carrega os itens da tabela selecionada
@@ -291,8 +291,9 @@ class Prescricao extends BaseController
             $v['data']['Medicamento'] = $z['mat_codigo'].'#'.$z['descricao'];
         }
 
-
+        #if(($action == 'excluir' || $action == 'concluir') && !$v['data']['submit']) { 
         if(
+            #(($action == 'cadastrar' || $action == 'editar') && (!$v['data']['submit'] || $v['data']['submit'] == 1))
             (!$v['data']['submit']) || 
             (($action == 'cadastrar' || $action == 'editar') && (!$v['data']['submit'] || $v['data']['submit'] == 1))
             
@@ -356,11 +357,24 @@ class Prescricao extends BaseController
             ];
 
         }
+        elseif($action == 'concluir') {
+
+            $v['opt'] = [
+                'bg'        => 'bg-success',
+                'button'    => '<button class="btn btn-success" id="submit" name="submit" value="2" type="submit"><i class="fa-solid fa-check-circle"></i> Concluir</button>',
+                'title'     => 'Tem certeza que deseja concluir a prescrição abaixo?',
+                'disabled'  => 'disabled',
+                'action'    => 'concluir',
+            ];
+
+        }
         else {
 
             $v['opt'] = [
                 'bg'        => 'bg-secondary',
-                'button'    => '<button type="submit" class="btn btn-primary" name="submit" value="1"><i class="fas fa-save" aria-hidden="true"></i> Salvar </button>',
+                #'button'    => '<button class="btn btn-info" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-circle-chevron-right"></i> Próximo</button>',
+                'button'    => '<button type="submit" class="btn btn-primary" name="submit" value="1"><i class="fas fa-save" aria-hidden="true"></i> Salvar e Finalizar</button>
+                <button type="submit" class="btn btn-info" name="submit2" value="2"><i class="fas fa-plus" aria-hidden="true"></i> Salvar e Incluir Outro Tratamento</button>',
                 'title'     => 'Cadastrar Prescrição',
                 'disabled'  => '',
                 'action'    => 'cadastrar',
@@ -465,10 +479,14 @@ class Prescricao extends BaseController
                     $v['data']['NomeMedicamento'] = $l[1];
 
                 }
-                if($action == 'cadastrar') {
-                    $v['data']['idSishuap_Usuario'] = $_SESSION['Sessao']['idSishuap_Usuario'];
-                    $v['data']['Concluido']         = 1;
-                }               
+                if($action == 'concluir') {
+                    $v['data']['Concluido']             = 1;
+                    $v['data']['DataConclusao']         = date('Y-m-d H:i:s', time());
+                    $v['data']['idSishuap_Usuario1']    = $_SESSION['Sessao']['idSishuap_Usuario'];
+                }
+                if($action == 'cadastrar')
+                    $v['data']['idSishuap_Usuario']     = $_SESSION['Sessao']['idSishuap_Usuario'];
+                
 
                 unset(
                     $v['data']['csrf_test_name'],
@@ -483,7 +501,31 @@ class Prescricao extends BaseController
 
                 $v['campos'] = array_keys($v['data']);
 
-                if($action == 'editar') {
+                if($action == 'concluir') {
+                    
+                    unset(
+                        $v['data']['DataFimTratamento'],
+                        $v['data']['DoseDiaria'],
+                        $v['data']['Clearance'],
+                        $v['data']['UnidadeMedida'],
+                    );
+
+                    $v['id'] = $v['data']['idSismicrob_Tratamento'];
+                    $v['anterior'] = $prescricao->find($v['id']);
+
+                    if($prescricao->update($v['id'], $v['data'])) {
+
+                        $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Sismicrob_Tratamento', 'UPDATE', $v['id']), TRUE);
+                        $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);                  
+
+                        session()->setFlashdata('success', 'Item atualizado com sucesso!');
+
+                    }
+                    else
+                        session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
+
+                }
+                elseif($action == 'editar') {
                             
                     $v['id'] = $v['data']['idSismicrob_Tratamento'];
                     $v['anterior'] = $prescricao->find($v['id']);

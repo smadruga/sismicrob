@@ -237,6 +237,7 @@ class PrescricaoModel extends Model
             $r['count'] = $query->getNumRows();
 
             $i = 0;
+
             foreach($query->getResultArray() as $v) {        
                 $r['array'][$i]['Conselho'] = $this->get_conselho($v['CpfPrescritor']);
                 $r['array'][$i]['Conselho1'] = ($v['CpfResponsavel']) ? $this->get_conselho($v['CpfResponsavel']) : NULL;
@@ -292,28 +293,24 @@ class PrescricaoModel extends Model
     public function get_conselho($data)
     {
 
-        $db = \Config\Database::connect('aghux');
-        $query = $db->query('
-            SELECT
-                concat(cpr_sigla, \'-\',nro_reg_conselho) as conselho
-            FROM
-                agh.v_rap_servidor_conselho
-            WHERE
-                cpf = '.$data.'
-        ');
+        if($data) {
 
-        /*
-        echo $db->getLastQuery();
-        echo "<pre>";
-        print_r($query);
-        echo "</pre>";
-        exit($data);
-        #*/
-        #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
+            $db = \Config\Database::connect('aghux');
+            $query = $db->query('
+                SELECT
+                    concat(cpr_sigla, \'-\',nro_reg_conselho) as conselho
+                FROM
+                    agh.v_rap_servidor_conselho
+                WHERE
+                    cpf = '.$data.'
+            ');
 
-        if($query->getNumRows()) {
-            $query = $query->getRowArray();
-            return $query['conselho'];
+            if(!$query->getNumRows() && $query->getNumRows() != 0) {
+                $query = $query->getRowArray();
+                return $query['conselho'];
+            }
+            else
+                return 'NÃO ENCONTRADO';
         }
         else
             return 'NÃO ENCONTRADO';
