@@ -240,7 +240,7 @@ function ajuste(campo) {
  * @param {string} value
  * @returns {decimal}
  */
-function showHideDiv(valor, campo, div, opcoes, autofocus, alternar, alternar0, alternar1, icon0, icon1) {
+function showHideDiv(valor, campo, div, opcoes, autofocus, alternar, alternar0, alternar1, icon0, icon1, divOcultar) {
 
     //console.log('>v '+valor+'<>c '+campo+'<>d '+div+'<>o '+opcoes);
 
@@ -280,10 +280,14 @@ function showHideDiv(valor, campo, div, opcoes, autofocus, alternar, alternar0, 
 
             }
             $('.idTabSismicrob_IndicacaoDiv').removeAttr("style");
-            //console.log('>vvv '+valor+'<>c '+campo+'<>d '+div+'<>o '+opcoes);
+            console.log('>vvv '+valor+'<>c '+campo+'<>d '+div+'<>o '+opcoes+'<>len '+o.length+'<>i '+i);
 
         }
-        //console.log('###>'+valor+'<>'+campo+'<>'+div+'<>'+opcoes+'<>'+autofocus+'<>'+alternar+'<>'+alternar0+'<>'+alternar1+'<>');
+        
+        //if (divOcultar) {            $('#Ocultar_' + div + valor).hide();            console.log('>vvv '+valor+'<> testes ');        }
+            
+
+        //console.log('###>'+valor+'<>'+campo+'<>'+div+'<>'+opcoes+'<>'+autofocus+'<>'+alternar+'<>'+alternar0+'<>'+alternar1+'<>'+'#Ocultar_' + div + valor);
     }
     //console.log('>'+valor+'<>'+campo+'<>'+div+'<>'+opcoes+'<>'+autofocus+'<>'+alternar+'<>'+alternar0+'<>'+alternar1+'<>');
 }

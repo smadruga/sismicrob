@@ -52,7 +52,7 @@
                         </div>
                     </button>
                 </h2>
-                <div id="collapse<?= $v['idSismicrob_Tratamento'] ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $v['idSismicrob_Tratamento'] ?>">
+                <div id="collapse<?= $v['idSismicrob_Tratamento'] ?>" class="accordion-collapse collapse show" aria-labelledby="heading<?= $v['idSismicrob_Tratamento'] ?>">
                     <div class="accordion-body">
                         <div>
                             <?php if($layout == 'list') { ?>

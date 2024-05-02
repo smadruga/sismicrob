@@ -23,7 +23,7 @@
                                 <select <?= $opt['disabled'] ?> class="form-control select2
                                     <?php if($validation->getError('idTabSismicrob_Indicacao')): ?>is-invalid<?php endif ?>"
                                         id="idTabSismicrob_Indicacao" name="idTabSismicrob_Indicacao" data-placeholder="Selecione uma opção..."
-                                        onchange="showHideDiv(this.value,this.name,'idTabSismicrob_Indicacao','1|3')"
+                                        onchange="showHideDiv(this.value,this.name,'idTabSismicrob_Indicacao','1|3',false,false,false,false,false,false,true)"
                                         data-allow-clear="1">
                                         <option value="">Selecione uma opção...</option>
                                         <?php
@@ -129,29 +129,31 @@
 
                 <div class="row g-3">
                     <div class="col-md-12">
-                            <label for="Medicamento" class="form-label">Medicamento <b class="text-danger">*</b></label>
-                            <div class="input-group mb-3">
-                                <select <?= $opt['disabled'] ?> class="form-select select2 
-                                    <?php if($validation->getError('Medicamento')): ?>is-invalid<?php endif ?>"
-                                        id="Medicamento" name="Medicamento" data-placeholder="Selecione uma opção"
-                                        data-allow-clear="1">
-                                        <option value="">Selecione uma opção</option>
-                                        <?php
-                                        foreach ($select['Medicamento']->getResultArray() as $row) {
-                                            $selected = ($data['Medicamento'] == $row['Codigo'].'#'.$row['Medicamento']) ? 'selected' : '';
-                                            echo '<option value="'.$row['Codigo'].'#'.$row['Medicamento'].'" '.$selected.'>'.$row['Medicamento'].'</option>';
-                                        }
-                                    ?>
-                                </select>
+                        <label for="Medicamento" class="form-label">Medicamento <b class="text-danger">*</b></label>
+                        <div class="input-group mb-3">
+                            <select <?= $opt['disabled'] ?> class="form-select select2 
+                                <?php if($validation->getError('Medicamento')): ?>is-invalid<?php endif ?>"
+                                    id="Medicamento" name="Medicamento" data-placeholder="Selecione uma opção"
+                                    data-allow-clear="1">
+                                    <option value="">Selecione uma opção</option>
+                                    <?php
+                                    foreach ($select['Medicamento']->getResultArray() as $row) {
+                                        $selected = ($data['Medicamento'] == $row['Codigo'].'#'.$row['Medicamento']) ? 'selected' : '';
+                                        echo '<option value="'.$row['Codigo'].'#'.$row['Medicamento'].'" '.$selected.'>'.$row['Medicamento'].'</option>';
+                                    }
+                                ?>
+                            </select>
 
-                                <?php if ($validation->getError('Medicamento')): ?>
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('Medicamento') ?>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
+                            <?php if ($validation->getError('Medicamento')): ?>
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('Medicamento') ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
+                    </div>
+                </div>
 
+                <div class="row g-3" id="Ocultar_idTabSismicrob_Indicacao1">
                     <div class="col-4">
                         <div>
                             <label for="DataInicioTratamento" class="form-label">Data de Início <b class="text-danger">*</b></label>
