@@ -202,11 +202,11 @@
                                 <div class="btn-group" data-toggle="buttons">
                                     <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off"
                                         id="DoseAtaqueS" value="S" <?php echo $radio['DoseAtaque']['c'][0] ?> <?= $opt['disabled'] ?>/>
-                                    <label class="btn btn-success <?php echo $radio['DoseAtaque']['a'][0] ?>" for="DoseAtaqueS" 
+                                    <label class="btn btn-secondary <?php echo $radio['DoseAtaque']['a'][0] ?>" for="DoseAtaqueS" 
                                         data-mdb-ripple-init>Sim</label>
                                     <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off" 
                                         id="DoseAtaqueN" value="N" <?php echo $radio['DoseAtaque']['c'][1] ?> <?= $opt['disabled'] ?>/>
-                                    <label class="btn btn-success <?php echo $radio['DoseAtaque']['a'][1] ?>" for="DoseAtaqueN" 
+                                    <label class="btn btn-secondary <?php echo $radio['DoseAtaque']['a'][1] ?>" for="DoseAtaqueN" 
                                         data-mdb-ripple-init>Não</label>
                                 </div>
                             </div>
@@ -275,19 +275,19 @@
                                     <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidaG" autocomplete="off" value="g"
                                         onchange="calculaProduto('DosePosologica', 'idTabSismicrob_Intervalo', 'DoseDiaria')" <?= $opt['disabled'] ?>
                                         <?php echo $radio['UnidadeMedida']['c'][0] ?>/>
-                                    <label class="btn btn-success <?php echo $radio['UnidadeMedida']['a'][0] ?>" for="UnidadeMedidaG" 
+                                    <label class="btn btn-secondary <?php echo $radio['UnidadeMedida']['a'][0] ?>" for="UnidadeMedidaG" 
                                         data-mdb-ripple-init name="UnidadeMedida">g</label>
 
                                     <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidamG" autocomplete="off" value="mg"
                                         onchange="calculaProduto('DosePosologica', 'idTabSismicrob_Intervalo', 'DoseDiaria')" <?= $opt['disabled'] ?>
                                         <?php echo $radio['UnidadeMedida']['c'][1] ?>/>
-                                    <label class="btn btn-success <?php echo $radio['UnidadeMedida']['a'][1] ?>" for="UnidadeMedidamG" 
+                                    <label class="btn btn-secondary <?php echo $radio['UnidadeMedida']['a'][1] ?>" for="UnidadeMedidamG" 
                                         data-mdb-ripple-init name="UnidadeMedida">mg</label>
 
                                     <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidaUI" autocomplete="off" value="UI"
                                         onchange="calculaProduto('DosePosologica', 'idTabSismicrob_Intervalo', 'DoseDiaria')" <?= $opt['disabled'] ?>
                                         <?php echo $radio['UnidadeMedida']['c'][2] ?>/>
-                                    <label class="btn btn-success <?php echo $radio['UnidadeMedida']['a'][2] ?>" for="UnidadeMedidaUI" 
+                                    <label class="btn btn-secondary <?php echo $radio['UnidadeMedida']['a'][2] ?>" for="UnidadeMedidaUI" 
                                         data-mdb-ripple-init name="UnidadeMedida">UI</label>
 
                                     <?php if ($validation->getError('DosePosologica')): ?>
@@ -391,11 +391,11 @@
                                 <div class="btn-group">
                                     <input type="radio" class="btn-check" name="Hemodialise" autocomplete="off" id="HemodialiseS" 
                                         value="S" <?php echo $radio['Hemodialise']['c'][0] ?> <?= $opt['disabled'] ?>/>
-                                    <label class="btn btn-success <?php echo $radio['Hemodialise']['a'][0] ?>" for="HemodialiseS"
+                                    <label class="btn btn-<?php echo $radio['Hemodialise']['b'][0] ?> <?php echo $radio['Hemodialise']['a'][0] ?>" for="HemodialiseS"
                                         data-mdb-ripple-init>Sim</label>
                                     <input type="radio" class="btn-check" name="Hemodialise" autocomplete="off" id="HemodialiseN" 
                                         value="N" <?php echo $radio['Hemodialise']['c'][1] ?> <?= $opt['disabled'] ?>/>
-                                    <label class="btn btn-success <?php echo $radio['Hemodialise']['a'][1] ?>" for="HemodialiseN"
+                                    <label class="btn btn-<?php echo $radio['Hemodialise']['b'][1] ?> <?php echo $radio['Hemodialise']['a'][1] ?>" for="HemodialiseN"
                                         data-mdb-ripple-init>Não</label>
                                 </div>
                             </div>

@@ -1105,12 +1105,14 @@ class HUAP_Functions
 
                             $radio['c'][$k] = 'checked';
                             $radio['a'][$k] = 'active';
+                            $radio['b'][$k] = 'warning';
 
                         }
                         else {
                             
                             $radio['c'][$k] = '';
                             $radio['a'][$k] = '';
+                            $radio['b'][$k] = 'secondary';
 
                         }
                         
@@ -1119,6 +1121,7 @@ class HUAP_Functions
 
                     $radio['c'][$j] = '';
                     $radio['a'][$j] = '';
+                    $radio['b'][$j] = 'secondary';
 
                 }
             }
