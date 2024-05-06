@@ -272,33 +272,33 @@
                                     onkeyup="calculaProduto('DosePosologica', 'idTabSismicrob_Intervalo', 'DoseDiaria')" <?= $opt['disabled'] ?>
                                     name="DosePosologica" id="DosePosologica" maxlength="18" value="<?php echo $data['DosePosologica'] ?>">
                                 
-                                    <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidaG" autocomplete="off" value="g"
-                                        onchange="calculaProduto('DosePosologica', 'idTabSismicrob_Intervalo', 'DoseDiaria')" <?= $opt['disabled'] ?>
-                                        <?php echo $radio['UnidadeMedida']['c'][0] ?>/>
-                                    <label class="btn btn-secondary <?php echo $radio['UnidadeMedida']['a'][0] ?>" for="UnidadeMedidaG" 
-                                        data-mdb-ripple-init name="UnidadeMedida">g</label>
+                                <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidaG" autocomplete="off" value="g"
+                                    onchange="calculaProduto('DosePosologica', 'idTabSismicrob_Intervalo', 'DoseDiaria')" <?= $opt['disabled'] ?>
+                                    <?php echo $radio['UnidadeMedida']['c'][0] ?>/>
+                                <label class="btn btn-secondary <?php echo $radio['UnidadeMedida']['a'][0] ?>" for="UnidadeMedidaG" 
+                                    data-mdb-ripple-init name="UnidadeMedida">g</label>
 
-                                    <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidamG" autocomplete="off" value="mg"
-                                        onchange="calculaProduto('DosePosologica', 'idTabSismicrob_Intervalo', 'DoseDiaria')" <?= $opt['disabled'] ?>
-                                        <?php echo $radio['UnidadeMedida']['c'][1] ?>/>
-                                    <label class="btn btn-secondary <?php echo $radio['UnidadeMedida']['a'][1] ?>" for="UnidadeMedidamG" 
-                                        data-mdb-ripple-init name="UnidadeMedida">mg</label>
+                                <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidamG" autocomplete="off" value="mg"
+                                    onchange="calculaProduto('DosePosologica', 'idTabSismicrob_Intervalo', 'DoseDiaria')" <?= $opt['disabled'] ?>
+                                    <?php echo $radio['UnidadeMedida']['c'][1] ?>/>
+                                <label class="btn btn-secondary <?php echo $radio['UnidadeMedida']['a'][1] ?>" for="UnidadeMedidamG" 
+                                    data-mdb-ripple-init name="UnidadeMedida">mg</label>
 
-                                    <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidaUI" autocomplete="off" value="UI"
-                                        onchange="calculaProduto('DosePosologica', 'idTabSismicrob_Intervalo', 'DoseDiaria')" <?= $opt['disabled'] ?>
-                                        <?php echo $radio['UnidadeMedida']['c'][2] ?>/>
-                                    <label class="btn btn-secondary <?php echo $radio['UnidadeMedida']['a'][2] ?>" for="UnidadeMedidaUI" 
-                                        data-mdb-ripple-init name="UnidadeMedida">UI</label>
+                                <input type="radio" class="btn-check" name="UnidadeMedida" id="UnidadeMedidaUI" autocomplete="off" value="UI"
+                                    onchange="calculaProduto('DosePosologica', 'idTabSismicrob_Intervalo', 'DoseDiaria')" <?= $opt['disabled'] ?>
+                                    <?php echo $radio['UnidadeMedida']['c'][2] ?>/>
+                                <label class="btn btn-secondary <?php echo $radio['UnidadeMedida']['a'][2] ?>" for="UnidadeMedidaUI" 
+                                    data-mdb-ripple-init name="UnidadeMedida">UI</label>
 
-                                    <?php if ($validation->getError('DosePosologica')): ?>
-                                        <div class="invalid-feedback">
-                                            <?= $validation->getError('DosePosologica') ?>
-                                        </div>
-                                    <?php elseif ($validation->getError('UnidadeMedida')): ?>
-                                        <div class="invalid-feedback">
-                                            <?= $validation->getError('UnidadeMedida') ?>
-                                        </div>                                    
-                                    <?php endif; ?>   
+                                <?php if ($validation->getError('DosePosologica')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('DosePosologica') ?>
+                                    </div>
+                                <?php elseif ($validation->getError('UnidadeMedida')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('UnidadeMedida') ?>
+                                    </div>                                    
+                                <?php endif; ?>
                                 
                             </div>
                         </div>                         
@@ -432,7 +432,7 @@
                         <?= $opt['button'] ?>
                     </div>       
                     <div class="col-6 text-end">
-                        <a class="btn btn-warning" href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i> Cancelar</a>
+                        <a class="btn btn-warning" href="javascript:history.go(-1)"><i class="fa-solid fa-rotate-left"></i> Cancelar</a>
                     </div>
                 </div>
 

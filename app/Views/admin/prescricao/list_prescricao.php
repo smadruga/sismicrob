@@ -70,7 +70,7 @@
                         </div>
 
                         <div class="container">
-                            <?php if($layout == 'assess') { ?>
+                            <?php if($layout == 'assess' || $layout == 'form_assess') { ?>
                             <div class="row">
                                 <div class="col">
                                     <b>Paciente:</b> <?= $v['NomePaciente'] ?>
@@ -178,7 +178,7 @@
                             <?php 
                             } 
                             elseif ($layout == 'form_assess' && $v['Avaliacao'] == 'P') {
-                                echo $this->include('admin/prescricao/form_assess_prescricao');
+                                echo $this->include('admin/prescricao/form_assess_prescricao', $v);
                             } 
                             ?>
                         </div>

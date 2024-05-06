@@ -676,7 +676,7 @@ class Prescricao extends BaseController
     *
     * @return void
     */
-    public function assess_prescricao($assess, $id = FALSE)
+    public function assess_prescricao($assess = FALSE, $id = FALSE)
     {
 
         $prescricao     = new PrescricaoModel(); #Inicia o objeto baseado na PrescricaoModel
@@ -689,6 +689,42 @@ class Prescricao extends BaseController
         $request = \Config\Services::request();
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();
+        
+        if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
+            $v['data'] = [
+                #'idSismicrob_Tratamento'                => '',
+
+                'Avaliacao'                             => '',
+                'AvaliacaoDoseObs'                      => '',
+                'AvaliacaoDuracaoObs'                   => '',
+                'AvaliacaoIntervaloObs'                 => '',
+                'AvaliacaoIndicacaoObs'                 => '',
+                'AvaliacaoPreenchimentoInadequadoObs'   => '',
+                'AvaliacaoOutrosObs'                    => '',
+
+                'submit'                                => '',
+            ];
+
+            $v['data']['idSismicrob_Tratamento'] = $id;
+        }
+        else {
+            #Captura os inputs do Formulário
+            $v['data'] = array_map('trim', $this->request->getPost(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+
+            $v['data']['Avaliacao'] = (!isset($v['data']['Avaliacao'])) ? null : $v['data']['Avaliacao'];
+            $id = $v['data']['idSismicrob_Tratamento'];
+        }
+
+
+/*
+            $v['data']['idSismicrob_Tratamento'] = $id;
+            echo "<pre>";
+            print_r($v['data']);
+            echo "</pre>";
+            exit('oi'.$_SESSION['Paciente']['prontuario']);
+#*/
+        if(!$assess && !$v['data']['submit'])
+            exit('ERRO KOP999'.$v['data']['submit'].' kkk '.$assess);
 
         $v['prescricao'] = $prescricao->read_prescricao($id, TRUE, TRUE, $assess);
 
@@ -705,34 +741,13 @@ class Prescricao extends BaseController
             $v['prescricao']['Sexo'] ='NÃO INFORMADO';
 
         $v['layout'] = 'form_assess';
-        
-        if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
-            $v['data'] = [
-                'idSismicrob_Tratamento'    => '',
-
-                'Avaliacao'                 => '',
-                'AvaliacaoDoseObs'             => '',
-                'AvaliacaoDuracaoObs'             => '',
-                'AvaliacaoIntervaloObs'                 => '',
-                'AvaliacaoIndicacaoObs'                 => '',
-                'AvaliacaoPreenchimentoInadequadoObs'                 => '',
-                'AvaliacaoOutrosObs'                 => '',
-                
-
-                'submit'                    => '',
-            ];
-            
-        }
-        else
-            #Captura os inputs do Formulário
-            $v['data'] = array_map('trim', $this->request->getPostGet(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
         $v['radio'] = array(
             'Avaliacao'    => $v['func']->radio_checked($v['data']['Avaliacao'], 'Avaliacao', 'SN', FALSE, FALSE, TRUE),
         );
 
         if($v['data']['submit']) {
-            
+
             #Critérios de validação
             $inputs = $this->validate([
                 'Avaliacao'     => ['label' => 'Avaliação', 'rules' => 'required'],
