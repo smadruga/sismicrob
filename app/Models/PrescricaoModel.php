@@ -101,7 +101,7 @@ class PrescricaoModel extends Model
         #$prescricao     = new PrescricaoModel(); #Inicia o objeto baseado na TabelaModel
 
         #$where = ($buscaid) ? 'st.idSismicrob_Tratamento = '.$data : 'st.Prontuario = '.$data;
-        if ($data && $buscaid)
+        if ( ($data && $buscaid) || ($data && $buscaid && $avaliacao) )
             $where = 'st.idSismicrob_Tratamento = '.$data;
         elseif ($data && !$buscaid)
             $where = 'st.Prontuario = '.$data;
@@ -201,21 +201,10 @@ class PrescricaoModel extends Model
             ORDER BY st.idSismicrob_Tratamento DESC
         ');
 
-        #foreach($prescricao['array'] as $v) {        }
-
-        /*
-        echo $db->getLastQuery();
-        echo "<pre>";
-        print_r($query->getResultArray());
-        echo "</pre>";
-        exit($data.' <> '.$query->getNumRows());
-        #*/
-
         /*
         $qr = $query->getResultArray();
         $qn = $query->getNumRows();
-
-        
+   
         echo "<pre>";
         print_r($qr);
         echo "</pre>";
@@ -228,6 +217,20 @@ class PrescricaoModel extends Model
             $r['array']['Conselho'] = $this->get_conselho($r['array']['CpfPrescritor']);
             $r['array']['Conselho1'] = ($r['array']['CpfResponsavel']) ? $this->get_conselho($r['array']['CpfResponsavel']) : NULL;
             $r['array']['Conselho2'] = ($r['array']['CpfAvaliador']) ? $this->get_conselho($r['array']['CpfAvaliador']) : NULL;
+            $r['array']['count'] = $query->getNumRows();
+            
+            /*
+            $qr = $query->getResultArray();
+            $qn = $query->getNumRows();
+       
+            echo "<pre>";
+            #print_r($qr);
+            echo "</pre>";
+            echo "<pre>";
+            print_r($r['array']);
+            echo "</pre>";            
+            exit($data.' <> '.$avaliacao);
+            #*/  
 
             return $r['array'];
 

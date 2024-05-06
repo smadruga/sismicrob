@@ -170,14 +170,17 @@
                             <hr />
                             <div class="row">
                                 <div class="col text-center">
-                                    <a class="btn btn-warning btn-lg" href="<?= base_url('prescricao/assess_prescricao/'.$v['idSismicrob_Tratamento']) ?>" 
+                                    <a class="btn btn-warning btn-lg" href="<?= base_url('prescricao/assess_prescricao/A/'.$v['idSismicrob_Tratamento']) ?>" 
                                         role="button"><i class="fa-solid fa-scale-unbalanced-flip"></i> AVALIAR</a>
                                 </div>
                             </div>
-
                             <br />
-                            
-                            <?php } ?>
+                            <?php 
+                            } 
+                            elseif ($layout == 'form_assess' && $v['Avaliacao'] == 'P') {
+                                echo $this->include('admin/prescricao/form_assess_prescricao');
+                            } 
+                            ?>
                         </div>
 
                     </div>
