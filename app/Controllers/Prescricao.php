@@ -565,7 +565,7 @@ class Prescricao extends BaseController
 
                     }
                     else
-                        session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação. ERRO: XPT3');
+                        session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação. ERRO CÓDIGO: UH91GN');
 
                 }
                 elseif($action == 'cadastrar') {
@@ -592,11 +592,11 @@ class Prescricao extends BaseController
 
                     }
                     else
-                        session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.  ERRO: PRESCRIÇÃO-01');
+                        session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.  ERRO CÓDIGO: Y8J4V1');
 
                 }
                 else
-                    session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação. ERRO: PRESCRIÇÃO-02');
+                    session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação. ERRO CÓDIGO: 1ASEOB');
 
 
                 return redirect()->to('prescricao/list_prescricao');
@@ -724,7 +724,7 @@ class Prescricao extends BaseController
             exit('oi'.$_SESSION['Paciente']['prontuario']);
 #*/
         if(!$assess && !$v['data']['submit'])
-            exit('ERRO KOP999'.$v['data']['submit'].' kkk '.$assess);
+            exit('ERRO CÓDIGO: 5CY173');
 
         $v['prescricao'] = $prescricao->read_prescricao($id, TRUE, TRUE, $assess);
 
@@ -758,7 +758,35 @@ class Prescricao extends BaseController
                 $v['validation'] = $this->validator;
             }
             else {
-                exit('ERRO 87ASX');
+                #exit('ERRO CÓDIGO: H1IXKS');
+
+
+                $v['anterior'] = array();
+
+                /*
+                echo "<pre>";
+                print_r($v['data']);
+                echo "</pre>";
+                exit('oi');
+                #*/
+
+                #$v['id'] = $prescricao->insert($v['data']);
+                $v['campos'] = array_keys($v['data']);
+
+                if($prescricao->update($v['data']['idSismicrob_Tratamento'], $v['data'])) {
+
+                    $v['auditoria']     = $auditoria->insert($v['func']->create_auditoria('Sismicrob_Tratamento', 'UPDATE', $v['data']['idSismicrob_Tratamento']), TRUE);       
+                    $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['data']['idSismicrob_Tratamento'], $v['auditoria']), TRUE);
+                                            
+                    session()->setFlashdata('success', 'Avaliação salva com sucesso!');
+                    return redirect()->to('prescricao/list_assess_prescricao/P');
+
+                }
+                else {
+                    session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação. ERRO CÓDIGO: NBO1D5');
+
+                }
+                
             }
         }
         
