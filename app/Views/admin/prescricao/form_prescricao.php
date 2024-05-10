@@ -296,11 +296,9 @@
                                         <?= $validation->getError('DosePosologica') ?>
                                     </div>
                                 <?php elseif ($validation->getError('UnidadeMedida')): ?>
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('UnidadeMedida') ?>
-                                    </div>                                    
+                                    <div class="form-text text-danger">Unidade de Medida é obrigatória</div>
                                 <?php endif; ?>
-                                
+                               
                             </div>
                         </div>                         
                     </div>

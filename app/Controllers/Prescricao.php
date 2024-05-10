@@ -403,11 +403,11 @@ class Prescricao extends BaseController
                     'DataInicioTratamento'                  => ['label' => 'Data de Início', 'rules' => 'required|valid_date[Y-m-d]'],
                     'Duracao'                               => ['label' => 'Duração', 'rules' => 'required|integer'],
                     'DataFimTratamento'                     => ['label' => 'Fim do Tratamento', 'rules' => 'required|valid_date[Y-m-d]'],
-                    
+                    */
                     'DataInicioTratamento'                  => 'required_if['.$v['data']['idTabSismicrob_Indicacao'].', 2]|required_if['.$v['data']['idTabSismicrob_Indicacao'].', 3]',
                     'Duracao'                               => 'required_if['.$v['data']['idTabSismicrob_Indicacao'].', 2]|required_if['.$v['data']['idTabSismicrob_Indicacao'].', 3]',
                     'DataFimTratamento'                     => 'required_if['.$v['data']['idTabSismicrob_Indicacao'].', 2]|required_if['.$v['data']['idTabSismicrob_Indicacao'].', 3]',
-                    */
+
                     'DosePosologica'                        => ['label' => 'acima', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\,)\d+)?$/]'],
                     'UnidadeMedida'                         => ['label' => 'Unidade de Medida', 'rules' => 'required'],
                     'idTabSismicrob_Intervalo'              => 'required',
