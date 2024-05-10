@@ -42,10 +42,12 @@
                                 </b></div>
                                 <div class="col text-end">
                                     <?php
-                                    if($v['Concluido'] == 1)
-                                        echo '<span class="badge bg-primary text-white"><i class="fa-solid fa-check-circle"></i> Avaliação Pendente</span>';
+                                    if($v['Avaliacao'] == 'P')
+                                        echo '<span class="badge rounded-pill bg-secondary text-white"><i class="fa-solid fa-hourglass-start"></i> Avaliação Pendente</span>';
+                                    elseif($v['Avaliacao'] == 'S')
+                                        echo '<span class="badge rounded-pill bg-success text-white"><i class="fa-solid fa-thumbs-up"></i> Aprovado</span>';
                                     else
-                                        echo '<span class="badge bg-warning text-white"><i class="fa-solid fa-triangle-exclamation"></i> Aberta</span>';
+                                        echo '<span class="badge rounded-pill bg-danger text-white"><i class="fa-solid fa-thumbs-down"></i> Reprovado</span>';
                                     ?>
                                 </div>
                             </div>
@@ -56,13 +58,11 @@
                     <div class="accordion-body">
                         <div>
                             <?php if($layout == 'list') { ?>
-                                <?php if($v['Concluido'] == 1) { ?>
                                     <a class="btn btn-outline-info" onclick="window.open(this.href).print(); return false" href="<?= base_url('prescricao/print_prescricao/'.$v['idSismicrob_Tratamento']) ?>" target="_blank" role="button"><i class="fa-solid fa-print"></i> Imprimir</a>
-                                    <a class="btn btn-outline-info click" href="<?= base_url('prescricao/copy_prescricao/'.$v['idSismicrob_Tratamento']) ?>" role="button"><i class="fa-solid fa-copy"></i> Copiar</a>
-                                    <!--<a class="btn btn-outline-info click" href="<?= base_url('prescricao/copy_prescricao/'.$v['idSismicrob_Tratamento'].'/1') ?>" role="button"><i class="fa-solid fa-repeat"></i> Continuar</a>-->
-                                <?php } else { ?>
-                                    <a class="btn btn-outline-warning" id="click" href="<?= base_url('prescricao/manage_prescricao/editar/'.$v['idSismicrob_Tratamento']) ?>" role="button"><i class="fa-solid fa-edit"></i> Editar</a>
-                                    <a class="btn btn-outline-danger" id="click" href="<?= base_url('prescricao/manage_prescricao/excluir/'.$v['idSismicrob_Tratamento']) ?>" role="button"><i class="fa-solid fa-trash-can"></i> Excluir</a>
+                                    <!--<a class="btn btn-outline-info click" href="<?= base_url('prescricao/copy_prescricao/'.$v['idSismicrob_Tratamento']) ?>" role="button"><i class="fa-solid fa-copy"></i> Copiar</a>
+                                    <a class="btn btn-outline-info click" href="<?= base_url('prescricao/copy_prescricao/'.$v['idSismicrob_Tratamento'].'/1') ?>" role="button"><i class="fa-solid fa-repeat"></i> Continuar</a>-->
+                                <?php if($v['Avaliacao'] == 'P') { ?>
+                                    <a class="btn btn-outline-info" id="click" href="<?= base_url('prescricao/assess_prescricao/A/'.$v['idSismicrob_Tratamento']) ?>" role="button"><i class="fa-solid fa-scale-unbalanced-flip"></i> Avaliar</a>
                             <?php } ?>
                                 <hr>
                             <?php } ?>
@@ -165,6 +165,73 @@
                                 <div class="col"><b>Conselho:</b> <?= $v['Conselho'] ?></div>
                             </div>
                             <?php
+                            if ($v['Avaliacao'] != 'P') {
+                            ?>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12"><b>Avaliação: <?= ($v['Avaliacao'] == 'S') ? 'Aprovado' : 'Reprovado' ?></b></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center"><b>JUSTIFICATIVAS</b></div>
+                            </div>                            
+                            <?php
+                            $i=0;
+                                if ($v['AvaliacaoDoseObs']) {
+                                    $i++;
+                                ?>                            
+                                <div class="row">
+                                    <div class="col-12"><b>Dose:</b> <?= $v['AvaliacaoDoseObs'] ?></div>
+                                </div>
+                                <?php
+                                }
+                                if ($v['AvaliacaoDuracaoObs']) {
+                                    $i++;
+                                ?>
+                                <div class="row">
+                                    <div class="col-12"><b>Duração:</b> <?= $v['AvaliacaoDuracaoObs'] ?></div>
+                                </div>
+                                <?php
+                                }
+                                if ($v['AvaliacaoIntervaloObs']) {
+                                    $i++;
+                                ?>
+                                <div class="row">
+                                    <div class="col-12"><b>Intervalo:</b> <?= $v['AvaliacaoIntervaloObs'] ?></div>
+                                </div>
+                                <?php
+                                }
+                                if ($v['AvaliacaoIndicacaoObs']) {
+                                    $i++;
+                                ?>
+                                <div class="row">
+                                    <div class="col-12"><b>Indicação:</b> <?= $v['AvaliacaoIndicacaoObs'] ?></div>
+                                </div>
+                                <?php
+                                }
+                                if ($v['AvaliacaoPreenchimentoInadequadoObs']) {
+                                    $i++;
+                                ?>
+                                <div class="row">
+                                    <div class="col-12"><b>Preenchimento Inadequado:</b> <?= $v['AvaliacaoPreenchimentoInadequadoObs'] ?></div>
+                                </div>
+                                <?php
+                                }
+                                if ($v['AvaliacaoOutrosObs']) {
+                                    $i++;
+                                ?>
+                                <div class="row">
+                                    <div class="col-12"><b>Observações:</b> <?= $v['AvaliacaoOutrosObs'] ?></div>
+                                </div>
+                                <?php
+                                }
+                                if ($i==0) {
+                                ?>
+                                <div class="row">
+                                    <div class="col-12 text-info text-center"><b>Nenhuma justificativa registrada</b></div>
+                                </div>
+                            <?php
+                                }
+                            }
                             if ($layout == 'assess' && $v['Avaliacao'] == 'P') {
                             ?>
                             <hr />

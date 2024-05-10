@@ -148,11 +148,11 @@ class Prescricao extends BaseController
         $v['prescricao']['DataNascimento']  = $aghux['dt_nascimento'];
         
         if ($aghux['sexo'] == 'M')
-            $v['prescricao']['Sexo'] =  'MASCULINO';
+            $v['prescricao']['Sexo'] = 'MASCULINO';
         elseif ($aghux['sexo'] == 'F') 
-            'FEMININO';
+            $v['prescricao']['Sexo'] = 'FEMININO';
         else
-            'NÃO INFORMADO';
+            $v['prescricao']['Sexo'] = 'NÃO INFORMADO';
 
 
         #$v['prescricao']['conselho'] = $prescricao->get_conselho($v['prescricao']['array'][0]['Cpf']);
@@ -736,9 +736,9 @@ class Prescricao extends BaseController
         if ($a['sexo'] == 'M')
             $v['prescricao']['Sexo'] = 'MASCULINO';
         elseif ($a['sexo'] == 'F') 
-            $v['prescricao']['Sexo'] ='FEMININO';
+            $v['prescricao']['Sexo'] = 'FEMININO';
         else
-            $v['prescricao']['Sexo'] ='NÃO INFORMADO';
+            $v['prescricao']['Sexo'] = 'NÃO INFORMADO';
 
         $v['layout'] = 'form_assess';
 

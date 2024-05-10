@@ -35,6 +35,11 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 text-center">
+            <div>
+                <h4><b>JUSTIFICATIVAS</b></h4>
+            </div>
+        </div>        
         <div class="col-6">
             <div>
                 <label for="AvaliacaoDoseObs" class="form-label">Dose:</label>

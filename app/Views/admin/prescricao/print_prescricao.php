@@ -203,9 +203,109 @@ if($prescricao['idTabSismicrob_Indicacao'] == 1) {
                             </div>
                             
                         </div>
-                    </div>                      
+                    </div>    
+                    
+                    <?php
+                    if ($prescricao['Avaliacao'] != 'P') {
+                    ?>                    
+                    <div class="row">
+                        <div class="col container border border-dark">
+                            <b>
+                                <div class="col fs-6 text-center p-2">
+                                    AVALIAÇÃO
+                                </div>
+                            </b>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col container border border-dark">
+                        
+                            <div class="col-12 fs-6">
+                                <br>
+                                    <b>Avaliação: <?= ($prescricao['Avaliacao'] == 'S') ? 'Aprovado' : 'Reprovado' ?></b>
+                            </div>
+                            <div class="col-12 fs-6">
+                                <div class="col-12 text-center"><b>JUSTIFICATIVAS</b></div>
+                            </div>                             
+                            <?php
+                            $i=0;
+                                if ($prescricao['AvaliacaoDoseObs']) {
+                                    $i++;
+                                ?>     
+                                <div class="col fs-6">
+                                        <b>Dose:</b> <?= $prescricao['AvaliacaoDoseObs'] ?>
+                                </div>
+                                <?php
+                                }
+                                if ($prescricao['AvaliacaoDuracaoObs']) {
+                                    $i++;
+                                ?>     
+                                <div class="col fs-6">
+                                        <b>Duração:</b> <?= $prescricao['AvaliacaoDuracaoObs'] ?>
+                                </div>
+                                <?php
+                                }
+                                if ($prescricao['AvaliacaoIntervaloObs']) {
+                                    $i++;
+                                ?>     
+                                <div class="col fs-6">
+                                        <b>Intervalo:</b> <?= $prescricao['AvaliacaoIntervaloObs'] ?>
+                                </div>
+                                <?php
+                                }
+                                if ($prescricao['AvaliacaoIndicacaoObs']) {
+                                    $i++;
+                                ?>     
+                                <div class="col fs-6">
+                                        <b>Indicação:</b> <?= $prescricao['AvaliacaoIndicacaoObs'] ?>
+                                </div>
+                                <?php
+                                }
+                                if ($prescricao['AvaliacaoPreenchimentoInadequadoObs']) {
+                                    $i++;
+                                ?>     
+                                <div class="col fs-6">
+                                        <b>Preenchimento Inadequado:</b> <?= $prescricao['AvaliacaoPreenchimentoInadequadoObs'] ?>
+                                </div>
+                                <?php
+                                }
+                                if ($prescricao['AvaliacaoOutrosObs']) {
+                                    $i++;
+                                ?>     
+                                <div class="col fs-6">
+                                        <b>Observações:</b> <?= $prescricao['AvaliacaoOutrosObs'] ?>
+                                </div>
+                                <?php
+                                }             
+                                if ($i==0) {
+                                    $i++;
+                                ?>     
+                                <div class="col-12 fs-6">
+                                    <div class="col-12 text-center"><b>Nenhuma justificativa registrada</b></div>
+                                </div>   
+                                <?php
+                                }                                                                                                                                                       
+                            ?>                                                                                
+                            <br />
+                        </div>
+                    </div>                       
 
-                </div>
+                <?php
+                }
+                else {
+                ?> 
+                    <div class="row">
+                        <div class="col container border border-dark">
+                            <b>
+                                <div class="col fs-6 text-center p-2">
+                                    Aguardando avaliação
+                                    <br>
+                                </div>
+                            </b>
+                        </div>
+                    </div>
+                <?php } ?>
             </td>
         </tr>
 
