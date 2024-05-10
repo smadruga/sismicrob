@@ -111,6 +111,9 @@ if($prescricao['idTabSismicrob_Indicacao'] == 1) {
                                     <b>Medicamento: <?= $prescricao['NomeMedicamento'] ?></b>
                                 </div>
                             </div>
+                            <?php
+                            if($prescricao['idTabSismicrob_Indicacao'] != 1) {
+                            ?>
                             <div class="row">
                                 <div class="col">
                                     <b>De: </b><?= $prescricao['DataInicioTratamento'] ?> <b>até</b> <?= $prescricao['DataFimTratamento'] ?>
@@ -119,7 +122,9 @@ if($prescricao['idTabSismicrob_Indicacao'] == 1) {
                                     <b>Duração:</b> <?= $prescricao['Duracao'] ?> dia(s)
                                 </div>
                             </div>
-
+                            <?php
+                            }
+                            ?>
                             <div class="row">
                                 <div class="col">
                                     <b>Dose Posológica de Manutenção:</b> <?= $prescricao['DosePosologica'] ?>
@@ -274,7 +279,7 @@ if($prescricao['idTabSismicrob_Indicacao'] == 1) {
                                     $i++;
                                 ?>     
                                 <div class="col fs-6">
-                                        <b>Observações:</b> <?= $prescricao['AvaliacaoOutrosObs'] ?>
+                                        <b>Observações:</b> <?= nl2br($prescricao['AvaliacaoOutrosObs']) ?>
                                 </div>
                                 <?php
                                 }             

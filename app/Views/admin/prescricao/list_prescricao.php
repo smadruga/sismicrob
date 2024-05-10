@@ -122,10 +122,16 @@
                                 <div class="col"><b>Medicamento:</b> <?= $v['NomeMedicamento'] ?></div>
                             </div>
 
+                            <?php
+                            if($v['idTabSismicrob_Indicacao'] != 1) {
+                            ?>
                             <div class="row">
                                 <div class="col"><b>De:</b> <?= $v['DataInicioTratamento'] ?> <b>até</b> <?= $v['DataFimTratamento'] ?></div>
                                 <div class="col"><b>Duração:</b> <?= $v['Duracao'] ?> dia(s)</div>
                             </div>
+                            <?php
+                            }
+                            ?>
 
                             <div class="row">
                                 <div class="col"><b>Dose Posológica de Manutenção:</b> <?= $v['DosePosologica'] ?></div>
@@ -220,7 +226,7 @@
                                     $i++;
                                 ?>
                                 <div class="row">
-                                    <div class="col-12"><b>Observações:</b> <?= $v['AvaliacaoOutrosObs'] ?></div>
+                                    <div class="col-12"><b>Observações:</b> <?= nl2br($v['AvaliacaoOutrosObs']) ?></div>
                                 </div>
                                 <?php
                                 }

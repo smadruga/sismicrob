@@ -1165,18 +1165,23 @@ class HUAP_Functions
      * Função que exibe/oculta uma div do formulário.
      *
      */
-    function div_showhide($data, $campo = FALSE, $valor = FALSE, $checkbox = FALSE, $default = FALSE, $todos = FALSE) {
+    function div_showhide($data, $campo = FALSE, $valor = FALSE, $checkbox = FALSE, $default = FALSE, $todos = FALSE, $not = FALSE) {
 
-        if ($todos == 1)
-            return ($data != 0) ? '' : 'style="display: none;"';
+        if($not)
+            return ($data != 1) ? '' : 'style="display: none;"';
         else {
-            if ($checkbox)
-                return ($data) ? '' : 'style="display: none;"';
+
+            if ($todos == 1)
+                return ($data != 0) ? '' : 'style="display: none;"';
             else {
-                if($default && !$data)
-                    return '';
-                else
-                    return ($data == $valor) ? '' : 'style="display: none;"';
+                if ($checkbox)
+                    return ($data) ? '' : 'style="display: none;"';
+                else {
+                    if($default && !$data)
+                        return '';
+                    else
+                        return ($data == $valor) ? '' : 'style="display: none;"';
+                }
             }
         }
 

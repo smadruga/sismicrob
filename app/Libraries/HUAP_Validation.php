@@ -6,7 +6,7 @@ namespace App\Libraries;
 
 class HUAP_Validation {
 
-    public function required_if($val, $campo) {
+    public function required_if($val, $campo, $not = FALSE) {
         
         $list = array_map('trim', explode(',', $campo));
 

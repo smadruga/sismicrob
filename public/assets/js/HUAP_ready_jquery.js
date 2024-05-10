@@ -108,6 +108,7 @@ $(document).ready(function() {
         return valorSelecionado;
     }
 
+    //auxilia a troca de cores no botão de unidade do campo doese posológica da prescrição do sismicrob
     $('input[name="UnidadeMedida"]').change(function(){
         
         var radioValue = $(this).val();
@@ -130,13 +131,19 @@ $(document).ready(function() {
 
     });
 
-    // Define o manipulador de evento para o clique em qualquer opção de radio
-    //$('input[name="UnidadeMedida"]').click(function(){
-        // Captura o valor do radio que foi clicado
-        //var valorSelecionado = $(this).val();
-        // Faça o que desejar com o valor capturado
-        //console.log("Valor selecionado:", valorSelecionado);
-    //});
+    //auxilia a troca de cores no botão de unidade do campo doese posológica da prescrição do sismicrob
+    $('#idTabSismicrob_Indicacao').change(function(){
+            
+        var v = $(this).val();
+
+        if(v != 1) 
+            $("#Ocultar_idTabSismicrob_Indicacao1").show();
+        else
+            $("#Ocultar_idTabSismicrob_Indicacao1").hide();
+
+    });
+
+
 
 });
 

@@ -331,6 +331,7 @@ class Prescricao extends BaseController
                 'idTabSismicrob_DiagnosticoInfeccioso'  => $v['func']->div_showhide($v['data']['idTabSismicrob_DiagnosticoInfeccioso'], 'idTabSismicrob_DiagnosticoInfeccioso', '7'),
                 'idTabSismicrob_Indicacao1'             => $v['func']->div_showhide($v['data']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '1'),
                 'idTabSismicrob_Indicacao3'             => $v['func']->div_showhide($v['data']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '3'),
+                'Ocultar_idTabSismicrob_Indicacao1'     => $v['func']->div_showhide($v['data']['idTabSismicrob_Indicacao'], 'idTabSismicrob_Indicacao', '1', FALSE, FALSE, FALSE, 1),
             );                  
         
         }
@@ -398,10 +399,15 @@ class Prescricao extends BaseController
                     'Justificativa'                         => 'required_if['.$v['data']['idTabSismicrob_Indicacao'].', 3]',
 
                     'Medicamento'                           => 'required',
+                    /*
                     'DataInicioTratamento'                  => ['label' => 'Data de Início', 'rules' => 'required|valid_date[Y-m-d]'],
                     'Duracao'                               => ['label' => 'Duração', 'rules' => 'required|integer'],
                     'DataFimTratamento'                     => ['label' => 'Fim do Tratamento', 'rules' => 'required|valid_date[Y-m-d]'],
-
+                    
+                    'DataInicioTratamento'                  => 'required_if['.$v['data']['idTabSismicrob_Indicacao'].', 2]|required_if['.$v['data']['idTabSismicrob_Indicacao'].', 3]',
+                    'Duracao'                               => 'required_if['.$v['data']['idTabSismicrob_Indicacao'].', 2]|required_if['.$v['data']['idTabSismicrob_Indicacao'].', 3]',
+                    'DataFimTratamento'                     => 'required_if['.$v['data']['idTabSismicrob_Indicacao'].', 2]|required_if['.$v['data']['idTabSismicrob_Indicacao'].', 3]',
+                    */
                     'DosePosologica'                        => ['label' => 'acima', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\,)\d+)?$/]'],
                     'UnidadeMedida'                         => ['label' => 'Unidade de Medida', 'rules' => 'required'],
                     'idTabSismicrob_Intervalo'              => 'required',

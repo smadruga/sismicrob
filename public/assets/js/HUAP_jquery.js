@@ -280,7 +280,7 @@ function showHideDiv(valor, campo, div, opcoes, autofocus, alternar, alternar0, 
 
             }
             $('.idTabSismicrob_IndicacaoDiv').removeAttr("style");
-            console.log('>vvv '+valor+'<>c '+campo+'<>d '+div+'<>o '+opcoes+'<>len '+o.length+'<>i '+i);
+            //console.log('>vvv '+valor+'<>c '+campo+'<>d '+div+'<>o '+opcoes+'<>len '+o.length+'<>i '+i);
 
         }
         

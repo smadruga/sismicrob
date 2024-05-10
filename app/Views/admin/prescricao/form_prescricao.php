@@ -153,7 +153,8 @@
                     </div>
                 </div>
 
-                <div class="row g-3" id="Ocultar_idTabSismicrob_Indicacao1">
+                <div class="row g-3" id="Ocultar_idTabSismicrob_Indicacao1"
+                    <?php echo $div['Ocultar_idTabSismicrob_Indicacao1'] ?>>
                     <div class="col-4">
                         <div>
                             <label for="DataInicioTratamento" class="form-label">Data de Início <b class="text-danger">*</b></label>
