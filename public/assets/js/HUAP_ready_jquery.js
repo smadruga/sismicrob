@@ -42,29 +42,6 @@ $(document).ready(function() {
         $(this).replaceWith('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Aguarde...</span></div>');
     });
 
-    $('.btn-group input[type="radio"]').change(function(){
-        // Remover a classe 'active' de todos os labels dentro do grupo de botões
-        $(this).parent().find('label').removeClass('active');
-
-        //console.log("OI3453 >>> "+$(this).val());
-        
-        // Adicionar a classe 'active' apenas ao label do radio selecionado
-        if ($(this).is(':checked')) {
-            $(this).next('label').addClass('active');
-        }
-
-    });
-    $('label[name="UnidadeMedida"]').click(function() {
-        // Captura o valor do elemento que disparou o evento de clique
-        //var valor = $(this).text();
-
-        // Remove a classe de todos os elementos com o mesmo nome
-        $('label[name="UnidadeMedida"]').removeClass('active');
-
-        // Exibe o valor no console
-        //console.log('Novo valor do elementooo:', valor);
-    });
-
     $('#idTabSismicrob_Indicacao').change(function(){
         var selectedOption = $(this).val();
 
@@ -87,6 +64,79 @@ $(document).ready(function() {
             $('#AntibioticobMantido').css('display', 'none');;
         }
     });
+
+
+    /*
+    * Adiciona um btn-warning para cara checked de cada campo radio do formulário
+    *
+    * @param {string} value
+    * @returns {decimal}
+    */
+    // Adiciona um listener para o evento click em todos os botões/labels dentro de cada grupo
+    $('.btn-group label').click(function() {
+        // Remove a classe btn-warning de todos os labels dentro do grupo
+        $(this).closest('.btn-group').find('label').removeClass('btn-warning');
+        // Adiciona a classe btn-secondary a todos os labels dentro do grupo
+        $(this).closest('.btn-group').find('label').addClass('btn-secondary');
+        // Adiciona a classe btn-warning apenas ao label clicado
+        $(this).addClass('btn-warning');
+        // Remove o atributo checked de todos os radio buttons dentro do grupo
+        $(this).closest('.btn-group').find('input[type="radio"]').prop('checked', false);
+        // Marca como checked o radio button correspondente ao label clicado
+        $(this).prev('input[type="radio"]').prop('checked', true);
+    });
+
+    $('.btn-group input[type="radio"]').change(function(){
+        // Remover a classe 'active' de todos os labels dentro do grupo de botões
+        $(this).parent().find('label').removeClass('active');
+
+        //console.log("OI3453 >>> "+$(this).val());
+        
+        // Adicionar a classe 'active' apenas ao label do radio selecionado
+        if ($(this).is(':checked')) {
+            $(this).next('label').addClass('active');
+        }
+
+    });
+    
+    // Função para capturar o valor do radio
+    function capturarValorRadio() {
+        // Captura o valor do radio
+        var valorSelecionado = $('input[name="UnidadeMedida"]:checked').val();
+
+        // Retorna o valor capturado
+        return valorSelecionado;
+    }
+
+    $('input[name="UnidadeMedida"]').change(function(){
+        
+        var radioValue = $(this).val();
+
+        if(radioValue === 'g') {
+            $('label[for="UnidadeMedidaG"]').removeClass('btn-secondary').addClass('btn-warning');
+            $('label[for="UnidadeMedidamG"]').removeClass('btn-warning').removeClass('active').addClass('btn-secondary');
+            $('label[for="UnidadeMedidaUI"]').removeClass('btn-warning').removeClass('active').addClass('btn-secondary');
+        }
+        else if(radioValue === 'mg') {
+            $('label[for="UnidadeMedidaG"]').removeClass('btn-warning').removeClass('active').addClass('btn-secondary');
+            $('label[for="UnidadeMedidamG"]').removeClass('btn-secondary').addClass('btn-warning');
+            $('label[for="UnidadeMedidaUI"]').removeClass('btn-warning').removeClass('active').addClass('btn-secondary');
+        }
+        else if(radioValue === 'UI') {
+            $('label[for="UnidadeMedidaG"]').removeClass('btn-warning').removeClass('active').addClass('btn-secondary');
+            $('label[for="UnidadeMedidamG"]').removeClass('btn-warning').removeClass('active').addClass('btn-secondary');
+            $('label[for="UnidadeMedidaUI"]').removeClass('btn-secondary').addClass('btn-warning');
+        }
+
+    });
+
+    // Define o manipulador de evento para o clique em qualquer opção de radio
+    //$('input[name="UnidadeMedida"]').click(function(){
+        // Captura o valor do radio que foi clicado
+        //var valorSelecionado = $(this).val();
+        // Faça o que desejar com o valor capturado
+        //console.log("Valor selecionado:", valorSelecionado);
+    //});
 
 });
 
