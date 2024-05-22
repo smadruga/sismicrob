@@ -21,7 +21,8 @@ CI_ENVIRONMENT = development
 # APP
 #--------------------------------------------------------------------
 
-app.baseURL = 'http://prescteste.com/'
+app.baseURL = 
+
 # app.forceGlobalSecureRequests = false
 
 # app.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'
@@ -38,27 +39,22 @@ app.baseURL = 'http://prescteste.com/'
 # DATABASE
 #--------------------------------------------------------------------
 
-database.default.hostname = 10.88.1.211
-database.default.database = preschuapweb
-database.default.username = apphuap
-database.default.password = 20apphuap22
+#Conexão com mysql ou mariadb
+database.default.hostname = 
+database.default.database = 
+database.default.username = 
+database.default.password = 
 database.default.DBDriver = MySQLi
 database.default.DBPrefix =
 
-#database.default.hostname = localhost
-#database.default.database = preschuapweb
-#database.default.username = rodrigo
-#database.default.password = pituca82
-#database.default.DBDriver = MySQLi
-#database.default.DBPrefix =
-
-database.aghux.hostname = 10.88.1.246
-database.aghux.database = dbaghu
-database.aghux.port     = 6544
-database.aghux.username = ugen_integra
-database.aghux.password = q6nqRWMnNR
-database.aghux.DBDriver = Postgre
-database.aghux.schema   = agh
+#Conexão com AGHUx
+database.aghux.hostname = 
+database.aghux.database = 
+database.aghux.port     = 
+database.aghux.username = 
+database.aghux.password = 
+database.aghux.DBDriver = 
+database.aghux.schema   = 
 
 #--------------------------------------------------------------------
 # CONTENT SECURITY POLICY
@@ -144,11 +140,12 @@ database.aghux.schema   = agh
 # LDAP (AD HUAP/EBSERH)
 #--------------------------------------------------------------------
 
-srv.ldap1 = 10.88.1.31
-srv.ldap2 = 10.88.1.32
+srv.ldap1 = 
+srv.ldap2 = 
 
-ldap.usr = EBSERHNET\adm.rcampos
+ldap.usr = EBSERHNET\
 ldap.pwd = 
+#SUBSTUIR HUAP PELA CONFIGURAÇÃO DO SEU HOSPITAL
 ldap.dn = OU=Usuarios,OU=HUAP,OU=EBSERH,DC=ebserhnet,DC=ebserh,DC=gov,DC=br
 
 #--------------------------------------------------------------------
@@ -156,5 +153,3 @@ ldap.dn = OU=Usuarios,OU=HUAP,OU=EBSERH,DC=ebserhnet,DC=ebserh,DC=gov,DC=br
 #--------------------------------------------------------------------
 
 huap.session.expires = 7200
-
-#srv.baseurl = http://prescteste.com/
