@@ -285,10 +285,11 @@ class Admin extends BaseController
             return view('admin/usuario/list_perfil', $v);
 
         $v['data'] = array();
-
+exit(env('mod.cod'));
         $v['data'] = [
             'idSishuap_Usuario' => $_SESSION['Usuario']['idSishuap_Usuario'],
             'idTab_Perfil'      => $v['Perfil'],
+            #'idTab_Modulo'      => env('mod.cod'),
             'idTab_Modulo'      => env('mod.cod'),
         ];
 
