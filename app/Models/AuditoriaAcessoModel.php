@@ -20,6 +20,7 @@ class AuditoriaAcessoModel extends Model
                                         'So',
                                         'Navegador',
                                         'NavegadorVersao',
+                                        'idTab_Modulo',
                                     ];
 
 }
