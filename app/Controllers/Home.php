@@ -91,6 +91,8 @@ class Home extends ResourceController
         $_SESSION['Sessao']['Nome'] = $v['Nome'][0] . ' ' . $v['Nome'][count($v['Nome'])-1];
 
         $_SESSION['Sessao']['Perfil'] = $perfil;
+        $_SESSION['Sessao']['Modulo'] = env('mod.cod');
+        
         $acesso->insert($func->set_acesso('LOGIN'), TRUE);
 
         /**

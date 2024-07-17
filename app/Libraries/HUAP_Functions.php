@@ -282,6 +282,7 @@ class HUAP_Functions
             'So'                => $agent->getPlatform(),
             'Navegador'         => $agent->getBrowser(),
             'NavegadorVersao'   => $agent->getVersion(),
+            'idTab_Modulo'      => env('mod.cod'),
         ];
 
     }
