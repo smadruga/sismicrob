@@ -340,7 +340,7 @@
                     </div>                    
                     <div class="col">
                         <div>
-                            <label for="Peso" class="form-label">Peso <b class="text-danger">*</b></label>
+                            <label for="Peso" class="form-label">Peso</label>
                             <div class="input-group">
                                 <input type="text" class="form-control <?php if($validation->getError('Peso')): ?>is-invalid<?php endif ?>" 
                                     id="Peso" maxlength="18" name="Peso" value="<?php echo $data['Peso'] ?>" <?= $opt['disabled'] ?>
@@ -356,7 +356,7 @@
                     </div>
                     <div class="col">
                         <div>
-                            <label for="Creatinina" class="form-label">Creatinina <b class="text-danger">*</b></label>
+                            <label for="Creatinina" class="form-label">Creatinina</label>
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control <?php if($validation->getError('Creatinina')): ?>is-invalid<?php endif ?>" 
                                     onkeyup="clearanceCreatinina('Peso', 'Creatinina', 'Sexo', 'Idade', 'Clearance')" <?= $opt['disabled'] ?>

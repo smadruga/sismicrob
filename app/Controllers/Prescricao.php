@@ -416,10 +416,11 @@ class Prescricao extends BaseController
                     'idTabSismicrob_ViaAdministracao'       => ['label' => 'acima', 'rules' => 'required'],
                     'idTabSismicrob_Especialidade'          => ['label' => 'Especialidade', 'rules' => 'required'],
 
+                    /*
                     'Peso'                                  => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\,)\d+)?$/]',
                     'Creatinina'                            => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\,)\d+)?$/]',
                     'Clearance'                             => ['label' => 'Filtração Glomerular', 'rules' => 'required'],
-
+                    */
                 ]);
 
             }
