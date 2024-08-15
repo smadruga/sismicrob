@@ -106,7 +106,7 @@ class PrescricaoModel extends Model
         elseif ($data && !$buscaid)
             $where = 'st.Prontuario = '.$data;
         elseif (!$data && $avaliacao)
-            $where = 'st.Avaliacao = "'.$avaliacao.'" AND st.Concluido = 1 ';
+            $where = 'st.Avaliacao = "'.$avaliacao.'" ';
         else
             exit('ERRO 5XEZ');
 
