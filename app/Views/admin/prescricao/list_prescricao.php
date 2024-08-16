@@ -174,19 +174,33 @@
                             if ($v['Avaliacao'] != 'P') {
                             ?>
                             <hr>
+
                             <div class="row">
-                                <div class="col-12"><b>Avaliação: <?= ($v['Avaliacao'] == 'S') ? 'Aprovado' : 'Reprovado' ?></b></div>
+                                <div class="col-2">
+                                    <?php
+                                        if($v['Avaliacao'] == 'P')
+                                            echo '<h4><span class="badge rounded-pill bg-secondary text-white"><i class="fa-solid fa-hourglass-start"></i> Avaliação Pendente</span></h4>';
+                                        elseif($v['Avaliacao'] == 'S')
+                                            echo '<h4><span class="badge rounded-pill bg-success text-white"><i class="fa-solid fa-thumbs-up"></i> Aprovado</span></h4>';
+                                        else
+                                            echo '<h4><span class="badge rounded-pill bg-danger text-white"><i class="fa-solid fa-thumbs-down"></i> Reprovado</span></h4>';
+                                    ?>
+                                </div>
                             </div>
+                            
+                            <hr>
                             <div class="row">
-                                <div class="col-12 text-center"><b>JUSTIFICATIVAS</b></div>
+                                <div class="col-12 text-center bg-secondary"><b>JUSTIFICATIVAS</b></div>
                             </div>                            
+                            <hr>
+
                             <?php
                             $i=0;
                                 if ($v['AvaliacaoDoseObs']) {
                                     $i++;
                                 ?>                            
                                 <div class="row">
-                                    <div class="col-12"><b>Dose:</b> <?= $v['AvaliacaoDoseObs'] ?></div>
+                                    <div class="col-12"><b>Dose:</b> <?= $v['AvaliacaoDoseObs'] ?><br><br></div>
                                 </div>
                                 <?php
                                 }
@@ -194,7 +208,7 @@
                                     $i++;
                                 ?>
                                 <div class="row">
-                                    <div class="col-12"><b>Duração:</b> <?= $v['AvaliacaoDuracaoObs'] ?></div>
+                                    <div class="col-12"><b>Duração:</b> <?= $v['AvaliacaoDuracaoObs'] ?><br><br></div>
                                 </div>
                                 <?php
                                 }
@@ -202,7 +216,7 @@
                                     $i++;
                                 ?>
                                 <div class="row">
-                                    <div class="col-12"><b>Intervalo:</b> <?= $v['AvaliacaoIntervaloObs'] ?></div>
+                                    <div class="col-12"><b>Intervalo:</b> <?= $v['AvaliacaoIntervaloObs'] ?><br><br></div>
                                 </div>
                                 <?php
                                 }
@@ -210,7 +224,7 @@
                                     $i++;
                                 ?>
                                 <div class="row">
-                                    <div class="col-12"><b>Indicação:</b> <?= $v['AvaliacaoIndicacaoObs'] ?></div>
+                                    <div class="col-12"><b>Indicação:</b> <?= $v['AvaliacaoIndicacaoObs'] ?><br><br></div>
                                 </div>
                                 <?php
                                 }
@@ -218,7 +232,7 @@
                                     $i++;
                                 ?>
                                 <div class="row">
-                                    <div class="col-12"><b>Preenchimento Inadequado:</b> <?= $v['AvaliacaoPreenchimentoInadequadoObs'] ?></div>
+                                    <div class="col-12"><b>Preenchimento Inadequado:</b> <?= $v['AvaliacaoPreenchimentoInadequadoObs'] ?><br><br></div>
                                 </div>
                                 <?php
                                 }
@@ -226,7 +240,7 @@
                                     $i++;
                                 ?>
                                 <div class="row">
-                                    <div class="col-12"><b>Observações:</b> <?= nl2br($v['AvaliacaoOutrosObs']) ?></div>
+                                    <div class="col-12"><b>Observações:</b> <?= nl2br($v['AvaliacaoOutrosObs']) ?><br><br></div>
                                 </div>
                                 <?php
                                 }
