@@ -15,7 +15,7 @@
     </li>
     <li>
         <?php 
-        //if ($_SESSION['Usuario']['Inativo'] == 1) { 
+        #if ($_SESSION['Usuario']['Inativo'] == 1) { 
         if(!isset($_SESSION['Usuario']['Permissao']) || !$_SESSION['Usuario']['Permissao'] || $_SESSION['Usuario']['Permissao'] == 'NULL' ) {    
         ?>
         <a href="<?= base_url('admin/enable_user/'.$_SESSION['Usuario']['idSishuap_Usuario']) ?>" class="nav-link text-white" aria-current="page">
