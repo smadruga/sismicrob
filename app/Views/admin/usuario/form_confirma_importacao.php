@@ -17,7 +17,7 @@
                             <b>Nome:</b>
                         </div>
                         <div class="col">
-                            <?= (isset($ad['entries'][0]['cn'][0])) ? esc(mb_convert_encoding($ad['entries'][0]['cn'][0], "UTF-8", "ASCII")) : '' ?>
+                            <?= (isset($ad['entries'][0]['cn'][0])) ? esc(mb_convert_encoding($ad['entries'][0]['cn'][0], "UTF-8", "ISO-8859-1")) : '' ?>
                         </div>
                     </div>
                     <div class="row">
