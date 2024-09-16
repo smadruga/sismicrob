@@ -43,6 +43,11 @@
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/AntibioticoMantido') ?>"><i class="fa-solid fa-table-list"></i> Manter Antibiótico</a>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://galeria.fabricadeaplicativos.com.br/ccih-huap" target="_blank"><i class="fa-solid fa-book-open"></i> Orientação
+                        <span class="visually-hidden"></span>
+                    </a>
+                </li>                
                 <?php if (isset($_SESSION['Sessao']['Perfil'][1]) || isset($_SESSION['Sessao']['Perfil'][2]) ) { ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-gear"></i> Configurações</a>
