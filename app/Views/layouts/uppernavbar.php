@@ -20,6 +20,7 @@
                         <span class="visually-hidden"></span>
                     </a>
                 </li>
+                <?php if ((!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,9])))) { ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-gavel"></i> Avaliação</a>
                     <div class="dropdown-menu">
@@ -27,7 +28,9 @@
                         <a class="dropdown-item" href="<?= base_url('prescricao/list_assess_prescricao/S') ?>"><i class="fa-solid fa-thumbs-up"></i> Aprovados</a>
                         <a class="dropdown-item" href="<?= base_url('prescricao/list_assess_prescricao/N') ?>"><i class="fa-solid fa-thumbs-down"></i> Reprovados</a>
                     </div>
-                </li>                
+                </li>
+                <?php } ?>        
+                <?php if ((!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,4])))) { ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-table"></i> Tabelas</a>
                     <div class="dropdown-menu">
@@ -43,12 +46,13 @@
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/AntibioticoMantido') ?>"><i class="fa-solid fa-table-list"></i> Manter Antibiótico</a>
                     </div>
                 </li>
+                <?php } ?>
                 <li class="nav-item">
                     <a class="nav-link" href="https://galeria.fabricadeaplicativos.com.br/ccih-huap" target="_blank"><i class="fa-solid fa-book-open"></i> Orientação
                         <span class="visually-hidden"></span>
                     </a>
                 </li>                
-                <?php if (isset($_SESSION['Sessao']['Perfil'][1]) || isset($_SESSION['Sessao']['Perfil'][2]) ) { ?>
+                <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,2]))) { ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-gear"></i> Configurações</a>
                     <div class="dropdown-menu">

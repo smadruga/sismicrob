@@ -62,7 +62,9 @@
                                     <!--<a class="btn btn-outline-info click" href="<?= base_url('prescricao/copy_prescricao/'.$v['idSismicrob_Tratamento']) ?>" role="button"><i class="fa-solid fa-copy"></i> Copiar</a>
                                     <a class="btn btn-outline-info click" href="<?= base_url('prescricao/copy_prescricao/'.$v['idSismicrob_Tratamento'].'/1') ?>" role="button"><i class="fa-solid fa-repeat"></i> Continuar</a>-->
                                 <?php if($v['Avaliacao'] == 'P') { ?>
-                                    <a class="btn btn-outline-info" id="click" href="<?= base_url('prescricao/assess_prescricao/A/'.$v['idSismicrob_Tratamento']) ?>" role="button"><i class="fa-solid fa-scale-unbalanced-flip"></i> Avaliar</a>
+                                    <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,9]))) { ?>
+                                        <a class="btn btn-outline-info" id="click" href="<?= base_url('prescricao/assess_prescricao/A/'.$v['idSismicrob_Tratamento']) ?>" role="button"><i class="fa-solid fa-scale-unbalanced-flip"></i> Avaliar</a>
+                                    <?php } ?>
                             <?php } ?>
                                 <hr>
                             <?php } ?>
