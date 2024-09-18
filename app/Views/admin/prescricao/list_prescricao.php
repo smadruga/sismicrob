@@ -162,7 +162,7 @@
 
                             <div class="row">
                                 <div class="col"><b><?= $mascara['DoseAtaque'] ?>:</b> <?= ($v['DoseAtaque'] == 'S') ? 'Sim' : 'Não' ?></div>
-                                <div class="col"><b>Hemodiálise:</b> <?= ($v['Hemodialise']) ? 'Sim' : 'Não' ?></div>
+                                <div class="col"><b>Hemodiálise:</b> <?= ($v['Hemodialise'] == 'S') ? 'Sim' : 'Não' ?></div>
                             </div>
                             
                             <hr>
