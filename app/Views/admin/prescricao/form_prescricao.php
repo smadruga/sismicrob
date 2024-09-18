@@ -153,6 +153,28 @@
                     </div>
                 </div>
 
+                <div class="row g-4">
+                    <div class="col">
+                        <div>
+                            <label for="DoseAtaque" class="form-label"><?= $data['mascara']['DoseAtaque'] ?> <b class="text-danger">*</b></label>
+                            <div class="input-group">
+                                <div class="btn-group" data-toggle="buttons">
+                                    <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off"
+                                        id="DoseAtaqueS" value="S" <?php echo $radio['DoseAtaque']['c'][0] ?> <?= $opt['disabled'] ?>/>
+                                    <label class="btn btn-<?php echo $radio['DoseAtaque']['b'][0] ?> <?php echo $radio['DoseAtaque']['a'][0] ?>" for="DoseAtaqueS" 
+                                        data-mdb-ripple-init>Sim</label>
+                                    <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off" 
+                                        id="DoseAtaqueN" value="N" <?php echo $radio['DoseAtaque']['c'][1] ?> <?= $opt['disabled'] ?>/>
+                                    <label class="btn btn-<?php echo $radio['DoseAtaque']['b'][1] ?> <?php echo $radio['DoseAtaque']['a'][1] ?>" for="DoseAtaqueN" 
+                                        data-mdb-ripple-init>Não</label>
+                                </div>
+                            </div>
+                        </div>                         
+                    </div>
+                </div>
+
+                <br>                
+
                 <div class="row g-3" id="Ocultar_idTabSismicrob_Indicacao1"
                     <?php echo $div['Ocultar_idTabSismicrob_Indicacao1'] ?>>
                     <div class="col-4">
@@ -194,28 +216,6 @@
                         </div>
                     </div>
                 </div>    
-
-                <div class="row g-4">
-                    <div class="col">
-                        <div>
-                            <label for="DoseAtaque" class="form-label"><?= $data['mascara']['DoseAtaque'] ?> <b class="text-danger">*</b></label>
-                            <div class="input-group">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off"
-                                        id="DoseAtaqueS" value="S" <?php echo $radio['DoseAtaque']['c'][0] ?> <?= $opt['disabled'] ?>/>
-                                    <label class="btn btn-<?php echo $radio['DoseAtaque']['b'][0] ?> <?php echo $radio['DoseAtaque']['a'][0] ?>" for="DoseAtaqueS" 
-                                        data-mdb-ripple-init>Sim</label>
-                                    <input type="radio" class="btn-check" name="DoseAtaque" autocomplete="off" 
-                                        id="DoseAtaqueN" value="N" <?php echo $radio['DoseAtaque']['c'][1] ?> <?= $opt['disabled'] ?>/>
-                                    <label class="btn btn-<?php echo $radio['DoseAtaque']['b'][1] ?> <?php echo $radio['DoseAtaque']['a'][1] ?>" for="DoseAtaqueN" 
-                                        data-mdb-ripple-init>Não</label>
-                                </div>
-                            </div>
-                        </div>                         
-                    </div>
-                </div>
-
-                <br>
 
                 <div class="row g-4">
                     <div class="col">
