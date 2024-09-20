@@ -316,7 +316,7 @@ class Prescricao extends BaseController
                 'Intervalo'             => $tabela->list_tabela_bd('Intervalo', FALSE, FALSE, '*', 'idTabSismicrob_Intervalo', TRUE), #Carrega os itens da tabela selecionada
                 'Especialidade'         => $tabela->list_tabela_bd('Especialidade', FALSE, FALSE, '*', 'idTabSismicrob_Especialidade', TRUE), #Carrega os itens da tabela selecionada
                 'ViaAdministracao'      => $tabela->list_tabela_bd('ViaAdministracao', FALSE, FALSE, '*', 'idTabSismicrob_ViaAdministracao', TRUE), #Carrega os itens da tabela selecionada
-                'DiagnosticoInfeccioso' => $tabela->list_tabela_bd('DiagnosticoInfeccioso', FALSE, FALSE, '*', 'idTabSismicrob_DiagnosticoInfeccioso', TRUE), #Carrega os itens da tabela selecionada
+                'DiagnosticoInfeccioso' => $tabela->list_tabela_bd('DiagnosticoInfeccioso', FALSE, FALSE, '*', 'Classificacao ASC, DiagnosticoInfeccioso ASC, idTabSismicrob_DiagnosticoInfeccioso', TRUE), #Carrega os itens da tabela selecionada
                 'AntibioticoMantido'    => $tabela->list_tabela_bd('AntibioticoMantido', FALSE, FALSE, '*', 'idTabSismicrob_AntibioticoMantido', TRUE), #Carrega os itens da tabela selecionada
             ];
     
