@@ -30,7 +30,7 @@
                     </div>
                 </li>
                 <?php } ?>        
-                <?php if ((!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,4])))) { ?>
+                <?php if ((!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,4,9])))) { ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-table"></i> Tabelas</a>
                     <div class="dropdown-menu">
