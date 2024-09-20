@@ -25,8 +25,8 @@
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-gavel"></i> Avaliação</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="<?= base_url('prescricao/list_assess_prescricao/P') ?>"><i class="fa-solid fa-hourglass-half"></i> Pendentes</a>
-                        <a class="dropdown-item" href="<?= base_url('prescricao/list_assess_prescricao/S') ?>"><i class="fa-solid fa-thumbs-up"></i> Aprovados</a>
-                        <a class="dropdown-item" href="<?= base_url('prescricao/list_assess_prescricao/N') ?>"><i class="fa-solid fa-thumbs-down"></i> Reprovados</a>
+                        <a class="dropdown-item" href="<?= base_url('prescricao/list_assess_prescricao/S') ?>"><i class="fa-solid fa-thumbs-up"></i> Conforme</a>
+                        <a class="dropdown-item" href="<?= base_url('prescricao/list_assess_prescricao/N') ?>"><i class="fa-solid fa-thumbs-down"></i> Não conforme</a>
                     </div>
                 </li>
                 <?php } ?>        

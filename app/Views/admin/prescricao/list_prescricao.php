@@ -45,9 +45,9 @@
                                     if($v['Avaliacao'] == 'P')
                                         echo '<span class="badge rounded-pill bg-secondary text-white"><i class="fa-solid fa-hourglass-start"></i> Avaliação Pendente</span>';
                                     elseif($v['Avaliacao'] == 'S')
-                                        echo '<span class="badge rounded-pill bg-success text-white"><i class="fa-solid fa-thumbs-up"></i> Aprovado</span>';
+                                        echo '<span class="badge rounded-pill bg-success text-white"><i class="fa-solid fa-thumbs-up"></i> Conforme</span>';
                                     else
-                                        echo '<span class="badge rounded-pill bg-danger text-white"><i class="fa-solid fa-thumbs-down"></i> Reprovado</span>';
+                                        echo '<span class="badge rounded-pill bg-danger text-white"><i class="fa-solid fa-thumbs-down"></i> Não conforme</span>';
                                     ?>
                                 </div>
                             </div>
@@ -183,9 +183,9 @@
                                         if($v['Avaliacao'] == 'P')
                                             echo '<h4><span class="badge rounded-pill bg-secondary text-white"><i class="fa-solid fa-hourglass-start"></i> Avaliação Pendente</span></h4>';
                                         elseif($v['Avaliacao'] == 'S')
-                                            echo '<h4><span class="badge rounded-pill bg-success text-white"><i class="fa-solid fa-thumbs-up"></i> Aprovado</span></h4>';
+                                            echo '<h4><span class="badge rounded-pill bg-success text-white"><i class="fa-solid fa-thumbs-up"></i> Conforme</span></h4>';
                                         else
-                                            echo '<h4><span class="badge rounded-pill bg-danger text-white"><i class="fa-solid fa-thumbs-down"></i> Reprovado</span></h4>';
+                                            echo '<h4><span class="badge rounded-pill bg-danger text-white"><i class="fa-solid fa-thumbs-down"></i> Não conforme</span></h4>';
                                     ?>
                                 </div>
                             </div>

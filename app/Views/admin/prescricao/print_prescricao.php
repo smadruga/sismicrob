@@ -228,7 +228,7 @@ if($prescricao['idTabSismicrob_Indicacao'] == 1) {
                         
                             <div class="col-12 fs-6">
                                 <br>
-                                    <b>Avaliação: <?= ($prescricao['Avaliacao'] == 'S') ? 'Aprovado' : 'Reprovado' ?></b>
+                                    <b>Avaliação: <?= ($prescricao['Avaliacao'] == 'S') ? 'Conforme' : 'Não conforme' ?></b>
                             </div>
                             <div class="col-12 fs-6">
                                 <div class="col-12 text-center"><b>JUSTIFICATIVAS</b></div>
