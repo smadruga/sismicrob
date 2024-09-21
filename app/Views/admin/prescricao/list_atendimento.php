@@ -16,7 +16,7 @@
             foreach($atendimento['array'] as $v) {
                 echo '
                 <tr>
-                    <td>'.$v['dt_consulta'].'</td>
+                    <td>'.$v['dt_consulta_formatada'].'</td>
                     <td>'.$v['origem'].'</td>
                 </tr>
                 ';

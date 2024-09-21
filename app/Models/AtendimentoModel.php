@@ -29,19 +29,18 @@ class AtendimentoModel extends Model
     {
 
         $db = \Config\Database::connect('aghux');
-        $query = $db->query('
+        $query = $db->query("
             select 
-                pac_codigo
-                , to_char(dt_consulta, \'DD/MM/YYYY\') as dt_consulta
-                , CASE
-                    WHEN origem = \'I\' THEN \'INTERNAÇÃO\'
-                    WHEN origem = \'A\' THEN \'CONSULTA\'
-                    WHEN origem = \'C\' THEN \'CIRURGIA\'
-                    WHEN origem = \'N\' THEN \'RECÉN-NASCIDO\'
-                ELSE
-                    \'CONSULTA CANCELADA\'
-                END as origem
-                , prontuario
+                pac_codigo,
+                to_char(dt_consulta, 'DD/MM/YYYY') as dt_consulta_formatada,
+                case
+                    when origem = 'I' then 'INTERNAÇÃO'
+                    when origem = 'A' then 'CONSULTA'
+                    when origem = 'C' then 'CIRURGIA'
+                    when origem = 'N' then 'RECÉN-NASCIDO'
+                    else 'CONSULTA CANCELADA'
+                end as origem,
+                prontuario
             from
                 (
                         select 
@@ -54,7 +53,7 @@ class AtendimentoModel extends Model
                                 left join agh.aac_consultas ac on aa.con_numero = ac.numero   
                         where 
                             
-                            aa.prontuario = '.$data.'
+                            aa.prontuario = ".$data."
                             and ac.ret_seq = 10
                     union
                         select 
@@ -65,11 +64,11 @@ class AtendimentoModel extends Model
                         from
                             agh.agh_atendimentos aa
                         where 
-                            aa.prontuario = '.$data.'
-                            and aa.origem in (\'C\', \'I\', \'N\')
+                            aa.prontuario = ".$data."
+                            and aa.origem in ('C', 'I', 'N')
                 ) results
             order by dt_consulta desc
-        ');
+        ");
 
         #$query = $query->getResultArray();
         #$query = $query->getNumRows();
