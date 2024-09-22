@@ -377,7 +377,7 @@ function mascaraValorReal(value) {
 }
 
 // Fecha divs de flashdata (mensagens de erro/sucesso) após alguns segundos
-$('.flashdata').delay(5000).fadeOut('slow');
+$('#flashdata-success, #flashdata-failed, #flashdata-nochange').delay(5000).fadeOut('slow');
 
 /*
  * Adiciona um btn-warning para cara checked de cada campo radio do formulário
