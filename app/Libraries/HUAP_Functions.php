@@ -138,12 +138,25 @@ class HUAP_Functions
     * @return bool
     */
     function check_date($data, $opt = 'regex') {
-
-        if($opt == 'checkdate')
-            return (strlen($data) == 8 && checkdate(substr($data, 2, 2), substr($data, 0, 2), substr($data, 4, 6))) ? TRUE : FALSE;
-        else
+        if($opt == 'checkdate') {
+            // Remover possíveis barras ou traços da data para permitir diferentes formatos
+            $data = str_replace(['/','-','.'], '', $data);
+    
+            // Verifica se a string tem exatamente 8 caracteres (formato DDMMAAAA)
+            if(strlen($data) == 8) {
+                // Extrai o dia, mês e ano e converte para inteiro
+                $dia = intval(substr($data, 0, 2)); // Dia está nos dois primeiros caracteres
+                $mes = intval(substr($data, 2, 2)); // Mês está nos caracteres 3 e 4
+                $ano = intval(substr($data, 4, 4)); // Ano está nos últimos 4 caracteres
+    
+                // Agora use checkdate com valores inteiros
+                return checkdate($mes, $dia, $ano) ? TRUE : FALSE;
+            }
+            return FALSE;
+        } else {
+            // Regex para verificar formato de data DD/MM/YYYY, DD-MM-YYYY ou DD.MM.YYYY
             return (preg_match('/^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/', $data)) ? TRUE : FALSE;
-
+        }
     }
 
     /**
