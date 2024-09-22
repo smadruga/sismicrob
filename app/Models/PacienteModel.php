@@ -40,12 +40,12 @@ class PacienteModel extends Model
     {
 
         $db = \Config\Database::connect('aghux');
-        $query = $db->query('
+        $query = $db->query("
             SELECT
                 codigo
                 , nome
                 , nome_mae
-                , to_char(dt_nascimento, \'DD/MM/YYYY\') as dt_nascimento
+                , to_char(dt_nascimento, 'DD/MM/YYYY') as dt_nascimento
                 , extract(year from age(dt_nascimento)) as idade
                 , sexo
                 , cpf
@@ -61,13 +61,35 @@ class PacienteModel extends Model
             FROM
                 aip_pacientes
             WHERE
-                codigo = '.$data.'
-        ');
+                codigo = ".$data."
+        ");
+
+        $query_int = $db->query("
+            select
+                ap.nome 
+                , to_char(ai.dthr_internacao, 'DD/MM/YYYY') as dthr_internacao
+                , auf.sigla 
+                , auf.descricao 
+                , ai.lto_lto_id 
+            from 
+                agh.aip_pacientes ap 
+                    left join agh.ain_internacoes ai on ap.codigo = ai.pac_codigo 
+                    left join agh.agh_unidades_funcionais auf on ai.unf_seq = auf.seq 
+            where 
+                codigo = ".$data."
+            order by ai.dthr_internacao desc
+            limit 1
+            ;
+                
+        ");
 
         $query = $query->getRowArray();
+        $query_int = $query_int->getRowArray();
 
         $query['telefone'] = ($query['ddd_fone_residencial'] || $query['fone_residencial']) ? $query['ddd_fone_residencial'].' '.$query['fone_residencial'].' (Residencial) ' : NULL;
         $query['telefone'] .= ($query['ddd_fone_recado'] || $query['fone_recado']) ? $query['ddd_fone_recado'].' '.$query['fone_recado'].' (Recado) ' : NULL;
+
+        $query['internacao'] = $query_int;
 
         /*
         echo $db->getLastQuery();

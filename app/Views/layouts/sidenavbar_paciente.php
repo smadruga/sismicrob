@@ -4,6 +4,9 @@
     </a>
     <span class="fs-6">Prontuário: <?= $_SESSION['Paciente']['prontuario'] ?></span>
     <hr>
+    <span class="fs-6">Última internação: <?= $_SESSION['Paciente']['internacao']['dthr_internacao'] ?></span>
+    <span class="fs-6"><?= $_SESSION['Paciente']['internacao']['lto_lto_id'].'  '.$_SESSION['Paciente']['internacao']['sigla'] ?></span>
+    <hr>
     <ul class="nav navbar-nav flex-column mb-auto">
         <li class="nav-item">
             <a href="<?= base_url('paciente/show_paciente/'.$_SESSION['Paciente']['codigo']) ?>" class="nav-link text-white p-2" aria-current="page">
