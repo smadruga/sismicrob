@@ -4,7 +4,7 @@
     </a>
     <span class="fs-6">Prontuário: <?= $_SESSION['Paciente']['prontuario'] ?></span>
     <hr>
-    <span class="fs-6">Última internação: <?= $_SESSION['Paciente']['internacao']['dthr_internacao'] ?></span>
+    <span class="fs-6">Internação: <?= $_SESSION['Paciente']['internacao']['dthr_internacao'] ?></span>
     <span class="fs-6"><?= $_SESSION['Paciente']['internacao']['lto_lto_id'].'  '.$_SESSION['Paciente']['internacao']['sigla'] ?></span>
     <hr>
     <ul class="nav navbar-nav flex-column mb-auto">

@@ -118,9 +118,12 @@ class Prescricao extends BaseController
 
         /*
         echo "<pre>";
-        print_r($v);
+        print_r($_SESSION);
         echo "</pre>";
-        #exit('oi'.$_SESSION['Paciente']['prontuario']);
+        echo "<pre>";
+        print_r($v['prescricao']);
+        echo "</pre>";
+        exit('oi'.$_SESSION['Paciente']['prontuario']);
         #*/
 
         return view('admin/prescricao/list_prescricao', $v);

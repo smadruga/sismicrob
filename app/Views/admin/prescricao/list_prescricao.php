@@ -167,6 +167,17 @@
                             
                             <hr>
 
+                            <?php
+                                if ( (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,9]))) || 
+                                ( $v['idSishuap_Usuario'] == $_SESSION['Sessao']['idSishuap_Usuario'] ) ) {
+                                    $v['NomePrescritor'];
+                                    $v['Conselho'];
+                                }
+                                else {
+                                    $v['NomePrescritor'] = '**********';
+                                    $v['Conselho'] = '**********';
+                                }
+                            ?>
                             <div class="row">
                                 <div class="col"><b>Criada em:</b> <?= $v['DataPrescricao'] ?></div>
                                 <div class="col"><b>Prescritor:</b> <?= $v['NomePrescritor'] ?></div>
@@ -175,6 +186,7 @@
 
                             <?php
                             if ($v['Avaliacao'] != 'P') {
+
                             ?>
                             <br>
 
