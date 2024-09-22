@@ -6,9 +6,6 @@ var timesession = new Date();
 //timesession.setHours( timesession.getHours() + 2 );
 timesession.setSeconds( timesession.getSeconds() + parseInt(timeout) );
 
-//fecha divs de flashdata (mensagens de erro/sucesso) após alguns segundos
-$('#flashdata').delay(5000).fadeOut('slow');
-
 //monta o time de sessão do usuário
 $('#clock').countdown(timesession)
 .on('update.countdown', function(event) {
@@ -378,6 +375,9 @@ function mascaraValorReal(value) {
     return r;
 
 }
+
+// Fecha divs de flashdata (mensagens de erro/sucesso) após alguns segundos
+$('.flashdata').delay(5000).fadeOut('slow');
 
 /*
  * Adiciona um btn-warning para cara checked de cada campo radio do formulário
