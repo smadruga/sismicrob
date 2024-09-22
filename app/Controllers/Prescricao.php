@@ -696,7 +696,7 @@ class Prescricao extends BaseController
         $request = \Config\Services::request();
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();
-        
+
         if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
             $v['data'] = [
                 #'idSismicrob_Tratamento'                => '',
@@ -770,14 +770,18 @@ class Prescricao extends BaseController
 
                 $v['anterior'] = array();
 
+                $v['data']['idSishuap_Usuario2'] = $_SESSION['Sessao']['idSishuap_Usuario'];
+
                 /*
                 echo "<pre>";
                 print_r($v['data']);
                 echo "</pre>";
+                echo "<pre>";
+                #print_r($_SESSION['Sessao']);
+                echo "</pre>";
                 exit('oi');
                 #*/
 
-                #$v['id'] = $prescricao->insert($v['data']);
                 $v['campos'] = array_keys($v['data']);
 
                 if($prescricao->update($v['data']['idSismicrob_Tratamento'], $v['data'])) {
