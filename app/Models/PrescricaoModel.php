@@ -308,7 +308,7 @@ class PrescricaoModel extends Model
                     cpf = '.$data.'
             ');
 
-            if(!$query->getNumRows() && $query->getNumRows() != 0) {
+            if($query->getNumRows() && $query->getNumRows() != 0) {
                 $query = $query->getRowArray();
                 return $query['conselho'];
             }
