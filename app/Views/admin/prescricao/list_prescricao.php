@@ -172,9 +172,18 @@
                                 <div class="col"><b>Prescritor:</b> <?= $v['NomePrescritor'] ?></div>
                                 <div class="col"><b>Conselho:</b> <?= $v['Conselho'] ?></div>
                             </div>
+
                             <?php
                             if ($v['Avaliacao'] != 'P') {
                             ?>
+                            <br>
+
+                            <div class="row">
+                                <div class="col"><b>Avaliada em:</b> <?= $v['DataAvaliacao'] ?></div>
+                                <div class="col"><b>Avaliador:</b> <?= $v['NomeAvaliador'] ?></div>
+                                <div class="col"><b>Conselho:</b> <?= $v['Conselho2'] ?></div>
+                            </div>
+
                             <hr>
 
                             <div class="row">

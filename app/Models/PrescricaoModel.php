@@ -182,6 +182,7 @@ class PrescricaoModel extends Model
                 , u1.Nome as NomeResponsavel
                 , u2.Cpf as CpfAvaliador
                 , u2.Nome as NomeAvaliador
+                , date_format(st.DataAvaliacao, "%d/%m/%Y %H:%i:%s") as DataAvaliacao
             FROM
                 preschuapweb.Sismicrob_Tratamento as st
                     left join TabSismicrob_AntibioticoMantido as am     on st.idTabSismicrob_AntibioticoMantido     = am.idTabSismicrob_AntibioticoMantido

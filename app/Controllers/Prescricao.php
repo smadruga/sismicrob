@@ -770,7 +770,8 @@ class Prescricao extends BaseController
 
                 $v['anterior'] = array();
 
-                $v['data']['idSishuap_Usuario2'] = $_SESSION['Sessao']['idSishuap_Usuario'];
+                $v['data']['idSishuap_Usuario2']    = $_SESSION['Sessao']['idSishuap_Usuario'];
+                $v['data']['DataAvaliacao']         = date('Y-m-d H:i:s', time());
 
                 /*
                 echo "<pre>";
