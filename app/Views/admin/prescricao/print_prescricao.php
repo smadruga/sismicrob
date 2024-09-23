@@ -157,82 +157,89 @@ if($prescricao['idTabSismicrob_Indicacao'] == 1) {
                             <hr>
 
                             <div class="row">
-                                <div class="col">
+                                <div class="col-4">
                                     <b>Peso:</b> <?= $prescricao['Peso'] ?> kg
                                 </div>
-                                <div class="col-4">
+                                <div class="col-3">
                                     <b>Creatinina:</b> <?= $prescricao['Creatinina'] ?> mg/dL
                                 </div>
-                                <div class="col-5">
+                                <div class="col">
                                     <b>Filtração Glomerular:</b> <?= $prescricao['Clearance'] ?> mL/min/1.73m²
                                 </div>                                
                             </div>    
 
                             <div class="row">
-                                <div class="col">
+                                <div class="col-4">
                                     <b><?= $mascara['DoseAtaque'] ?>:</b> <?= ($prescricao['DoseAtaque']) == 'S' ? 'Sim' : 'Não' ?>
                                 </div>
-                                <div class="col-5">
+                                <div class="col-3">
                                     <b>Hemodiálise:</b> <?= ($prescricao['Hemodialise']) == 'S' ? 'Sim' : 'Não' ?>
                                 </div>
-                            </div>                                
-
-
-
+                                <div class="col"><b>Sepse:</b> 
+                                    <?php 
+                                        if ($prescricao['Sepse'] == 'S') 
+                                            echo 'Sim';
+                                        elseif ($prescricao['Sepse'] == 'C')  
+                                            echo 'Choque Séptico';
+                                        else 
+                                            echo 'Não';
+                                    ?>
+                                </div>
+                            </div>
+                            <br>                            
                         </div>
                     </div>
-                    
-                    <div class="row">
-                        <div class="col container border border-dark">
-                            <b>
-                                <div class="col fs-6 text-center p-2">
-                                    RESPONSÁVEL PELA PRESCRIÇÃO
-                                </div>
-                            </b>
-                        </div>
-                    </div>  
 
                     <div class="row">
                         <div class="col container border border-dark">
                         
+                            <?php   
+                                if ( (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,9]))) || 
+                                ( $prescricao['idSishuap_Usuario'] == $_SESSION['Sessao']['idSishuap_Usuario'] ) ) {
+                                    $prescricao['NomePrescritor'];
+                                    $prescricao['Conselho'];
+                                }
+                                else {
+                                    $prescricao['NomePrescritor'] = '**********';
+                                    $prescricao['Conselho'] = '**********';
+                                }
+                            ?>
                             <div class="col fs-6 p-2">
                                 <br>
                                     <b>Criada em:</b> <?= $prescricao['DataPrescricao'] ?> ||
                                     <b>Prescritor:</b> <?= $prescricao['NomePrescritor'] ?> ||
                                     <b>Conselho:</b> <?= $prescricao['Conselho'] ?>
-                                    <!--<br>
-                                    <b>Concluída em:</b> <?= $prescricao['DataConclusao'] ?> ||
-                                    <b>Concluída por:</b> <?= $prescricao['NomeResponsavel'] ?> ||
-                                    <b>Conselho:</b> <?= $prescricao['Conselho1'] ?>-->
-                                <br><br>
+                                <br>
+                                <?php
+                                    if ($prescricao['Avaliacao'] != 'P') {
+                                ?>
+                                <br>
+                                    <b>Avaliada em:</b> <?= ($prescricao['DataAvaliacao']) ? $prescricao['DataAvaliacao'] : 'NÃO REGISTRADO' ?> ||
+                                    <b>Avaliador:</b> <?= ($prescricao['NomeAvaliador']) ? $prescricao['NomeAvaliador'] : 'NÃO REGISTRADO' ?> ||
+                                    <b>Conselho:</b> <?= ($prescricao['Conselho2']) ? $prescricao['Conselho2'] : 'NÃO REGISTRADO' ?>
+                                <br>
+                                <?php } ?>
                             </div>
-                            
+                            <br>
                         </div>
                     </div>    
                     
                     <?php
                     if ($prescricao['Avaliacao'] != 'P') {
                     ?>                    
-                    <div class="row">
-                        <div class="col container border border-dark">
-                            <b>
-                                <div class="col fs-6 text-center p-2">
-                                    AVALIAÇÃO
-                                </div>
-                            </b>
-                        </div>
-                    </div>
                     
                     <div class="row">
                         <div class="col container border border-dark">
                         
                             <div class="col-12 fs-6">
                                 <br>
-                                    <b>Avaliação: <?= ($prescricao['Avaliacao'] == 'S') ? 'Conforme' : 'Não conforme' ?></b>
+                                    <b>Avaliação: <?= ($prescricao['Avaliacao'] == 'S') ? 'CONFORME' : 'NÃO CONFORME' ?></b>
                             </div>
+                            
                             <div class="col-12 fs-6">
                                 <div class="col-12 text-center"><b>JUSTIFICATIVAS</b></div>
-                            </div>                             
+                            </div>
+                            <br>
                             <?php
                             $i=0;
                                 if ($prescricao['AvaliacaoDoseObs']) {

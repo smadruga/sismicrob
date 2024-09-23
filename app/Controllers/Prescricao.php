@@ -215,6 +215,7 @@ class Prescricao extends BaseController
                 'Creatinina'                    => '',
                 'Clearance'                     => '',
                 'Hemodialise'                   => '',
+                'Sepse'                   => '',
                 
                 'DiagnosticoInfecciosoOutro'    => '',
                 'SubstituicaoMedicamento'       => '',
@@ -326,7 +327,8 @@ class Prescricao extends BaseController
             $v['radio'] = array(
                 'UnidadeMedida' => $v['func']->radio_checked($v['data']['UnidadeMedida'], 'UnidadeMedida', 'g|mg|UI', FALSE, TRUE, TRUE),
                 'DoseAtaque'    => $v['func']->radio_checked($v['data']['DoseAtaque'], 'DoseAtaque', 'SN', 'N', FALSE, TRUE),
-                'Hemodialise'   => $v['func']->radio_checked($v['data']['Hemodialise'], 'Hemodialise', 'SN', 'N', FALSE, TRUE),        
+                'Hemodialise'   => $v['func']->radio_checked($v['data']['Hemodialise'], 'Hemodialise', 'SN', 'N', FALSE, TRUE),
+                'Sepse'         => $v['func']->radio_checked($v['data']['Sepse'], 'Sepse', 'S|N|C', 'N', TRUE, TRUE),
             );
     
             $v['div'] = array(

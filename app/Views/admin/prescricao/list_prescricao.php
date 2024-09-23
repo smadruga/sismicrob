@@ -155,14 +155,26 @@
                             <br>
 
                             <div class="row">
-                                <div class="col-3"><b>Peso:</b> <?= $v['Peso'] ?> kg</div>
+                                <div class="col-4"><b>Peso:</b> <?= $v['Peso'] ?> kg</div>
                                 <div class="col-3"><b>Creatinina:</b> <?= $v['Creatinina'] ?> mg/dL</div>
                                 <div class="col"><b>Filtração Glomerular:</b> <?= $v['Clearance'] ?> mL/min/1.73m²</div>
                             </div>
 
                             <div class="row">
-                                <div class="col"><b><?= $mascara['DoseAtaque'] ?>:</b> <?= ($v['DoseAtaque'] == 'S') ? 'Sim' : 'Não' ?></div>
-                                <div class="col"><b>Hemodiálise:</b> <?= ($v['Hemodialise'] == 'S') ? 'Sim' : 'Não' ?></div>
+                                <div class="col-4"><b><?= $mascara['DoseAtaque'] ?>:</b> <?= ($v['DoseAtaque'] == 'S') ? 'Sim' : 'Não' ?></div>
+                                <div class="col-3"><b>Hemodiálise:</b> <?= ($v['Hemodialise'] == 'S') ? 'Sim' : 'Não' ?></div>
+                                <?php if($v['idTabSismicrob_Indicacao'] == 3) { ?>
+                                <div class="col"><b>Sepse:</b> 
+                                    <?php 
+                                        if ($v['Sepse'] == 'S') 
+                                            echo 'Sim';
+                                        elseif ($v['Sepse'] == 'C')  
+                                            echo 'Choque Séptico';
+                                        else 
+                                            echo 'Não';
+                                    ?>
+                                </div>
+                                <?php } ?>
                             </div>
                             
                             <hr>
@@ -191,9 +203,9 @@
                             <br>
 
                             <div class="row">
-                                <div class="col"><b>Avaliada em:</b> <?= $v['DataAvaliacao'] ?></div>
-                                <div class="col"><b>Avaliador:</b> <?= $v['NomeAvaliador'] ?></div>
-                                <div class="col"><b>Conselho:</b> <?= $v['Conselho2'] ?></div>
+                                <div class="col"><b>Avaliada em:</b> <?= ($v['DataAvaliacao']) ? $v['DataAvaliacao'] : 'NÃO REGISTRADO' ?></div>
+                                <div class="col"><b>Avaliador:</b> <?= ($v['NomeAvaliador']) ? $v['NomeAvaliador'] : 'NÃO REGISTRADO' ?></div>
+                                <div class="col"><b>Conselho:</b> <?= ($v['Conselho2']) ? $v['Conselho2'] : 'NÃO REGISTRADO' ?></div>
                             </div>
 
                             <hr>

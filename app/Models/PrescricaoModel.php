@@ -17,36 +17,37 @@ class PrescricaoModel extends Model
                                         'idSismicrob_Tratamento',      
                                         'Medicamento',                 
                                         'DataInicioTratamento',        
-                                        'Duracao',                     
+                                        'Duracao',   
                                         'DataFimTratamento',           
                                         
-                                        'DoseAtaque',                                
+                                        'DoseAtaque',              
                                         'DosePosologica',              
-                                        'UnidadeMedida',                              
-                                        'DoseDiaria',                  
-                                        'Unidades',                    
-                                        'Peso',                        
-                                        'Creatinina',                  
-                                        'Clearance',                   
-                                        'Hemodialise',                 
+                                        'UnidadeMedida',            
+                                        'DoseDiaria',
+                                        'Unidades',  
+                                        'Peso',      
+                                        'Creatinina',
+                                        'Clearance',
+                                        'Hemodialise',
+                                        'Sepse',        
                                         
                                         'DiagnosticoInfecciosoOutro',  
                                         'SubstituicaoMedicamento',     
                                         'IndicacaoTipoCirurgia',               
                                         
-                                        'Avaliacao',                           
-                                        'AvaliacaoDose',                       
-                                        'AvaliacaoDoseObs',                    
-                                        'AvaliacaoDuracao',                    
+                                        'Avaliacao',         
+                                        'AvaliacaoDose',     
+                                        'AvaliacaoDoseObs',  
+                                        'AvaliacaoDuracao',  
                                         'AvaliacaoDuracaoObs',                 
-                                        'AvaliacaoIntervalo',                  
+                                        'AvaliacaoIntervalo',
                                         'AvaliacaoIntervaloObs',               
-                                        'AvaliacaoIndicacao',                  
+                                        'AvaliacaoIndicacao',
                                         'AvaliacaoIndicacaoObs',               
                                         'AvaliacaoPreenchimentoInadequado',    
                                         'AvaliacaoPreenchimentoInadequadoObs', 
-                                        'AvaliacaoOutros',                     
-                                        'AvaliacaoOutrosObs',                  
+                                        'AvaliacaoOutros',   
+                                        'AvaliacaoOutrosObs',
                                         
                                         'AlteracaoPorAlta',            
                                         
@@ -54,10 +55,10 @@ class PrescricaoModel extends Model
                                         'SubstituidoPeloTratamento',   
                                         
                                         'Justificativa',               
-                                        'Suspender',                   
+                                        'Suspender', 
                                         'SuspenderObs',                
                                         
-                                        'Prorrogar',                   
+                                        'Prorrogar', 
                                         'ProrrogarObs',                
                                                  
                                         'idTabSismicrob_ViaAdministracao',     
@@ -130,6 +131,7 @@ class PrescricaoModel extends Model
                 , format(st.Creatinina, 2, "pt_BR") as Creatinina
                 , format(st.Clearance, 2, "pt_BR") as Clearance
                 , st.Hemodialise
+                , st.Sepse
                 , st.DiagnosticoInfecciosoOutro
                 , st.SubstituicaoMedicamento
                 , st.IndicacaoTipoCirurgia

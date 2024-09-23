@@ -399,7 +399,31 @@
                                 </div>
                             </div>
                         </div>
-                    </div>    
+                    </div>
+                    <div class="col idTabSismicrob_Indicacao3" id="idTabSismicrob_Indicacao3" <?php echo $div['idTabSismicrob_Indicacao3'] ?>>
+                        <div>
+                            <label for="Sepse" class="form-label">Sepse <b class="text-danger">*</b></label>
+                            <div class="input-group">
+                                <div class="btn-group">
+                                <input type="radio" class="btn-check" name="Sepse" id="SepseS" autocomplete="off" value="S"
+                                    <?= $opt['disabled'] ?> <?php echo $radio['Sepse']['c'][0] ?>/>
+                                <label class="btn btn-<?php echo $radio['Sepse']['b'][0] ?> <?php echo $radio['Sepse']['a'][0] ?>" 
+                                    for="SepseS" id="labelSepseS" data-mdb-ripple-init name="SepseS" aria-pressed="true">Sim</label>
+
+                                <input type="radio" class="btn-check" name="Sepse" id="SepseN" autocomplete="off" value="N"
+                                    <?= $opt['disabled'] ?> <?php echo $radio['Sepse']['c'][1] ?>/>
+                                <label class="btn btn-<?php echo $radio['Sepse']['b'][1] ?> <?php echo $radio['Sepse']['a'][1] ?>" 
+                                    for="SepseN" id="labelSepseN" data-mdb-ripple-init name="SepseN" aria-pressed="true">Não</label>
+
+                                <input type="radio" class="btn-check" name="Sepse" id="SepseC" autocomplete="off" value="C"
+                                    <?= $opt['disabled'] ?> <?php echo $radio['Sepse']['c'][2] ?> aria-pressed="true"/>
+                                <label class="btn btn-<?php echo $radio['Sepse']['b'][2] ?> <?php echo $radio['Sepse']['a'][2] ?>" 
+                                    for="SepseC" id="labelSepseC" data-mdb-ripple-init name="SepseC" aria-pressed="true">Choque Séptico</label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>     
                     <div class="col-5 idTabSismicrob_Indicacao1" id="idTabSismicrob_Indicacao1" <?php echo $div['idTabSismicrob_Indicacao1'] ?>>
                         <div>
                             <label for="idTabSismicrob_AntibioticoMantido" class="form-label">Antibiótico após cirurgia <b class="text-danger">*</b></label>
@@ -441,6 +465,7 @@
             <input type="hidden" name="Idade" id="Idade" value="<?= $_SESSION['Paciente']['idade'] ?>" />
             <input type="hidden" name="Sexo" id="Sexo" value="<?= $_SESSION['Paciente']['sexo'] ?>" />
             <input type="hidden" name="radioUnidadeMedida" id="radioUnidadeMedida" value="g|mg|UI" />
+            <input type="hidden" name="radioSepse" id="radioSepse" value="S|N|C" />
             <input type="hidden" name="action" value="<?= $opt['action'] ?>" />
             <?php if($opt['action'] == 'editar' || $opt['action'] == 'excluir') { ?>
             <input type="hidden" name="idSismicrob_Tratamento" value="<?= $data['idSismicrob_Tratamento'] ?>" />
