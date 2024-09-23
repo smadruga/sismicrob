@@ -260,7 +260,8 @@ class Prescricao extends BaseController
 
                 'Medicamento'                       => '',
 
-                'submit' => '',
+                'submit'    => '',
+                'prox'      => '',
             ];
             
         }
@@ -272,6 +273,9 @@ class Prescricao extends BaseController
         }
 
         $v['data']['layout'] = 'list';
+        
+        if(isset($v['data']['prox']) && $v['data']['prox'] == 1) 
+            $v['data']['submit'] = 1;                
 
         if(($action == 'editar' || $action == 'excluir' || $action == 'concluir') && !$v['data']['submit']) {
 
@@ -295,9 +299,7 @@ class Prescricao extends BaseController
             $v['data']['Medicamento'] = $z['mat_codigo'].'#'.$z['descricao'];
         }
 
-        #if(($action == 'excluir' || $action == 'concluir') && !$v['data']['submit']) { 
         if(
-            #(($action == 'cadastrar' || $action == 'editar') && (!$v['data']['submit'] || $v['data']['submit'] == 1))
             (!$v['data']['submit']) || 
             (($action == 'cadastrar' || $action == 'editar') && (!$v['data']['submit'] || $v['data']['submit'] == 1))
             
@@ -378,8 +380,8 @@ class Prescricao extends BaseController
 
             $v['opt'] = [
                 'bg'        => 'bg-secondary',
-                #'button'    => '<button class="btn btn-info" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-circle-chevron-right"></i> Próximo</button>',
-                'button'    => '<button type="submit" class="btn btn-primary" name="submit" value="1"><i class="fas fa-save" aria-hidden="true"></i> Salvar </button>',
+                'button'    => '<button type="submit" class="btn btn-primary" name="submit" value="1"><i class="fas fa-save" aria-hidden="true"></i> Concluir </button> 
+                                <button type="submit" class="btn btn-info" name="prox" value="1"><i class="fas fa-plus" aria-hidden="true"></i> Próximo </button>',
                 'title'     => 'Cadastrar Prescrição',
                 'disabled'  => '',
                 'action'    => 'cadastrar',
@@ -599,8 +601,7 @@ class Prescricao extends BaseController
                         $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
                                                 
                         session()->setFlashdata('success', 'Item adicionado com sucesso!');
-                        #return redirect()->to('prescricao/manage_medicamento/'.$v['id']);
-                        return redirect()->to('prescricao/list_prescricao');
+                        return (isset($v['data']['prox'])) ? redirect()->to('prescricao/manage_prescricao/cadastrar') : redirect()->to('prescricao/list_prescricao');
 
                     }
                     else
