@@ -136,6 +136,28 @@ database.aghux.schema   =
 
 # curlrequest.shareOptions = true
 
+
+
+
+#--------------------------------------------------------------------
+# SESSION CONFIG - Tempo definido em segundos
+#--------------------------------------------------------------------
+
+huap.session.expires = 7200
+
+#--------------------------------------------------------------------
+# MÓDULO CONFIG
+#--------------------------------------------------------------------
+
+mod.name.min    = "sismicrob"
+mod.name.max    = "SISMICROB"
+mod.name.first  = "Sismicrob"
+mod.cod         = 4
+
+#####################################################################
+# HU CONFIG
+#####################################################################
+
 #--------------------------------------------------------------------
 # LDAP (AD HUAP/EBSERH)
 #--------------------------------------------------------------------
@@ -145,11 +167,11 @@ srv.ldap2 =
 
 ldap.usr = EBSERHNET\
 ldap.pwd = 
-#SUBSTUIR HUAP PELA CONFIGURAÇÃO DO SEU HOSPITAL
-ldap.dn = OU=Usuarios,OU=HUAP,OU=EBSERH,DC=ebserhnet,DC=ebserh,DC=gov,DC=br
+ldap.dn  = OU=Usuarios,OU=HUAP,OU=EBSERH,DC=ebserhnet,DC=ebserh,DC=gov,DC=br
 
 #--------------------------------------------------------------------
-# SESSION CONFIG - Tempo definido em segundos
+# DETALHES DO HU
 #--------------------------------------------------------------------
 
-huap.session.expires = 7200
+hu.nome         = "Hospital Universitário Antonio Pedro"
+hu.abrev        = "Huap-UFF"
