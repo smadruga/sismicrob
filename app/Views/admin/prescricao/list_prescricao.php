@@ -7,6 +7,37 @@
 
     <div class="col border rounded ms-2 p-4">
 
+        <div class="">
+
+            <?php 
+                if ( ($prescricao['total'] > $limit) && ($page <= $ult) ) {
+                    echo '
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                    ';
+                    
+                    if ( ($prx > $ult) ) 
+                        $prx = $ult;
+
+                    echo '
+                        <li class="page-item"><a class="page-link" href="'. base_url('prescricao/'.$met.'/'.$pri) .'">Primeiro</a></li>
+                            <li class="page-item"><a class="page-link" href="'. base_url('prescricao/'.$met.'/'.$ant) .'"><<</a></li>                    
+                        <li class="page-item"><a class="page-link" href="'. base_url('prescricao/'.$met.'/'.$page) .'">'. $page .'</a></li>
+                        <li class="page-item"><a class="page-link" href="'. base_url('prescricao/'.$met.'/'.$prx) .'">>></a></li>
+                            <li class="page-item"><a class="page-link" href="'. base_url('prescricao/'.$met.'/'.$ult) .'">Último</a></li>
+                    ';
+
+                    echo '
+                            </ul>
+                        </nav>            
+                    ';
+                }
+
+            ?>
+
+        </div>
+
+    
         <?php
         if($prescricao['count'] <= 0) {
             echo '

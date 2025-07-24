@@ -96,7 +96,7 @@ class PrescricaoModel extends Model
     *
     * @return void
     */
-    public function read_prescricao($data = FALSE, $buscaid = FALSE, $row = FALSE, $avaliacao = FALSE)
+    public function read_prescricao($data = FALSE, $buscaid = FALSE, $row = FALSE, $avaliacao = FALSE, $limit = FALSE, $offset = FALSE)
     {
 
         #$prescricao     = new PrescricaoModel(); #Inicia o objeto baseado na TabelaModel
@@ -111,9 +111,8 @@ class PrescricaoModel extends Model
         else
             exit('ERRO 5XEZ');
 
-        #exit('ERRO 5XEZ'.$where);
-
-        #exit('ERRO 5XEZ'.$where);
+        $limit = ($limit) ? 'LIMIT '.$limit : null;
+        $offset = ($offset) ? 'OFFSET '.$offset : null;;
 
         $db = \Config\Database::connect();
         $query = $db->query('
@@ -186,7 +185,7 @@ class PrescricaoModel extends Model
                 , u2.Nome as NomeAvaliador
                 , date_format(st.DataAvaliacao, "%d/%m/%Y %H:%i:%s") as DataAvaliacao
             FROM
-                preschuapweb.Sismicrob_Tratamento as st
+                Sismicrob_Tratamento as st
                     left join TabSismicrob_AntibioticoMantido as am     on st.idTabSismicrob_AntibioticoMantido     = am.idTabSismicrob_AntibioticoMantido
                     left join TabSismicrob_DiagnosticoInfeccioso as di  on st.idTabSismicrob_DiagnosticoInfeccioso  = di.idTabSismicrob_DiagnosticoInfeccioso
                     left join TabSismicrob_Especialidade as e           on st.idTabSismicrob_Especialidade          = e.idTabSismicrob_Especialidade
@@ -202,9 +201,12 @@ class PrescricaoModel extends Model
             WHERE
                     '.$where.'            
             ORDER BY st.idSismicrob_Tratamento DESC
+            '.$limit.'
+            '.$offset.'
         ');
 
         /*
+        echo '<Br> >> '.$db->getLastQuery();
         $qr = $query->getResultArray();
         $qn = $query->getNumRows();
    
@@ -239,6 +241,15 @@ class PrescricaoModel extends Model
 
         }
         else {
+            
+            $q = $db->query('
+                SELECT COUNT(*) as total 
+                FROM Sismicrob_Tratamento as st
+                WHERE '.$where.'
+            ');     
+            $t = $q->getRow(); // retorna objeto com a propriedade "total"
+            $r['total'] = $t->total;
+
             $r['array'] = $query->getResultArray();
             $r['count'] = $query->getNumRows();
 

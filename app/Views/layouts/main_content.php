@@ -3,14 +3,14 @@
 <?= $this->include('layouts/uppernavbar') ?>
 <br />
 
-<main class="<?= $_SESSION['config']['class'] ?>">
+<main class="<?= $_SESSION['config']['class'] ?>" style="padding-top: 35px;">
     <div class="row">
 
         <div class="col">
 
             <?= $this->include('layouts/div_flashdata') ?>
 
-            <div class="">
+            <div>
                 <div class="row">
 
                     <?= $this->renderSection('subcontent') ?>

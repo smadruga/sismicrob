@@ -102,7 +102,7 @@ class Prescricao extends BaseController
     *
     * @return mixed
     */
-    public function list_prescricao()
+    public function list_prescricao($page = null)
     {
 
         $prescricao = new PrescricaoModel();
@@ -112,7 +112,17 @@ class Prescricao extends BaseController
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();
 
-        $v['prescricao'] = $prescricao->read_prescricao($_SESSION['Paciente']['prontuario']);
+        $v['page'] = (!$page) ? 1 : $page;
+        $v['limit'] = 5;
+        $v['offset'] = ($v['page']-1) * $v['limit'];
+
+        $v['prescricao'] = $prescricao->read_prescricao($_SESSION['Paciente']['prontuario'], FALSE, FALSE, FALSE, $v['limit'], $v['offset']);
+
+        $v['pri'] = 1;
+        $v['ant'] = ($v['page']-1 <= 0) ? 1 : $v['page']-1;
+        $v['prx'] = ($v['page']+1);
+        $v['ult'] = ceil(($v['prescricao']['total']/$v['limit']));
+        $v['met'] = 'list_prescricao';
 
         $v['layout'] = 'list';
 
@@ -636,7 +646,7 @@ class Prescricao extends BaseController
     *
     * @return void
     */
-    public function list_assess_prescricao($assess)
+    public function list_assess_prescricao($assess, $page = null)
     {
 
         $prescricao     = new PrescricaoModel(); #Inicia o objeto baseado na PrescricaoModel
@@ -650,7 +660,17 @@ class Prescricao extends BaseController
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();
 
-        $v['prescricao'] = $prescricao->read_prescricao(FALSE, FALSE, FALSE, $assess);
+        $v['page'] = (!$page) ? 1 : $page;
+        $v['limit'] = 5;
+        $v['offset'] = ($v['page']-1) * $v['limit'];
+
+        $v['prescricao'] = $prescricao->read_prescricao(FALSE, FALSE, FALSE, $assess, $v['limit'], $v['offset']);
+
+        $v['pri'] = 1;
+        $v['ant'] = ($v['page']-1 <= 0) ? 1 : $v['page']-1;
+        $v['prx'] = ($v['page']+1);
+        $v['ult'] = ceil(($v['prescricao']['total']/$v['limit']));
+        $v['met'] = 'list_assess_prescricao/'.$assess;
 
         $i = 0;
         foreach($v['prescricao']['array'] as $x) {
@@ -670,13 +690,12 @@ class Prescricao extends BaseController
             $i++;          
         }
 
-        $v['layout'] = 'assess';
-        
-       
+        $v['layout'] = 'assess';     
         
         /*
         echo "<pre>";
-        print_r($v['prescricao']['array']);
+        #print_r($v['prescricao']);
+        print_r($v);
         echo "</pre>";
         exit('oi'.$_SESSION['Paciente']['prontuario']);
         #*/
