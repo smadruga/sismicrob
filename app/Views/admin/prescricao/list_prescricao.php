@@ -7,36 +7,45 @@
 
     <div class="col border rounded ms-2 p-4">
 
-        <div class="">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col">
+                    <?php 
+                        if ( ($prescricao['total'] > $limit) && ($page <= $ult) ) {
+                            echo '
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                            ';
+                            
+                            if ( ($prx > $ult) ) 
+                                $prx = $ult;
 
-            <?php 
-                if ( ($prescricao['total'] > $limit) && ($page <= $ult) ) {
-                    echo '
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination">
-                    ';
-                    
-                    if ( ($prx > $ult) ) 
-                        $prx = $ult;
+                            echo '
+                                <li class="page-item"><a class="page-link" href="'. base_url('prescricao/'.$met.'/'.$pri) .'">Primeiro</a></li>
+                                <li class="page-item"><a class="page-link" href="'. base_url('prescricao/'.$met.'/'.$ant) .'"><<</a></li>                    
+                                <li class="page-item"><a class="page-link" href="'. base_url('prescricao/'.$met.'/'.$page) .'">'. $page .'</a></li>
+                                <li class="page-item"><a class="page-link" href="'. base_url('prescricao/'.$met.'/'.$prx) .'">>></a></li>
+                                <li class="page-item"><a class="page-link" href="'. base_url('prescricao/'.$met.'/'.$ult) .'">Último</a></li>
+                            ';
 
-                    echo '
-                        <li class="page-item"><a class="page-link" href="'. base_url('prescricao/'.$met.'/'.$pri) .'">Primeiro</a></li>
-                            <li class="page-item"><a class="page-link" href="'. base_url('prescricao/'.$met.'/'.$ant) .'"><<</a></li>                    
-                        <li class="page-item"><a class="page-link" href="'. base_url('prescricao/'.$met.'/'.$page) .'">'. $page .'</a></li>
-                        <li class="page-item"><a class="page-link" href="'. base_url('prescricao/'.$met.'/'.$prx) .'">>></a></li>
-                            <li class="page-item"><a class="page-link" href="'. base_url('prescricao/'.$met.'/'.$ult) .'">Último</a></li>
-                    ';
+                            echo '
+                                    </ul>
+                                </nav>            
+                                
+                            ';
+                            $x = 1;
+                        }
 
-                    echo '
-                            </ul>
-                        </nav>            
-                    ';
-                }
-
-            ?>
-
+                    ?>
+                </div>
+                <div class="col">
+                    <?= (isset($x)) ? '<h4><span class="badge text-bg-secondary bg-warning">Total: '.$prescricao['total'].' prescrições</span></h4>' : NULL; ?>
+                </div>
+                <div class="col">
+                
+                </div>
+            </div>
         </div>
-
     
         <?php
         if($prescricao['count'] <= 0) {
