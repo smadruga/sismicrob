@@ -39,7 +39,7 @@
                     ?>
                 </div>
                 <div class="col">
-                    <?= (isset($x)) ? '<h4><span class="badge text-bg-secondary bg-warning">Total: '.$prescricao['total'].' prescrições</span></h4>' : NULL; ?>
+                    <?= (isset($x)) ? '<h4><span class="badge text-bg-secondary bg-warning">Total geral: '.$prescricao['total'].' prescrições</span></h4>' : NULL; ?>
                 </div>
                 <div class="col">
                 
